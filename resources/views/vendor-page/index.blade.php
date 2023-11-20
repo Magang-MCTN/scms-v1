@@ -19,39 +19,16 @@
                   <a href="/vendor"><img src="{{ asset ('dashboard/template/images/MCTN.png')}}" height="100px" ></a>
                 </div>
                 <div class="col-8 pt-4 mt-1 text-center">
-                  <span class="dropdown dropdown-toggle profile" data-toggle="dropdown" style="color:black" >
-                    <a href="#/"><img src="Images/profile-icon.png" class="profile-icon color"></a>
-                  </span>
-                  <ul class="dropdown-menu mt-4 text-center" style="margin-left:-6%;border-radius:10px;">
-                    <li class="pre-profile-1 pt-2 pb-2"><a href="contact-form.html" class="color" style="font-weight:600">Help Center </a></li>
-                    <li class="pre-profile-1 pt-2 pb-2"><a href="ecommerce.html" class="color" style="font-weight:600">Order History</a></li>
-                    <li class="pre-profile-1 pt-2 pb-2"><a href="ecommerce.html" class="color" style="font-weight:600">Change Password</a></li>
-                    <li class="pre-profile-1 pt-2 pb-2"><a href="ecommerce.html" class="color" style="font-weight:600">Update Profile</a></li>
-                    <li class="pre-profile-1 pt-2 pb-2"><a href="login-form.html" class="color" style="font-weight:600">Log In</a></li>
-                  </ul>
-                  <span class="menu-1"><a href="ecommerce.html" class="color">Beranda</a></span>
+                  <span class="menu-1"><a href="/vendor" class="color">Beranda</a></span>
                   <span class="menu"><a href="ecommerce-price-men.html" class="color">Pengadaan</a></span>
                   <span class="menu"><a href="about-us.html" class="color">Status</a></span>
                   <span class="menu"><a href="contact-form.html" class="color">Profile</a></span>
                   <span class="menu"><a href="/logout/vendor" class="color">Logout</a></span>
-                  <span class="menu"><a href="login-form.html" class="color">login/sign in</a></span>
+                  <span class="menu"><a href="login-form.html" class="color" style="color:black">Contact</a></span>
                 </div>
               </div>
-              <!-- <div class="container-fluid side-bar px-0">
-                <div class="col-12 text-right bg-danger"> 
-                  <span class="close"><a href="#/" class="color">&times;</a></span>
-                </div>
-                  <ul class="pt-5 pre-side-bar">
-                    <li class="pt-4" style="margin-left:-5%;"><a href="ecommercehtml" class="color">home</a></li>
-                    <li class="pt-3"style="margin-left:-5%"><a href="ecommerce-price-men.html" class="color">products</a></li>
-                    <li class="pt-3"style="margin-left:-5%"><a href="about-us.html#/" class="color">about</a></li>
-                    <li class="pt-3"style="margin-left:-5%"><a href="contact-form.html" class="color">contact</a></li>
-                    <li class="pt-3"style="margin-left:-5%"><a href="#/" class="color">Update profile</a></li>
-                    <li class="pt-3"style="margin-left:-5%"><a href="login-form.html" class="color">log in</a><span><a href="#" class="color"><img src="Images/log-in..png" class="log-in"></a></span></li>
-                  </ul>
-              </div> -->
             </div>
-            <div class="carousel-inner text-center">
+            {{-- <div class="carousel-inner text-center">
               <div class="carousel-item" style="height:100vh"> 
                 <div style="height:100vh;width:100vw" class="text-right pr-5">
                   <div class="container pt-4">
@@ -87,8 +64,8 @@
                 </div>
               </div>
           </div>
-        </div>
-          <div class='container-fluid pb-3'>
+        </div> --}}
+          {{-- <div class='container-fluid pb-3'>
             <div class="row">
               <div class="col text-center">
                 <a href="ecommerce-price-men.html"><span style="font-size:30px;text-transform:uppercase;font-weight:bold" data-aos="zoom-in">popular</span></a>
@@ -148,10 +125,10 @@
                     <a href="ecommerce-price-men.html"><span class="image-lable" data-aos="fade-up">accessories & tradesional dress<br>$117.00</span></a>
                   </div>
                 </div>
-              </div>
+              </div> --}}
               <div class="row mb-1 pb-3">
                 <div class="col-12 pb-5 text-center">
-                  <a href="ecommerce-price-men.html"><span style="font-weight:700;font-size:20px;color:blue" data-aos="zoom-in">see more</span><span class="pl-3" style="color:blue"><i class="fa fa-arrow-right" aria-hidden="true" data-aos="zoom-in"></i></span></a>
+                  {{-- <a href="ecommerce-price-men.html"><span style="font-weight:700;font-size:20px;color:blue" data-aos="zoom-in">see more</span><span class="pl-3" style="color:blue"><i class="fa fa-arrow-right" aria-hidden="true" data-aos="zoom-in"></i></span></a> --}}
                 </div>
               </div>
             </div>
@@ -160,19 +137,22 @@
             <div class="container sift-couple" height="200px">
               <div class="row">
                 <div class="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12 text-center">
-                  <a href="ecommerce-price-men.html"><img src="Images/wedding-couple.jpg" height="230px" class="pl-5" data-aos="fade-up"></a>
+                  <a href="/vendor"><img src="{{ asset ('storage/ptmctn.PNG')}}" height="230px" class="pl-5" data-aos="fade-up"></a>
                 </div>
                 <div class="col-xl-7 col-lg-7 col-md-6 col-sm-12 col-12 pt-4 text-center"> 
-                  <span style="font-weight:700;font-size:20px;" data-aos="zoom-in">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Vestibulum consequat quam vel diam iaculis consectetur.
-                Praesent ac arcu sem. Nulla consectetur magna ac libero
-                rutrum malesuada. Class aptent taciti sociosqu ad litora
-                torquent per conubia nostra, per</span><br><br><a href="ecommerce-price-men.html"><span style="font-size:20px;color:rgb(180, 69, 69);font-weight: 800;text-transform: uppercase;" data-aos="zoom-in">choose your wedding dress</span></a>
+                  <span style="font-weight:700;font-size:20px;" data-aos="zoom-in">PT Mandau Cipta Tenaga Nusantara
+                    PT Mandau Cipta Tenaga Nusantara (MCTN) adalah anak perusahaan
+                    PT PLN (Persero). Pada awalnya, PT MCTN merupakan perusahaan
+                    Pembangkit Tenaga Listrik dan Uap yang memasok kebutuhan
+                    operasional eksplorasi minyak Blok Hulu Rokan. PT MCTN memproduksi
+                    listrik sebesar 70% atau sekitar 280 MW pada system blok Hulu Rokan,
+                    termasuk produksi uap dengan kontribusi 70% terhadap kebutuhan
+                    ekplorasi duri atau sebesar 46.850 Ton/hari.</span><br><br><a href="ecommerce-price-men.html"><span style="font-size:20px;color:rgb(180, 69, 69);font-weight: 800;text-transform: uppercase;" data-aos="zoom-in">Join With US</span></a>
                 </div>
               </div>
             </div>
           </div>
-          <div class="container-fluid mt-5">
+          {{-- <div class="container-fluid mt-5">
            <div class="container pt-3 pb-3">
              <div class="row">
               <div class="col-sm-12 text-center pb-4 pt-4">
@@ -341,7 +321,7 @@
               </div>
             </div>
           </div>
-          </div>
+          </div> --}}
           <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
           <script>
             AOS.init({

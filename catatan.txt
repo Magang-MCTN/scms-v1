@@ -1,0 +1,15 @@
+RAB:  tabel_rencana_anggaran_biaya
+            tabel_barang
+            tabel_transaksi
+            tabel_kota
+
+Justifikasi Penunjukan Langsung(No PRK dan kriteria JPL tidak jadi FK):  Total Keseluruhan Barang pada Form RAB belum
+
+    tabel_kota
+    tabel_pengadaan
+    tabel_anggaran
+    tabel_anggaran(Ga usah)
+    tabel_peserta
+    tabel_kriteria_jpl(Ga usah)
+
+Nota Dinas ada 2 form : Pake Pengadaan_scm cuman beda tujuan rendan dan lakdan

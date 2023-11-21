@@ -60,18 +60,18 @@ class VendorLoginController extends Controller
     public function loginVendor(Request $request)
     {
         $this->validate($request, [
-            'email' => 'required|email',
+            'email_perusahaan' => 'required|email',
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('email_perusahaan', 'password');
 
         if (auth()->guard('web_vendor')->attempt($credentials)) {
             return redirect('/vendor');
         }
 
-        return redirect()->back()->withInput($request->only('email'))->withErrors([
-            'email' => 'These credentials do not match our records.',
+        return redirect()->back()->withInput($request->only('email_perusahaan'))->withErrors([
+            'email_perusahaan' => 'These credentials do not match our records.',
         ]);
     }
     //tambahkan script di bawah ini
@@ -86,7 +86,7 @@ class VendorLoginController extends Controller
     {
         try {
             $user_google    = Socialite::driver('google')->user();
-            $user           = Vendor::where('email', $user_google->getEmail())->first();
+            $user           = Vendor::where('email_perusahaan', $user_google->getEmail())->first();
 
             //jika user ada maka langsung di redirect ke halaman home
             //jika user tidak ada maka simpan ke database
@@ -97,7 +97,7 @@ class VendorLoginController extends Controller
                 return redirect()->route('dashboard');
             } else {
                 $create = Vendor::Create([
-                    'email'             => $user_google->getEmail(),
+                    'email_perusahaan'             => $user_google->getEmail(),
                     'name'              => $user_google->getName(),
                     'password'          => 0,
                     'email_verified_at' => now(),

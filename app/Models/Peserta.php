@@ -11,11 +11,17 @@ class Peserta extends Model
     protected $primaryKey = 'ID_Peserta';
 
     protected $fillable = [
+        'ID_Vendor',
         'Nama_Peserta',
+        'jabatan',
         'Alamat_Peserta',
         'Email_Peserta',
         'Nomor_Kontak_Peserta',
-        'Faks',
-        'NPWP',
+        'signature',
     ];
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class, 'ID_Vendor', 'ID_Vendor');
+    }
 }

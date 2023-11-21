@@ -38,8 +38,8 @@
               <p class="fw-light">Sign in to continue.</p>
               <form class="pt-3">
                 <div class="form-group">
-                <input type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                  @error('email')
+                <input type="email_perusahaan" placeholder="Email Perusahaan" class="form-control @error('email_perusahaan') is-invalid @enderror" name="email_perusahaan" value="{{ old('email_perusahaan') }}" required autocomplete="email_perusahaan" autofocus>
+                  @error('email_perusahaan')
                   <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                   </span>

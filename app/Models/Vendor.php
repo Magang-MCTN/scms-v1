@@ -25,6 +25,7 @@ class Vendor extends Authenticatable
         'no_telepon_perwakilan',
         'alamat_perusahaan',
         'no_telepon_perusahaan',
+        'signature',
     ];
 
     protected $hidden = [
@@ -34,5 +35,10 @@ class Vendor extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class, 'id_role', 'id_role');
+    }
+    public function tabelPeserta()
+    {
+        // return $this->belongsTo(Peserta::class, 'ID_Vendor', 'ID_Vendor');
+        return $this->hasMany(Peserta::class,'ID_Vendor','ID_Vendor');
     }
 }

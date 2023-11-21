@@ -21,8 +21,8 @@
                 <div class="col-8 pt-4 mt-1 text-center">
                   <span class="menu-1"><a href="/vendor" class="color">Beranda</a></span>
                   <span class="menu"><a href="ecommerce-price-men.html" class="color">Pengadaan</a></span>
-                  <span class="menu"><a href="about-us.html" class="color">Status</a></span>
-                  <span class="menu"><a href="contact-form.html" class="color">Profile</a></span>
+                  <span class="menu"><a href="/profile/vendor" class="color">Status</a></span>
+                  <span class="menu"><a href="/profile/vendor" class="color">Profile</a></span>
                   <span class="menu"><a href="/logout/vendor" class="color">Logout</a></span>
                   <span class="menu"><a href="login-form.html" class="color" style="color:black">Contact</a></span>
                 </div>

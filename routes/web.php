@@ -135,9 +135,10 @@ Route::middleware(['auth', 'role:7'])->group(function () {
 
 });
 
-Route::middleware(['auth', 'role:8'])->group(function () {
+Route::middleware(['auth:web_vendor', 'role:8'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "Pejabat Lakdan"
-    // Route::get('/vendor', [VendorController::class, 'index'])->name('vendor');
+    Route::get('/profile/vendor', [VendorController::class, 'profile'])->name('vendor-page.profile');
+    Route::post('/profile/peserta', [VendorController::class, 'store'])->name('profile-vendor.store');
 });
 
 // Route::get('/unauthorized', function () {

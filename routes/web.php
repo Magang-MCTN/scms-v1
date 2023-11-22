@@ -139,6 +139,14 @@ Route::middleware(['auth:web_vendor', 'role:8'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "Pejabat Lakdan"
     Route::get('/profile/vendor', [VendorController::class, 'profile'])->name('vendor-page.profile');
     Route::post('/profile/peserta', [VendorController::class, 'store'])->name('profile-vendor.store');
+    Route::post('/profile/add-signature/{ID_Peserta}', [VendorController::class, 'addSignature'])->name('profile-vendor.add-signature');
+    Route::post('/profile/add-signature/{ID_Vendor}', [VendorController::class, 'addSignatureVendor'])->name('profile-vendor.add-signature-vendor');
+    Route::get('/profile/{ID_Vendor}/edit', [VendorController::class, 'edit'])->name('profile-vendor.edit');
+    Route::put('/profile/{ID_Vendor}', [VendorController::class, 'update'])->name('profile-vendor.update');
+    Route::delete('/profile/{ID_Vendor}', [VendorController::class, 'delete'])->name('profile-vendor.delete');
+    Route::get('/profile/{ID_Peserta}/edit', [VendorController::class, 'editPeserta'])->name('profile-vendor-peserta.edit');
+    Route::put('/profile/{ID_Peserta}', [VendorController::class, 'updatePeserta'])->name('profile-vendor-peserta.update');
+    Route::delete('/profile/{ID_Peserta}', [VendorController::class, 'deletePeserta'])->name('profile-vendor-peserta.delete');
 });
 
 // Route::get('/unauthorized', function () {

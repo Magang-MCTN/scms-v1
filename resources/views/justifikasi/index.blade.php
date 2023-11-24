@@ -29,11 +29,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="Nama_Peserta">Peserta Penunjukan Langsung</label>
-                            <select name="Nama_Peserta" id="Nama_Peserta" class="form-control" required>
+                            <label for="name">Peserta Penunjukan Langsung</label>
+                            <select name="name" id="name" class="form-control" required>
                                 @foreach($namaPesertaOptions as $option)
                                     <option value="{{ $option->id }}" {{ $namaPeserta && $option->id == $namaPeserta->id ? 'selected' : '' }}>
-                                        {{ $option->Nama_Peserta }}
+                                        {{ $option->name }}
                                     </option>
                                 @endforeach
                             </select>

@@ -16,16 +16,13 @@ class Vendor extends Authenticatable
     protected $fillable = [
 
         'id_role',
-        'name',
-        'email',
         'password',
         'nama_perusahaan',
         'email_perusahaan',
-        'jabatan',
-        'no_telepon_perwakilan',
         'alamat_perusahaan',
         'no_telepon_perusahaan',
         'id_signatures',
+        'approved',
     ];
 
     protected $hidden = [

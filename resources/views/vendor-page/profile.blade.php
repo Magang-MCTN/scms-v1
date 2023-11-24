@@ -51,7 +51,7 @@
                                 <th class="col-sm-3">Aksi</th>
                             </tr>
                             <tr>
-                                <td class="col-sm-9 text-secondary">{{ auth()->guard('web_vendor')->user()->name }}</td>
+                                {{-- <td class="col-sm-9 text-secondary">{{ auth()->guard('web_vendor')->user()->name }}</td>
                                 <td class="col-sm-9 text-secondary">{{ auth()->guard('web_vendor')->user()->email }}</td>
                                 <td class="col-sm-9 text-secondary">{{ auth()->guard('web_vendor')->user()->jabatan }}</td>
                                 <td class="col-sm-9 text-secondary">{{ auth()->guard('web_vendor')->user()->no_telepon_perwakilan }}</td>
@@ -123,7 +123,7 @@
                                     </a>
                                 </td>
                                 </td>
-                            </tr>
+                            </tr> --}}
                             <!-- Peserta Section -->
                             @if (auth()->guard('web_vendor')->user()->tabelPeserta)
                                 @foreach(auth()->guard('web_vendor')->user()->tabelPeserta as $peserta)

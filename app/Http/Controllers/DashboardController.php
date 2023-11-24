@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 // use App\Models\Signature;
 use App\Models\User;
 use App\Models\PengadaanScm;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -85,4 +86,13 @@ class DashboardController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Tanda tangan berhasil diunggah.');
     }
+
+    public function showDashboard()
+{
+    // Mendapatkan data vendor, misalnya data vendor pertama
+    $vendor = Vendor::first();
+
+    // Menampilkan view dashboard dengan mengirimkan data vendor
+    return view('dashboard.home', compact('vendor'));
+}
 }

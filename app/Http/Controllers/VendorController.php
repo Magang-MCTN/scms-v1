@@ -22,11 +22,6 @@ class VendorController extends Controller
     public function profile(...$ID_Vendor){
 
         $users = auth()->guard('web_vendor')->user(); // Mengambil pengguna yang sedang masuk
-        // $signature = $user->signature; // Mengambil tanda tangan dari relasi
-        // $signature = Signature::where('user_id', $id)->first();
-        // Mengambil pengguna yang sedang masuk
-
-
         $profile = Vendor::with('tabelPeserta');
         $users = $profile;
 
@@ -39,7 +34,6 @@ class VendorController extends Controller
             'jabatan' => 'required|max:255' ,
             'Email_Peserta' => 'required|max:255' ,
             'Nomor_Kontak_Peserta' => 'required|numeric' ,
-            // 'signatures.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
     $vendorId = Auth::guard('web_vendor')->id();
@@ -51,16 +45,6 @@ class VendorController extends Controller
     $perwakilan->Nomor_Kontak_Peserta = $validatedData['Nomor_Kontak_Peserta'];
     $perwakilan->save();
 
-    // foreach ($validatedData['signatures'] as $pesertaId => $signature) {
-    //     $peserta = Peserta::find($pesertaId);
-    //     $signatures = new SignaturesVendor;
-    //     $signaturesName = time() . '_' . $signature->getClientOriginalName(); // Gunakan nama unik
-    //     $signature->storeAs('signatures-vendor', $signaturesName, 'public');
-    //     $signatures->signatures = $signaturesName;
-
-    //     $peserta->signatures()->save($signatures);
-
-    
         return redirect()->route('vendor-page.profile')->with('success', 'Data Perwakilan berhasil disimpan');
     }
 
@@ -144,4 +128,49 @@ public function delete($ID_Peserta)
     return redirect()->route('vendor-page.profile',  compact('perwakilan'))->with('success', 'Data peserta berhasil dihapus');
 }
 
+public function approved(Request $request, ...$ID_Vendor){
+
+    // $vendors = Vendor::find($ID_Vendor);
+
+    // if ($vendors && auth()->guard('web_vendor')->user()->id_role === 8) {
+    //     $vendors->update([
+    //         'approved' => true,
+    //     ]);
+
+    //     return redirect()->back()->with('success', 'Vendor berhasil disetujui.');
+    // }
+
+    // return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk melakukan tindakan ini atau ID Vendor tidak valid.');
+    $vendors = auth()->guard('web_vendor')->user();
+    $approved = Vendor::all();
+    $vendors = $approved;
+
+    // if (auth()->guard('web_vendor')->user()->id_role === 1) {
+    //     $vendors = Vendor::find($ID_Vendor);
+
+    //     if ($vendors) {
+    //         $vendors->update([
+    //             'approved' => true,
+    //         ]);
+
+    //         return redirect()->back()->with('success', 'Vendor berhasil disetujui.');
+    //     }
+    // }
+    // return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk melakukan tindakan ini.');
+    return view('vendor-page.approved', compact('vendors'));
+}
+
+public function approvedSetuju($ID_Vendor){
+    $vendors = Vendor::find($ID_Vendor);
+
+    if ($vendors && auth()->guard('web_vendor')->user()->id_role === 1) {
+        $vendors->update([
+            'approved' => true,
+        ]);
+
+        return redirect()->back()->with('success', 'Vendor berhasil disetujui.');
+    }
+
+    return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk melakukan tindakan ini atau ID Vendor tidak valid.');
+}
 }

@@ -6,6 +6,7 @@ use App\Models\Anggaran;
 use App\Models\JenisPengadaan;
 use App\Models\Pengadaan;
 use App\Models\Peserta;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use App\Models\JustifikasiPenunjukanLangsung;
 
@@ -17,13 +18,13 @@ class JustifikasiController extends Controller
 
         $jenisPengadaan = !empty($ID_Jenis_Pengadaan) ? JenisPengadaan::find($ID_Jenis_Pengadaan[1]) : null;
 
-        $namaPeserta = !empty($Nama_Peserta) ? Peserta::find($Nama_Peserta[]) : null;
+        $namaPeserta = !empty($name) ? Vendor::find($name[]) : null;
 
         $justifikasiData = JustifikasiPenunjukanLangsung::all();
 
         $jenisPengadaanOptions = JenisPengadaan::all();
 
-        $namaPesertaOptions = Peserta::all();
+        $namaPesertaOptions = Vendor::all();
 
         return view('justifikasi.index', compact('justifikasiData', 'pengadaan', 'jenisPengadaan', 'jenisPengadaanOptions', 'namaPeserta', 'namaPesertaOptions'));
     }

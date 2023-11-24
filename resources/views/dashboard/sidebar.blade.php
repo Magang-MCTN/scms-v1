@@ -334,6 +334,45 @@
             </ul>
           </div>
         </li>
+        @elseif (Auth::user()->id_role === 7)
+        <li class="nav-item nav-category">Pengadaan Barang</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Pengadaan</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="ui-basic">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/approve-vendor">Approve Vendor</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+              @if(isset($vendor))
+    <!-- Tautan yang berkaitan dengan vendor -->
+    <a href="{{ route('approve.vendor', $vendor->vendor_id) }}">Approve Vendor</a>
+    <!-- Tambahan tautan atau informasi lainnya yang berhubungan dengan vendor -->
+@endif
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item nav-category">Cash Advance</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Cash Advance</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="cashAdvanceSubMenu">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+            </ul>
+          </div>
+        </li>
         @endif
 
         @if (Auth::user()->level === 'Admin Tim')

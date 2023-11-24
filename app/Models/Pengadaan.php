@@ -17,46 +17,52 @@ class Pengadaan extends Model
         'ID_Metode_Pengadaan',
         'ID_Sistem_Evaluasi_Penawaran',
         'ID_Jenis_Pengadaan',
-        'status',
+        'id_status',
     ];
 
     public function metodePengadaan()
     {
-        return $this->belongsTo(MetodePengadaan::class, 'ID_Metode_Pengadaan');
+        return $this->hasMany(MetodePengadaan::class, 'ID_Metode_Pengadaan');
     }
 
     public function sistemEvaluasiPenawaran()
     {
-        return $this->belongsTo(SistemEvaluasiPenawaran::class, 'ID_Sistem_Evaluasi_Penawaran');
+        return $this->hasMany(SistemEvaluasiPenawaran::class, 'ID_Sistem_Evaluasi_Penawaran');
     }
 
     public function jenisPengadaan()
     {
-        return $this->belongsTo(JenisPengadaan::class, 'ID_Jenis_Pengadaan');
+        return $this->hasMany(JenisPengadaan::class, 'ID_Jenis_Pengadaan');
     }
 
     public function rab()
     {
-        return $this->hasOne(Rab::class, 'pengadaan_ID_Pengadaan');
+        return $this->hasMany(Rab::class, 'pengadaan_ID_Pengadaan');
     }
 
     public function justifikasiPenunjukanLangsung()
     {
-        return $this->hasOne(JustifikasiPenunjukanLangsung::class, 'pengadaan_ID_Pengadaan');
+        return $this->hasMany(JustifikasiPenunjukanLangsung::class, 'pengadaan_ID_Pengadaan');
     }
 
     public function rencanaNotaDinas()
     {
-        return $this->hasOne(RencanaNotaDinas::class, 'pengadaan_ID_Pengadaan');
+        return $this->hasMany(RencanaNotaDinas::class, 'pengadaan_ID_Pengadaan');
     }
 
     public function pelaksanaanNotaDinas()
     {
-        return $this->hasOne(PelaksanaanNotaDinas::class, 'pengadaan_ID_Pengadaan');
+        return $this->hasMany(PelaksanaanNotaDinas::class, 'pengadaan_ID_Pengadaan');
     }
 
     public function pengadaanSCM()
     {
-        return $this->hasOne(PengadaanScm::class, 'pengadaan_ID_Pengadaan');
+        return $this->hasMany(PengadaanScm::class, 'pengadaan_ID_Pengadaan');
     }
+
+    public function status()
+{
+    return $this->belongsTo(Status::class, 'id_status');
+}
+
 }

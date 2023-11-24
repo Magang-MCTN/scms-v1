@@ -26,28 +26,21 @@ class VendorLoginController extends Controller
     public function storeVendor(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:vendor'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'nama_perusahaan' => ['required', 'string', 'max:255'],
             'email_perusahaan' => ['required', 'string', 'email', 'max:255', 'unique:vendor'],
-            'jabatan' => ['required', 'string', 'max:255'],
-            'no_telepon_perwakilan' => ['required', 'numeric'],
             'alamat_perusahaan' => ['required', 'string', 'max:255'],
             'no_telepon_perusahaan' => ['required', 'numeric'],
         ]);
 
         Vendor::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'nama_perusahaan' => $request['nama_perusahaan'],
             'email_perusahaan' => $request['email_perusahaan'],
-            'jabatan' => $request['jabatan'],
-            'no_telepon_perwakilan' => $request['no_telepon_perwakilan'],
             'alamat_perusahaan' => $request['alamat_perusahaan'],
             'no_telepon_perusahaan' => $request['no_telepon_perusahaan'],
             'id_role' => 8,
+            'approved' => false,
         ]);
         return redirect('login/vendor')->with('success', 'Data berhasil ditambahkan.');
     }
@@ -67,12 +60,23 @@ class VendorLoginController extends Controller
         $credentials = $request->only('email_perusahaan', 'password');
 
         if (auth()->guard('web_vendor')->attempt($credentials)) {
-            return redirect('/vendor');
-        }
+            $vendors = auth()->guard('web_vendor')->user();
+            if ($vendors->approved) {
+                return redirect('/vendor');
+        }else {
+            auth()->guard('web_vendor')->logout();
+            return redirect()->back()->withInput($request->only('email_perusahaan'))->withErrors([
+                'email_perusahaan' => 'Your account has not been approved yet.',
+            ]);
 
-        return redirect()->back()->withInput($request->only('email_perusahaan'))->withErrors([
-            'email_perusahaan' => 'These credentials do not match our records.',
-        ]);
+        // return redirect()->back()->withInput($request->only('email_perusahaan'))->withErrors([
+        //     'email_perusahaan' => 'These credentials do not match our records.',
+        // ]);
+        }
+    }
+    return redirect()->back()->withInput($request->only('email_perusahaan'))->withErrors([
+        'email_perusahaan' => 'These credentials do not match our records.',
+    ]);
     }
     //tambahkan script di bawah ini
     public function redirectToProvider()
@@ -102,6 +106,7 @@ class VendorLoginController extends Controller
                     'password'          => 0,
                     'email_verified_at' => now(),
                     'id_role' => 8,
+                    'approved' => false,
                 ]);
 
 

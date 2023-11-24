@@ -69,10 +69,10 @@
             <tr>
                 <td>{{ $item->Judul_Pengadaan }}</td>
                 <td>
-                    @if($item->status == 'Belum Selesai')
-                        <span style="color: yellow;">&#9899;</span>
-                    @else
+                    @if($item->status == 'Selesai')
                         <span style="color: green;">&#10003;</span>
+                    @else
+                        <span style="color: yellow;">&#128308;</span>
                     @endif
                 </td>
                 <td>{{ $item->operasi }}

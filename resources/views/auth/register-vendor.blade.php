@@ -54,7 +54,7 @@
                                         <h4 class="py-2">Join us now</h2>
                                         <form method="POST" action="{{ route('store-vendor') }}">
                                             @csrf
-                                            <input id="name" type="text" placeholder="Nama Perwakilan" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus><br>
+                                            {{-- <input id="name" type="text" placeholder="Nama Perwakilan" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus><br>
                                             @error('name')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -71,7 +71,7 @@
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
-                                            @enderror
+                                            @enderror --}}
                                             <input id="nama_perusahaan" type="text" placeholder="Nama Perusahaan" class="form-control @error('nama_perusahaan') is-invalid @enderror" name="nama_perusahaan" value="{{ old('nama_perusahaan') }}" required autocomplete="nama_perusahaan" autofocus><br>
                                             @error('nama_perusahaan')
                                                 <span class="invalid-feedback" role="alert">
@@ -96,12 +96,12 @@
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
-                                            <input id="email" type="email" placeholder="Email Perwakilan" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email"><br>
+                                            {{-- <input id="email" type="email" placeholder="Email Perwakilan" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email"><br>
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
-                                            @enderror
+                                            @enderror --}}
                                             <div class="input-group mb-3">
                                             <input id="password" type="password" placeholder="Password" class="password-container form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                                             <div class="input-group-append">

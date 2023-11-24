@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\Kota;
 use App\Models\Rab;
+use App\Models\Status;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
 class RabController extends Controller
@@ -24,35 +26,43 @@ class RabController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'Kode_Barang' => 'required|max:255',
-            'Kota' => 'in:Jakarta,Pekanbaru,Duri',
+            'Kota'=> 'required',
             'Tanggal' => 'required|date',
+            'Kode_Barang' => 'required|max:255',
+            'Nama_Barang'=> 'required|max:255',
             'Deskripsi' => 'required|max:255',
             'Unit' => 'in:Buah,Pcs,Lembar,Set',
+            'estimasi_jumlah' => 'required|numeric',
             'Harga' => 'required|numeric',
             'Total' => 'required|numeric',
-            'Keterangan',
+            'Keterangan' => 'nullable',
+            'total_keseluruhan' => 'required|numeric',
         ]);
 
-        Rab::create($validatedData);
-
         $rab = new Rab();
-    $rab->ID_Kota = $request->input('kota');
-    $rab->Tanggal = $request->input('tanggal');
-    // Lanjutkan untuk kolom-kolom lainnya
-    $rab->save();
+        $rab->ID_Kota = $request->input('Kota');
+        $rab->Tanggal = $request->input('Tanggal');
+        $rab->Deskripsi = $request->input('Deskripsi');
+        $rab->save();
 
-    // Simpan barang-barang terkait
     foreach ($request->input('barang') as $barangData) {
         $barang = new Barang();
         $barang->ID_RAB = $rab->ID_RAB;
+        $barang->Kode_Barang = $barangData['Kode_Barang'];
+        $barang->Nama_Barang = $barangData['Nama_Barang'];
         $barang->Estimasi_Jumlah = $barangData['estimasi_jumlah'];
-        $barang->Harga = $barangData['harga'];
-        // Lanjutkan untuk kolom-kolom lainnya
+        $barang->Harga = $barangData['Harga'];
+        $barang->Total = $barangData['Total'];
+        $barang->Keterangan = $barangData['keterangan'];
         $barang->save();
     }
 
-        return redirect()->route('rab.index')->with('success', 'Data Barang berhasil disimpan');
+    $transaksi = new Transaksi();
+    $transaksi->ID_RAB = $rab->ID_RAB;
+    $transaksi->Total_Keseluruhan = $request->input('total_keseluruhan');
+    $transaksi->save();
+
+        return redirect()->route('pengadaan.index')->with('success', 'Data Barang berhasil disimpan');
     }
 
     public function status(Request $request)

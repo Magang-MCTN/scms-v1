@@ -22,7 +22,6 @@
 <!-- plugins:js -->
 {{-- javascript --}}
 @include('dashboard/js')
-
 </body>
 
 </html>

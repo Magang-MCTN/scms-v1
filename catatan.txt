@@ -1,8 +1,4 @@
-RAB:  tabel_rencana_anggaran_biaya
-            tabel_barang
-            tabel_transaksi
-            tabel_kota
-
+Pertama Registrasi Vendor si perwakilan nyimpan ke tabel peserta, kemudian login perusahaan , signatures khusus di tabel peserta
 Justifikasi Penunjukan Langsung(No PRK dan kriteria JPL tidak jadi FK):  Total Keseluruhan Barang pada Form RAB belum
 
     tabel_kota

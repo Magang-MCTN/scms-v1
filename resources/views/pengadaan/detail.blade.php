@@ -29,12 +29,11 @@
                                         <td>{{ $dokumen }}</td>
                                         {{-- Tambahkan tanggal_pengajuan berdasarkan masing-masing dokumen --}}
                                         <td>Tanggal Pengajuan: {{ optional($pengadaan->{'tanggal_' . strtolower(str_replace(' ', '_', $dokumen))})->tanggal_pengajuan }}</td>
-                                        <td>
-                                            {{-- Tambahkan status berdasarkan masing-masing dokumen --}}
-                                            @if(optional($pengadaan->{'tanggal_' . strtolower(str_replace(' ', '_', $dokumen))})->status === 'Sudah Dibuat')
-                                                <span class="badge badge-opacity-warning">Sudah Dibuat </span>
+                                        <td class="badge-opacity-danger">
+                                            @if ($status)
+                                                {{ $status->keterangan_status }}
                                             @else
-                                                <span class="badge badge-opacity-danger">Belum Dibuat</span>
+                                                Status Tidak Ditemukan
                                             @endif
                                         </td>
                                         <td>

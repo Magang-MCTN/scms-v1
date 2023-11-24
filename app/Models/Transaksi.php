@@ -11,8 +11,19 @@ class Transaksi extends Model
     protected $primaryKey = 'ID_Transaksi';
 
     protected $fillable = [
+        'estimasi_jumlah',
         'Unit',
         'Harga',
         'Total',
+        'total_keseluruhan',
     ];
+
+    public function rab()
+    {
+        return $this->hasMany(rab::class,'ID_Transaksi');
+    }
+    public function barang()
+    {
+        return $this->hasMany(Barang::class, 'ID_Transaksi');
+    }
 }

@@ -31,4 +31,9 @@ class Peserta extends Model
     {
         return $this->hasMany(SignaturesVendor::class, 'ID_Peserta', 'ID_Peserta');
     }
+
+    // public function perwakilanDaftar()
+    // {
+    //     return $this->hasMany(Vendor::class, 'perwakilan_daftar', 'perwakilan_daftar');
+    // }
 }

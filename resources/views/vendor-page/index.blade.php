@@ -336,5 +336,14 @@
             parallax2.style.backgroundPositionY = offset * 0.9 + 'px';
           });*/
         </script>
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+        var user = @json(auth()->guard('web_vendor')->user());
+        if (user.perwakilan_daftar === false) {
+            alert('Selamat datang! Anda perlu mengisi data perwakilan.');
+            window.location.href = '/profile/vendor';
+        }
+    });
+        </script>
     </body>
 </html>

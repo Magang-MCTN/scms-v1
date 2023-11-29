@@ -13,6 +13,12 @@
     <script src="{{ asset('storage/vendor.js') }}"></script>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    @if(session('perwakilan_alert'))
+        <script>
+            alert('Perwakilan belum didaftarkan. Silakan isi perwakilan terlebih dahulu.');
+        </script>
+    @endif
 </head>
 
 <body>
@@ -41,9 +47,9 @@
                         <tbody>
                             <!-- User Profile -->
                             <tr>
-                                <th class="col-sm-3">Name</th>
-                                <th class="col-sm-3">Email Perwakilan</th>
+                                <th class="col-sm-3">Nama Perwakilan</th>
                                 <th class="col-sm-3">Jabatan</th>
+                                <th class="col-sm-3">Email Perwakilan</th>
                                 <th class="col-sm-3">Nomor Telepon Perwakilan</th>
                                 <th class="col-sm-3">Tanggal Registrasi</th>
                                 <th class="col-sm-3">Tanda Tangan</th>
@@ -51,79 +57,6 @@
                                 <th class="col-sm-3">Aksi</th>
                             </tr>
                             <tr>
-                                {{-- <td class="col-sm-9 text-secondary">{{ auth()->guard('web_vendor')->user()->name }}</td>
-                                <td class="col-sm-9 text-secondary">{{ auth()->guard('web_vendor')->user()->email }}</td>
-                                <td class="col-sm-9 text-secondary">{{ auth()->guard('web_vendor')->user()->jabatan }}</td>
-                                <td class="col-sm-9 text-secondary">{{ auth()->guard('web_vendor')->user()->no_telepon_perwakilan }}</td>
-                                <td class="col-sm-9 text-secondary">{{ auth()->guard('web_vendor')->user()->created_at }}</td>
-                                <td class="col-sm-9 text-secondary">
-                                    @if (auth()->guard('web_vendor')->user()->signaturesVendor)
-                                        @foreach(auth()->guard('web_vendor')->user()->signaturesVendor as $signature)
-                                            <img src="{{ asset('storage/signatures-vendor/' . $signature->signatures) }}" alt="Signature Image" height="50">
-                                        @endforeach
-                                    @else
-                                        Tidak ada tanda tangan.
-                                    @endif
-                                </td>
-                                <td class="col-sm-9 text-secondary">
-                                    <form id="form_{{ auth()->guard('web_vendor')->user()->ID_Vendor }}" action="{{ route('profile-vendor.add-signature-vendor', ['ID_Vendor' => auth()->guard('web_vendor')->user()->ID_Vendor]) }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <input type="file" class="form-control" name="signatures" accept=".png">
-                                        <button type="submit" class="btn btn-secondary">Tambah</button>
-                                    </form>
-                                </td>
-                                <td class="col-sm-9 text-secondary">
-                                    <button type="button" class="btn btn-warning edit-button" id="{{ auth()->guard('web_vendor')->user()->ID_Vendor }}">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                
-                                    <div class="modal fade" id="editModal{{auth()->guard('web_vendor')->user()->ID_Vendor}}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="editModalLabel">Edit</h5>
-                                                    <button type="button" class="close closeModalBtnEdit" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form id="form" action="{{ route('profile-vendor.update', ['ID_Vendor' => auth()->guard('web_vendor')->user()->ID_Vendor]) }}" method="POST" enctype="multipart/form-data">
-                                                        @csrf
-                                                        <div class="form-group">
-                                                            <label for="Nama_Peserta">Nama Perwakilan</label>
-                                                            <input type="text" class="form-control" id="Nama_Peserta" name="Nama_Peserta" placeholder="Nama Perwakilan" required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="jabatan">Jabatan</label>
-                                                            <input type="text" class="form-control" id="jabatan" name="jabatan" placeholder="Jabatan" required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="Email_Peserta">Email Perwakilan</label>
-                                                            <input type="text" class="form-control" id="Email_Peserta" name="Email_Peserta" placeholder="Email Perwakilan" required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="Nomor_Kontak_Peserta">Kontak Perwakilan</label>
-                                                            <input type="text" class="form-control" id="Nomor_Kontak_Peserta" name="Nomor_Kontak_Peserta" placeholder="Kontak Perwakilan" required>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" form="edit-form-{{auth()->guard('web_vendor')->user()->ID_Vendor}}" class="btn btn-primary">Simpan Perubahan</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                
-                                    <form id="delete-form-{{ auth()->guard('web_vendor')->user()->ID_Vendor }}" action="{{ route('profile-vendor.delete', auth()->guard('web_vendor')->user()->ID_Vendor) }}" method="POST" style="display: none;">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-                                    <a href="#" class="btn btn-danger" onclick="if (confirm('Apakah Anda yakin ingin menghapus data ini?')) { event.preventDefault(); document.getElementById('delete-form-{{ auth()->guard('web_vendor')->user()->ID_Vendor }}').submit(); }">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </td>
-                                </td>
-                            </tr> --}}
                             <!-- Peserta Section -->
                             @if (auth()->guard('web_vendor')->user()->tabelPeserta)
                                 @foreach(auth()->guard('web_vendor')->user()->tabelPeserta as $peserta)
@@ -149,12 +82,13 @@
                                                 <button type="submit" class="btn btn-secondary">Tambah</button>
                                             </form>
                                         </td>
+
                                         <td class="col-sm-9 text-secondary">
-                                            <button type="button" class="btn btn-warning edit-button" id="{{ $peserta->ID_Peserta }}">
+                                            <button type="button" class="btn btn-warning edit-button" data-id="{{ $peserta->ID_Peserta }}">
                                                 <i class="fas fa-edit"></i>
                                             </button>
                         
-                                            <div class="modal fade" id="editModal{{$peserta->ID_Peserta}}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="editModal{{ $peserta->ID_Peserta }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -164,40 +98,42 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form id="form" action="{{ route('profile-vendor-peserta.update', ['ID_Peserta' => $peserta->ID_Peserta]) }}" method="POST" enctype="multipart/form-data">
+                                                            <form id="edit-form-{{ $peserta->ID_Peserta }}" action="{{ route('profile-vendor-peserta.update', ['ID_Peserta' => $peserta->ID_Peserta]) }}" method="POST" enctype="multipart/form-data">
                                                                 @csrf
+                                                                @method('PUT')
                                                                 <div class="form-group">
                                                                     <label for="Nama_Peserta">Nama Perwakilan</label>
-                                                                    <input type="text" class="form-control" id="Nama_Peserta" name="Nama_Peserta" placeholder="Nama Perwakilan" required>
+                                                                    <input type="text" class="form-control" id="Nama_Peserta" name="Nama_Peserta" placeholder="Nama Perwakilan" value="{{$peserta->Nama_Peserta}}" required>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="jabatan">Jabatan</label>
-                                                                    <input type="text" class="form-control" id="jabatan" name="jabatan" placeholder="Jabatan" required>
+                                                                    <input type="text" class="form-control" id="jabatan" name="jabatan" placeholder="Jabatan" value="{{$peserta->jabatan}}" required>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="Email_Peserta">Email Perwakilan</label>
-                                                                    <input type="text" class="form-control" id="Email_Peserta" name="Email_Peserta" placeholder="Email Perwakilan" required>
+                                                                    <input type="text" class="form-control" id="Email_Peserta" name="Email_Peserta" placeholder="Email Perwakilan" value="{{$peserta->Email_Peserta}}" required>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="Nomor_Kontak_Peserta">Kontak Perwakilan</label>
-                                                                    <input type="text" class="form-control" id="Nomor_Kontak_Peserta" name="Nomor_Kontak_Peserta" placeholder="Kontak Perwakilan" required>
+                                                                    <input type="text" class="form-control" id="Nomor_Kontak_Peserta" name="Nomor_Kontak_Peserta" placeholder="Kontak Perwakilan" value="{{$peserta->Nomor_Kontak_Peserta}}" required>
                                                                 </div>
                                                             </form>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="submit" form="edit-form-{{$peserta->ID_Vendor}}" class="btn btn-primary">Simpan Perubahan</button>
+                                                            <button type="button" class="btn btn-secondary closeModalBtnEdit">Close</button>
+                                                            <button type="submit" form="edit-form-{{ $peserta->ID_Peserta }}" class="btn btn-primary">Simpan Perubahan</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                         
-                                            <form id="delete-form-{{ $peserta->ID_Vendor }}" action="{{ route('profile-vendor-peserta.delete', $peserta->ID_Vendor) }}" method="POST" style="display: none;">
+                                            <form id="delete-form-{{ $peserta->ID_Peserta }}" action="{{ route('profile-vendor-peserta.delete', $peserta->ID_Peserta) }}" method="POST" style="display: none;">
                                                 @csrf
                                                 @method('DELETE')
                                             </form>
-                                            <a href="#" class="btn btn-danger" onclick="if (confirm('Apakah Anda yakin ingin menghapus data ini?')) { event.preventDefault(); document.getElementById('delete-form-{{ $peserta->ID_Vendor }}').submit(); }">
+                                            <button type="button" class="btn btn-danger" onclick="if (confirm('Apakah Anda yakin ingin menghapus data ini?')) { event.preventDefault(); document.getElementById('delete-form-{{ $peserta->ID_Peserta }}').submit(); }">
                                                 <i class="fas fa-trash"></i>
-                                            </a>
+                                            </button>
                                         </td>
                                         </td>
                                     </tr>
@@ -341,6 +277,37 @@
                 }
             });
         }
+        
+    $(".edit-button").click(function() {
+    var pesertaID = $(this).data('id');
+    var modalID = "#editModal" + pesertaID;
+
+    // Tampilkan modal edit yang sesuai
+    $(modalID).modal("show");
+
+    // Ambil data peserta dari server dengan AJAX
+    // $.ajax({
+    //     url: "{{ route('profile-vendor-peserta.update', ['ID_Peserta' => ':ID_Peserta']) }}".replace(':ID_Peserta', pesertaID),
+    //     type: "GET",
+    //     success: function(response) {
+    //         // Isi formulir edit dengan data peserta
+    //         $("#Nama_Peserta").val(response.Nama_Peserta);
+    //         $("#jabatan").val(response.jabatan);
+    //         $("#Email_Peserta").val(response.Email_Peserta);
+    //         $("#Nomor_Kontak_Peserta").val(response.Nomor_Kontak_Peserta);
+    //     },
+    //     error: function(error) {
+    //         console.log(error);
+    //         alert('Terjadi kesalahan saat mengambil data peserta.');
+    //     }
+    // });
+});
+
+$(".closeModalBtnEdit").click(function() {
+    // Ini akan menutup modal yang sedang aktif
+    $(this).closest(".modal").modal("hide");
+});
+
     </script>
 </body>
 

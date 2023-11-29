@@ -23,6 +23,7 @@ class Vendor extends Authenticatable
         'no_telepon_perusahaan',
         'id_signatures',
         'approved',
+        'perwakilan_daftar'
     ];
 
     protected $hidden = [
@@ -44,4 +45,8 @@ class Vendor extends Authenticatable
         return $this->hasMany(SignaturesVendor::class, 'ID_Vendor', 'ID_Vendor');
     }
 
+    // public function perwakilanDaftar()
+    // {
+    //     return $this->hasMany(Peserta::class, 'perwakilan_daftar', 'perwakilan_daftar');
+    // }
 }

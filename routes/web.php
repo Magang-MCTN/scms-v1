@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JustifikasiController;
 use App\Http\Controllers\NotaDinasPermintaanPelaksanaanPengadaanController;
@@ -31,7 +32,6 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
-Route::get('/vendor', [VendorController::class, 'index'])->name('vendor');
 // Route::get('/pengajuan-tamu', [TamuController::class, 'createForm'])->name('tamu.create');
 
 
@@ -51,6 +51,7 @@ Route::post('/store/vendor', [VendorLoginController::class, 'storeVendor'])->nam
 
 Route::middleware(['auth:web_vendor', 'role:1'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "Pejabat Lakdan"
+    // Route::get('/vendor', [VendorController::class, 'index'])->name('vendor');
     Route::get('/vendor/approved', [VendorController::class, 'approved'])->name('vendor-page.approved');
     Route::put('/vendor/approved/{ID_Vendor}', [VendorController::class, 'approvedSetuju'])->name('vendor-page.approved-setuju');
     // Route::get('/profile/vendor', [VendorController::class, 'profile'])->name('vendor-page.profile');
@@ -113,10 +114,13 @@ Route::middleware(['auth', 'role:1,2,3,4,'])->group(function () {
 
     //RAB
     Route::get('/rab/{ID_Pengadaan}', [RabController::class, 'index'])->name('rab.index');
-    Route::get('/rab/create', [RabController::class, 'create'])->name('rab.create');
+    // Route::get('/rab/create', [RabController::class, 'create'])->name('rab.create');
     Route::post('/rab/{ID_Pengadaan}', [RabController::class, 'store'])->name('rab.store');
     Route::get('/status_rab', [RabController::class, 'status'])->name('rab.status');
     Route::get('/status_rab/{id}', [RabController::class, 'detail'])->name('rab.detail');
+
+    Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
+    Route::post('/barang/store', [BarangController::class, 'store'])->name('barang.store');
 
     //Justifikasi Pengadaan Langsung
     Route::get('/justifikasi/{ID_Pengadaan}', [JustifikasiController::class, 'index'])->name('justifikasi.index');
@@ -162,6 +166,7 @@ Route::middleware(['auth', 'role:7'])->group(function () {
 
 Route::middleware(['auth:web_vendor', 'role:8'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "Pejabat Lakdan"
+    Route::get('/vendor', [VendorController::class, 'index'])->name('vendor')->middleware('check_perwakilan_daftar');
     Route::get('/profile/vendor', [VendorController::class, 'profile'])->name('vendor-page.profile');
     Route::post('/profile/peserta', [VendorController::class, 'store'])->name('profile-vendor.store');
     Route::post('/profile/add-signature/{ID_Peserta}', [VendorController::class, 'addSignature'])->name('profile-vendor.add-signature');
@@ -172,12 +177,9 @@ Route::middleware(['auth:web_vendor', 'role:8'])->group(function () {
     Route::get('/profile/{ID_Peserta}/edit', [VendorController::class, 'editPeserta'])->name('profile-vendor-peserta.edit');
     Route::put('/profile/{ID_Peserta}', [VendorController::class, 'updatePeserta'])->name('profile-vendor-peserta.update');
     Route::delete('/profile/{ID_Peserta}', [VendorController::class, 'deletePeserta'])->name('profile-vendor-peserta.delete');
+
+    // Route::get('/profile/perwakilan', [VendorController::class, 'isiPerwakilan'])->name('vendor-page.perwakilan');
 });
-
-// Route::get('/unauthorized', function () {
-//     return 'Akses Ditolak!'; // Tampilkan pesan akses ditolak
-// })->name('unauthorized');
-
 
 // Rute untuk logout
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -41,6 +41,7 @@ class VendorLoginController extends Controller
             'no_telepon_perusahaan' => $request['no_telepon_perusahaan'],
             'id_role' => 8,
             'approved' => false,
+            'perwakilan_daftar' => false,
         ]);
         return redirect('login/vendor')->with('success', 'Data berhasil ditambahkan.');
     }
@@ -51,34 +52,37 @@ class VendorLoginController extends Controller
     }
 
     public function loginVendor(Request $request)
-    {
-        $this->validate($request, [
-            'email_perusahaan' => 'required|email',
-            'password' => 'required',
-        ]);
+{
+    $this->validate($request, [
+        'email_perusahaan' => 'required|email',
+        'password' => 'required',
+    ]);
 
-        $credentials = $request->only('email_perusahaan', 'password');
+    $credentials = $request->only('email_perusahaan', 'password');
 
-        if (auth()->guard('web_vendor')->attempt($credentials)) {
-            $vendors = auth()->guard('web_vendor')->user();
-            if ($vendors->approved) {
+    if (auth()->guard('web_vendor')->attempt($credentials)) {
+        $vendor = auth()->guard('web_vendor')->user();
+
+        if ($vendor->approved) {
+            // Cek id_role dan arahkan sesuai kondisi
+            if ($vendor->id_role === 1) {
+                return redirect('/vendor/approved');
+            } elseif ($vendor->id_role === 8) {
                 return redirect('/vendor');
-        }else {
+            }
+        } else {
             auth()->guard('web_vendor')->logout();
             return redirect()->back()->withInput($request->only('email_perusahaan'))->withErrors([
                 'email_perusahaan' => 'Your account has not been approved yet.',
             ]);
-
-        // return redirect()->back()->withInput($request->only('email_perusahaan'))->withErrors([
-        //     'email_perusahaan' => 'These credentials do not match our records.',
-        // ]);
         }
     }
+
     return redirect()->back()->withInput($request->only('email_perusahaan'))->withErrors([
         'email_perusahaan' => 'These credentials do not match our records.',
     ]);
-    }
-    //tambahkan script di bawah ini
+}
+
     public function redirectToProvider()
     {
         return Socialite::driver('google')->redirect();

@@ -48,7 +48,7 @@
 
                     <div class="form-group">
                         <label for="Total">Total (Rp):</label>
-                        <input type="number" name="barang[0][Total]" class="total form-control" disabled>
+                        <input type="number" name="barang[0][Total]" class="total form-control" readonly>
                     </div>
 
                     <div class="form-group">
@@ -58,13 +58,111 @@
                 </div>
 
                 <div id="barang-container">
-                    <!-- Area untuk menambahkan beberapa barang -->
+                    <br>
                 </div>
 
                 <div class="form-group">
-                    <label for="total_keseluruhan">Total Keseluruhan (Rp):</label>
-                    <input type="number" name="total_keseluruhan" id="total_keseluruhan" class="form-control" disabled>
+                    <label for="kota">Kota:</label>
+                    <select name="kota" id="kota" class="form-control" required>
+                        <option value=""> </option>
+                        @foreach($kotaOptions as $option)
+                            <option value="{{ $option->Kota }}" {{ $kota && $option->Kota == $kota->id ? 'selected' : '' }}>
+                                {{ $option->Kota }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
+
+                    <div class="form-group">
+                        <label for="Tanggal">Tanggal</label>
+                        <input type="date" name="Tanggal" id="Tanggal" class="form-control" required>
+                    </div>
+
+                <div class="form-group">
+                    <label for="total_keseluruhan">Total Keseluruhan (Rp):</label>
+                    <input type="number" name="total_keseluruhan" id="total_keseluruhan" class="form-control" readonly>
+                </div>
+
+                {{-- <div class="form-group">
+                    <label for="divisiUser1">Dikirim Kepada :</label>
+                    <select name="divisiUser1" id="divisiUser1" class="form-control" required>
+                        <option value=""> </option>
+                        @foreach($divisi1Options as $option)
+                            <option value="{{ $option->id }}" {{ $divisiUser1 && $option->id == $divisiUser1->id ? 'selected' : '' }}>
+                                {{ $option->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div> --}}
+
+                <div class="form-group">
+                    <label for="divisiUser1">Dikirim Kepada :</label>
+                    <select name="divisiUser1" id="divisiUser1" class="form-control" required>
+                        <option value=""> </option>
+                        @foreach($divisi1Options as $option)
+                            <option value="{{ $option->name }}" {{ $divisiUser1 && $option->name == $divisiUser1 ? 'selected' : '' }}>
+                                {{ $option->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                
+
+                {{-- @if ($total_keseluruhan >= 3000000000 && $total_keseluruhan <= 20000000000)
+    <div class="form-group" style="display: none;">
+        <label for="divisiUser2">Dikirim Kepada (Divisi 2):</label>
+        <select name="divisiUser2" id="divisiUser2" class="form-control">
+            <option value=""> </option>
+            @foreach($divisiUser2Options as $option)
+                <option value="{{ $option->id }}" {{ $divisiUser2 && $option->id == $divisiUser2->id ? 'selected' : '' }}>
+                    {{ $option->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+@endif
+
+@if ($total_keseluruhan >= 20000000000 && $total_keseluruhan <= 89000000000)
+    <div class="form-group" style="display: none;">
+        <label for="divisiUser3">Dikirim Kepada (Divisi 3):</label>
+        <select name="divisiUser3" id="divisiUser3" class="form-control">
+            <option value=""> </option>
+            @foreach($divisiUser3Options as $option)
+                <option value="{{ $option->id }}" {{ $divisiUser3 && $option->id == $divisiUser3->id ? 'selected' : '' }}>
+                    {{ $option->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+@endif --}}
+
+{{-- @if ($total_keseluruhan >= 3000000000 && $total_keseluruhan <= 20000000000)
+                    <div class="form-group">
+                        <label for="divisiUser2">Dikirim Kepada (Divisi 2):</label>
+                        <select name="divisiUser2" id="divisiUser2" class="form-control">
+                            <option value=""> </option>
+                            @foreach($divisiUser2Options as $option)
+                                <option value="{{ $option->id }}" {{ $divisiUser2 && $option->id == $divisiUser2->id ? 'selected' : '' }}>
+                                    {{ $option->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
+
+                @if ($total_keseluruhan >= 20000000000 && $total_keseluruhan <= 89000000000)
+                    <div class="form-group">
+                        <label for="divisiUser3">Dikirim Kepada (Divisi 3):</label>
+                        <select name="divisiUser3" id="divisiUser3" class="form-control">
+                            <option value=""> </option>
+                            @foreach($divisiUser3Options as $option)
+                                <option value="{{ $option->id }}" {{ $divisiUser3 && $option->id == $divisiUser3->id ? 'selected' : '' }}>
+                                    {{ $option->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif --}}
 
                 <button id="tambahBarangBtn" type="button" class="btn btn-secondary">+ Tambah Barang</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -101,30 +199,45 @@ $(document).ready(function () {
     });
 
     function addNewForm() {
+
         // Dapatkan form terakhir
         var lastForm = $(".barang-form:last");
-
-        // Clone form terakhir
         var newForm = lastForm.clone();
-
-        // Bersihkan nilai input pada form baru
         newForm.find('input, textarea').val('');
 
-        var formCount = $(".barang-form").length + 1;
-        newForm.find(".form-group:first label").text("Kode Barang: B" + ("000" + formCount).slice(-4));
+        // Dapatkan kode barang dari form terakhir
+        var newKodeBarang = generateRandomKodeBarang();
+        newForm.find(".form-group:first label").text("Kode Barang: " + newKodeBarang);
+        // Hitung total formulir yang ada
+var totalForms = $(".barang-form").length;
 
-        var newFormId = new Date().getTime(); // ID unik berdasarkan timestamp
-        newForm.attr('id', 'barang-form-' + newFormId);
+newForm.find('[name^="barang"]').each(function () {
+    var nameAttr = $(this).attr("name");
+    var newNameAttr = nameAttr.replace(/\[\d+\]/, '[' + totalForms + ']');
+    $(this).attr("name", newNameAttr);
+});
+
+     // Hapus tombol tambah pada form terakhir
+     $(".barang-form:last #tambahBarangBtn").remove();
 
         newForm.find(".hapusBarangBtn").remove();
         newForm.find(".form-group:last").after('<button type="button" class="btn btn-danger hapusBarangBtn">Hapus Barang</button>');
 
-        // Hapus tombol tambah pada form terakhir
-        lastForm.find("#tambahBarangBtn").remove();
-
         // Masukkan form baru setelah form terakhir
         lastForm.after(newForm);
     }
+
+    function generateRandomKodeBarang() {
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var kodeBarang = 'B';
+
+    for (var i = 0; i < 7; i++) {
+        var randomIndex = Math.floor(Math.random() * characters.length);
+        kodeBarang += characters.charAt(randomIndex);
+    }
+
+    return kodeBarang;
+}
 
     function calculateTotal(form) {
         var estimasiJumlah = parseInt(form.find(".estimasi_jumlah").val()) || 0;
@@ -147,6 +260,32 @@ $(document).ready(function () {
         // Setel nilai total keseluruhan
         $("#total_keseluruhan").val(totalKeseluruhan);
     }
+
+//     function toggleDivisi2Divisi3Visibility() {
+//     var totalKeseluruhan = parseInt($("#total_keseluruhan").val()) || 0;
+
+//     // Ambil elemen-elemen yang berkaitan dengan divisiUser2 dan divisiUser3
+//     var divisi2Element = $("#divisiUser2");
+//     var divisi3Element = $("#divisiUser3");
+
+
+//     // Atur visibility berdasarkan kondisi
+//     if (totalKeseluruhan >= 3000000000 && totalKeseluruhan <= 20000000000) {
+//         divisi2Element.show();
+//         divisi3Element.hide();
+//     } else if (totalKeseluruhan > 20000000000 && totalKeseluruhan <= 89000000000) {
+//         divisi2Element.show();
+//         divisi3Element.show();
+//     } else {
+//         divisi2Element.hide();
+//         divisi3Element.hide();
+//     }
+
+// }
+
+// // Panggil fungsi saat halaman dimuat dan ketika total keseluruhan berubah
+// toggleDivisi2Divisi3Visibility();
+//     $("#total_keseluruhan").on("input", toggleDivisi2Divisi3Visibility);
 
 </script>
 

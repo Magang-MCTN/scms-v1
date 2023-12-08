@@ -14,11 +14,10 @@ class Rab extends Model
         'ID_Kota',
         'tanggal',
         'ID_Barang',
-        'ID_Transaksi',
-        'pengadaan_ID_Pengadaan',
-        'id_status',
-        'created_at',
-        'updated_at',
+        'ID_Pengadaan',
+        'total_keseluruhan',
+        'nama_user_1',
+        'jabatan_user_1',
     ];
 
     public function kota()
@@ -28,19 +27,15 @@ class Rab extends Model
 
     public function barang()
     {
-        return $this->hasMany(Barang::class, 'ID_Barang');
-    }
-    public function transaksi()
-    {
-        return $this->hasMany(Transaksi::class, 'ID_Transaksi');
+        return $this->belongsToMany(Barang::class, 'tabel_barang_rab', 'ID_RAB', 'ID_Barang');
     }
 
     public function pengadaan()
     {
-        return $this->hasMany(Pengadaan::class, 'pengadaan_ID_Pengadaan');
+        return $this->belongsTo(Pengadaan::class, 'ID_Pengadaan');
     }
 
     public function status(){
-        return $this->hasMany(Status::class,'id_status');
+        return $this->belongsTo(Status::class,'id_status');
     }
 }

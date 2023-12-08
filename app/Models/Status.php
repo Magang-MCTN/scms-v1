@@ -36,4 +36,21 @@ class Status extends Model
     {
         return $this->hasMany(PelaksanaanNotaDinas::class, 'id_status');
     }
+
+    public function statusRab()
+    {
+        return $this->belongsTo(Status::class, 'id_status_rab');
+    }
+    public function statusJustifikasi()
+    {
+        return $this->belongsTo(Status::class, 'id_status_justifikasi');
+    }
+    public function statusNotaDinasPermintaan()
+    {
+        return $this->belongsTo(Status::class, 'id_status_nota_dinas_permintaan');
+    }
+    public function statusNotaDinasPelaksanaan()
+    {
+        return $this->belongsTo(Status::class, 'id_status_nota_dinas_pelaksanaan');
+    }
 }

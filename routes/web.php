@@ -7,10 +7,12 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JustifikasiController;
 use App\Http\Controllers\NotaDinasPermintaanPelaksanaanPengadaanController;
 use App\Http\Controllers\NotaDinasPermintaanPengadaanController;
+use App\Http\Controllers\PejabatUserController;
 use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\PengadaanScmController;
 use App\Http\Controllers\RabController;
 use App\Http\Controllers\RabPengajuanController;
+use App\Http\Controllers\SignaturesController;
 use App\Http\Controllers\TamuController;
 use App\Http\Controllers\TuanRumahController;
 use App\Http\Controllers\VendorController;
@@ -48,6 +50,11 @@ Route::post('/store', [AuthController::class, 'store'])->name('store');
 
 Route::get('/register/vendor', [VendorLoginController::class, 'showRegistrationVendorForm'])->name('registervendorform');
 Route::post('/store/vendor', [VendorLoginController::class, 'storeVendor'])->name('store-vendor');
+
+Route::get('/tanda_tangan/create', [SignaturesController::class, 'create'])->name('tanda_tangan.create');
+Route::post('/tanda_tangan', [SignaturesController::class, 'store'])->name('tanda_tangan.store');
+Route::get('/tanda_tangan/edit', [SignaturesController::class, 'edit'])->name('tanda_tangan.edit');
+Route::post('/tanda_tangan/update', [SignaturesController::class, 'update'])->name('tanda_tangan.update');
 
 Route::middleware(['auth:web_vendor', 'role:1'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "Pejabat Lakdan"
@@ -109,18 +116,20 @@ Route::middleware(['auth', 'role:1,2,3,4,'])->group(function () {
     Route::get('/pengadaan/{ID_Pengadaan}/edit', [PengadaanController::class, 'edit'])->name('pengadaan.edit');
     Route::put('/pengadaan/{ID_Pengadaan}', [PengadaanController::class, 'update'])->name('pengadaan.update');
     Route::delete('/pengadaan/{ID_Pengadaan}', [PengadaanController::class, 'delete'])->name('pengadaan.delete');
-
-    // Route::get('/pengadaan/detail/{ID_Pengadaan}/{dokumen}', 'PengadaanController@detail')->name('nama_route_detail');
+    Route::get('/export-pdf/{ID_Pengadaan}/{ID_RAB}', [RabController::class, 'rabPDFExport'])->name('export.pdf');
 
     //RAB
     Route::get('/rab/{ID_Pengadaan}', [RabController::class, 'index'])->name('rab.index');
     // Route::get('/rab/create', [RabController::class, 'create'])->name('rab.create');
     Route::post('/rab/{ID_Pengadaan}', [RabController::class, 'store'])->name('rab.store');
+    Route::post('/rab/rangkum/{ID_Pengadaan}', [RabController::class, 'rangkum'])->name('rab.rangkum');
     Route::get('/status_rab', [RabController::class, 'status'])->name('rab.status');
-    Route::get('/status_rab/{id}', [RabController::class, 'detail'])->name('rab.detail');
-
-    Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
-    Route::post('/barang/store', [BarangController::class, 'store'])->name('barang.store');
+    Route::get('/status_rab/{ID_Pengadaan}', [RabController::class, 'detail'])->name('rab.detail');
+    Route::get('/rab/preview/{ID_Pengadaan}/{ID_RAB}', [RabController::class, 'preview'])->name('rab.preview');
+    Route::get('/rab/preview/download/{ID_Pengadaan}/{ID_RAB}', [RabController::class, 'downloadPreview'])->name('rab.preview.download');
+    Route::get('/pengadaan/kirim/rab/{ID_Pengadaan}/{ID_RAB}', [RabController::class, 'kirimRab'])->name('rab.kirim');
+    // Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
+    // Route::post('/barang/store', [BarangController::class, 'store'])->name('barang.store');
 
     //Justifikasi Pengadaan Langsung
     Route::get('/justifikasi/{ID_Pengadaan}', [JustifikasiController::class, 'index'])->name('justifikasi.index');
@@ -145,7 +154,12 @@ Route::middleware(['auth', 'role:1,2,3,4,'])->group(function () {
 });
 Route::middleware(['auth', 'role:5'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "Pejabat User"
-
+    Route::get('/persetujuan/pengadaan', [PejabatUserController::class, 'index'])->name('persetujuan.pengadaan.index');
+    // Route::get('/status_pengadaan', [PengadaanController::class, 'status'])->name('pengadaan.status');
+    // Route::get('/status_pengadaan/{ID_Pengadaan}', [PengadaanController::class, 'detail'])->name('pengadaan.detail');
+    // Route::get('/pejabatuser', [PejabatUserController::class, 'status'])->name('pejabatuser.status');
+    // Route::get('/pejabatuser/{ID_Pengadaan}', [PejabatUserController::class, 'detail'])->name('pejabatuser.detail');
+    Route::get('/detail/{ID_Pengadaan}', [PejabatUserController::class, 'detail'])->name('pejabatuser.detail');
 });
 Route::middleware(['auth', 'role:6'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "Pejabat Rendan"

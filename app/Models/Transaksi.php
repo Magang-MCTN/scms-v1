@@ -18,10 +18,10 @@ class Transaksi extends Model
         'total_keseluruhan',
     ];
 
-    public function rab()
-    {
-        return $this->hasMany(rab::class,'ID_Transaksi');
-    }
+    // public function rab()
+    // {
+    //     return $this->morphToMany(rab::class,'ID_Transaksi');
+    // }
     public function barang()
     {
         return $this->hasMany(Barang::class, 'ID_Barang');

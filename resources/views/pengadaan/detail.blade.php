@@ -28,18 +28,68 @@
                                     <tr>
                                         <td>{{ $dokumen }}</td>
                                         {{-- Tambahkan tanggal_pengajuan berdasarkan masing-masing dokumen --}}
-                                        <td>Tanggal Pengajuan: {{ optional($pengadaan->{'tanggal_' . strtolower(str_replace(' ', '_', $dokumen))})->tanggal_pengajuan }}</td>
-                                        <td class="badge-opacity-danger">
-                                            @if ($status)
-                                                {{ $status->keterangan_status }}
-                                            @else
-                                                Status Tidak Ditemukan
+                                        {{-- <td>Tanggal Pengajuan: {{ optional($pengadaan->{'tanggal_' . strtolower(str_replace(' ', '_', $dokumen))})->tanggal_pengajuan }}</td> --}}
+                                        <td>
+                                            @if ($dokumen == 'Rencana Anggaran Biaya')
+                                                @if ($rab)
+                                                    {{ $rab->created_at }}
+                                                @else
+                                                    Status Tidak Ditemukan
+                                                @endif
+                                            {{-- @elseif ($dokumen == 'Justifikasi Penunjukan Langsung')
+                                                @if ($statusJustifikasi)
+                                                    {{ $statusJustifikasi->keterangan_status }}
+                                                @else
+                                                    Status Tidak Ditemukan
+                                                @endif
+                                            @elseif ($dokumen == 'Nota Dinas Permintaan Pengadaan')
+                                                @if ($statusNotaDinasPermintaan)
+                                                    {{ $statusNotaDinasPermintaan->keterangan_status }}
+                                                @else
+                                                    Status Tidak Ditemukan
+                                                @endif
+                                            @elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')
+                                                @if ($statusNotaDinasPelaksanaan)
+                                                    {{ $statusNotaDinasPelaksanaan->keterangan_status }}
+                                                @else
+                                                    Status Tidak Ditemukan
+                                                @endif --}}
+                                            @endif
+                                        </td>
+                                        <td class="badge badge-pill badge-dark">
+                                            @if ($dokumen == 'Rencana Anggaran Biaya')
+                                                @if ($statusRab)
+                                                    {{ $statusRab->keterangan_status }}
+                                                @else
+                                                    Status Tidak Ditemukan
+                                                @endif
+                                            @elseif ($dokumen == 'Justifikasi Penunjukan Langsung')
+                                                @if ($statusJustifikasi)
+                                                    {{ $statusJustifikasi->keterangan_status }}
+                                                @else
+                                                    Status Tidak Ditemukan
+                                                @endif
+                                            @elseif ($dokumen == 'Nota Dinas Permintaan Pengadaan')
+                                                @if ($statusNotaDinasPermintaan)
+                                                    {{ $statusNotaDinasPermintaan->keterangan_status }}
+                                                @else
+                                                    Status Tidak Ditemukan
+                                                @endif
+                                            @elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')
+                                                @if ($statusNotaDinasPelaksanaan)
+                                                    {{ $statusNotaDinasPelaksanaan->keterangan_status }}
+                                                @else
+                                                    Status Tidak Ditemukan
+                                                @endif
                                             @endif
                                         </td>
                                         <td>
                                         @if ($dokumen == 'Rencana Anggaran Biaya')
-                                            <a href="{{ route('rab.index', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan]) }}" class="btn btn-info">Detail</a>
-                                            {{-- <a href="{{ route('barang.index', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan]) }}" class="btn btn-info">Tambah RAB</a> --}}
+                                            @if ($pengadaan->id_status_rab == 6 )
+                                                <a href="{{ route('rab.index', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan]) }}" class="btn btn-info">Detail</a>
+                                            @else
+                                                <a href="{{ route('rab.preview', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'ID_RAB' => $rab->ID_RAB]) }}" class="btn btn-info">Detail</a>
+                                            @endif
                                         @elseif ($dokumen == 'Justifikasi Penunjukan Langsung')
                                             <a href="{{ route('justifikasi.index', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan]) }}" class="btn btn-info">Detail</a>
                                         @elseif ($dokumen == 'Nota Dinas Permintaan Pengadaan')

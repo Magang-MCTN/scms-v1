@@ -27,6 +27,7 @@ class User extends Authenticatable
         'remember_token',
         'id_role',
         'approved',
+        'id_divisi',
     ];
 
     /**
@@ -51,5 +52,10 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class, 'id_role', 'id_role');
+    }
+
+    public function divisiUser()
+    {
+        return $this->belongsTo(Divisi::class, 'id_divisi', 'id_divisi');
     }
 }

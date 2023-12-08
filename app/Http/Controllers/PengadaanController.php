@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BarangRab;
 use App\Models\Pengadaan;
+use App\Models\Rab;
 use App\Models\Status;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -44,6 +46,10 @@ class PengadaanController extends Controller
         'checklist_rencana_anggaran_biaya',
         'checklist_justifikasi_penunjukan_langsung',
         'id_status',
+        'id_status_rab',
+        'id_status_justifikasi',
+        'id_status_nota_dinas_permintaan',
+        'id_status_nota_dinas_pelaksanaan',
     ]);
 
     $pengadaan = new Pengadaan;
@@ -53,6 +59,10 @@ class PengadaanController extends Controller
     $pengadaan->checklist_rencana_anggaran_biaya = $request->has('checklist_rencana_anggaran_biaya') ? 1 : 0;
     $pengadaan->checklist_justifikasi_penunjukan_langsung = $request->has('checklist_justifikasi_penunjukan_langsung') ? 1 : 0;
     $pengadaan->id_status = 6;
+    $pengadaan->id_status_rab = 6;
+    $pengadaan->id_status_justifikasi = 6;
+    $pengadaan->id_status_nota_dinas_permintaan = 6;
+    $pengadaan->id_status_nota_dinas_pelaksanaan = 6;
     $pengadaan->save();
 
         return redirect()->route('pengadaan.index')->with('success', 'Data pengadaan berhasil disimpan');
@@ -88,7 +98,7 @@ class PengadaanController extends Controller
     public function detail($ID_Pengadaan, ...$dokumen)
     {
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
-
+        $rab = Rab::where('ID_Pengadaan', $ID_Pengadaan)->first();
         $dokumenList = ['Rencana Anggaran Biaya', 'Justifikasi Penunjukan Langsung','Nota Dinas Permintaan Pengadaan','Nota Dinas Permintaan Pelaksanaan Pengadaan'];
         $dokumen_checked = [];
 
@@ -99,8 +109,12 @@ class PengadaanController extends Controller
     
     $statusData = Status::all();
     $status = $pengadaan->status;
+    $statusRab = $pengadaan->statusRab;
+    $statusJustifikasi = $pengadaan->statusJustifikasi;
+    $statusNotaDinasPermintaan = $pengadaan->statusNotaDinasPermintaan;
+    $statusNotaDinasPelaksanaan = $pengadaan->statusNotaDinasPelaksanaan;
 
-        return view('pengadaan.detail', compact('pengadaan', 'dokumen_checked', 'dokumen','statusData','status'));
+        return view('pengadaan.detail', compact('pengadaan','rab', 'dokumen_checked', 'dokumen','statusData','status', 'statusRab','statusJustifikasi','statusNotaDinasPermintaan','statusNotaDinasPelaksanaan'));
 
     }
 
@@ -119,7 +133,7 @@ class PengadaanController extends Controller
         'checklist_nota_dinas_permintaan_pelaksanaan_pengadaan',
         'checklist_rencana_anggaran_biaya',
         'checklist_justifikasi_penunjukan_langsung',
-        'id_status' => 7,
+        // 'id_status' => 7,
     ]);
 
     $pengadaan = Pengadaan::find($ID_Pengadaan);
@@ -129,7 +143,7 @@ class PengadaanController extends Controller
     $pengadaan->checklist_nota_dinas_permintaan_pelaksanaan_pengadaan = $request->has('checklist_nota_dinas_permintaan_pelaksanaan_pengadaan') ? 1 : 0;
     $pengadaan->checklist_rencana_anggaran_biaya = $request->has('checklist_rencana_anggaran_biaya') ? 1 : 0;
     $pengadaan->checklist_justifikasi_penunjukan_langsung = $request->has('checklist_justifikasi_penunjukan_langsung') ? 1 : 0;
-    $pengadaan->id_status = 7;
+    // $pengadaan->id_status = 7;
     $pengadaan->save();
 
     return redirect()->route('pengadaan.index')->with('success', 'Data pengadaan berhasil diperbarui');
@@ -150,15 +164,4 @@ public function delete($ID_Pengadaan)
     return redirect()->route('pengadaan.index',  compact('pengadaan'))->with('success', 'Data pengadaan berhasil dihapus');
 }
 
-    public function generatePDF(Request $request)
-    {
-        // Dapatkan data dari formulir
-        $data = $request->all();
-
-        // Buat PDF
-        $pdf = PDF::loadView('pdf.view', ['data' => $data]);
-
-        // Simpan PDF atau tampilkan dalam browser
-        return $pdf->stream();
-    }
 }

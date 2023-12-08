@@ -233,6 +233,21 @@
           </div>
         </li>
 
+        <li class="nav-item nav-category">Signatures</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Signatures</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="cashAdvanceSubMenu">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/tanda_tangan/create">Upload Tanda Tangan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/tanda_tangan/edit">Edit Tanda Tangan</a></li>
+            </ul>
+          </div>
+        </li>
+
         @elseif (Auth::user()->id_role === 2)
         <li class="nav-item nav-category">Pengadaan Barang</li>
         <li class="nav-item">
@@ -263,6 +278,21 @@
               <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item nav-category">Signatures</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Signatures</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="cashAdvanceSubMenu">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/tanda_tangan/create">Upload Tanda Tangan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/tanda_tangan/edit">Edit Tanda Tangan</a></li>
             </ul>
           </div>
         </li>
@@ -301,6 +331,21 @@
           </div>
         </li>
 
+        <li class="nav-item nav-category">Signatures</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Signatures</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="cashAdvanceSubMenu">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/tanda_tangan/create">Upload Tanda Tangan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/tanda_tangan/edit">Edit Tanda Tangan</a></li>
+            </ul>
+          </div>
+        </li>
+
         @elseif (Auth::user()->id_role === 4)
         <li class="nav-item nav-category">Pengadaan Barang</li>
         <li class="nav-item">
@@ -334,6 +379,120 @@
             </ul>
           </div>
         </li>
+
+        <li class="nav-item nav-category">Signatures</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Signatures</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="cashAdvanceSubMenu">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/tanda_tangan/create">Upload Tanda Tangan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/tanda_tangan/edit">Edit Tanda Tangan</a></li>
+            </ul>
+          </div>
+        </li>
+
+        @elseif (Auth::user()->id_role === 5)
+        <li class="nav-item nav-category">Pengadaan Barang</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Pengadaan</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="ui-basic">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/persetujuan/pengadaan">Persetujuan Pengadaan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item nav-category">Cash Advance</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Cash Advance</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="cashAdvanceSubMenu">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item nav-category">Signatures</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Signatures</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="cashAdvanceSubMenu">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/tanda_tangan/create">Upload Tanda Tangan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/tanda_tangan/edit">Edit Tanda Tangan</a></li>
+            </ul>
+          </div>
+        </li>
+
+        @elseif (Auth::user()->id_role === 6)
+        <li class="nav-item nav-category">Pengadaan Barang</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Pengadaan</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="ui-basic">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item nav-category">Cash Advance</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Cash Advance</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="cashAdvanceSubMenu">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item nav-category">Signatures</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Signatures</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="cashAdvanceSubMenu">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/tanda_tangan/create">Upload Tanda Tangan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/tanda_tangan/edit">Edit Tanda Tangan</a></li>
+            </ul>
+          </div>
+        </li>
+
         @elseif (Auth::user()->id_role === 7)
         <li class="nav-item nav-category">Pengadaan Barang</li>
         <li class="nav-item">

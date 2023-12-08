@@ -18,6 +18,10 @@ class Pengadaan extends Model
         'ID_Sistem_Evaluasi_Penawaran',
         'ID_Jenis_Pengadaan',
         'id_status',
+        'id_status_rab',
+        'id_status_justifikasi',
+        'id_status_nota_dinas_permintaan',
+        'id_status_nota_dinas_pelaksanaan',
     ];
 
     public function metodePengadaan()
@@ -37,7 +41,7 @@ class Pengadaan extends Model
 
     public function rab()
     {
-        return $this->hasMany(Rab::class, 'pengadaan_ID_Pengadaan');
+        return $this->hasOne(Rab::class, 'ID_Pengadaan');
     }
 
     public function justifikasiPenunjukanLangsung()
@@ -64,6 +68,25 @@ class Pengadaan extends Model
 {
     return $this->belongsTo(Status::class, 'id_status');
 }
+
+    public function statusRab()
+{
+    return $this->belongsTo(Status::class, 'id_status_rab');
+}
+
+public function statusJustifikasi()
+{
+    return $this->belongsTo(Status::class, 'id_status_justifikasi');
+}
+public function statusNotaDinasPermintaan()
+{
+    return $this->belongsTo(Status::class, 'id_status_nota_dinas_permintaan');
+}
+public function statusNotaDinasPelaksanaan()
+{
+    return $this->belongsTo(Status::class, 'id_status_nota_dinas_pelaksanaan');
+}
+
 
     public function barang()
     {

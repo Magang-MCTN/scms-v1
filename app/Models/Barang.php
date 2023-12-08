@@ -14,7 +14,6 @@ class Barang extends Model
         'ID_Pengadaan',
         'Kode_Barang',
         'Nama_Barang',
-        // 'ID_Baran',
         'Deskripsi',
         'Keterangan',
         'estimasi_jumlah',
@@ -26,12 +25,12 @@ class Barang extends Model
 
     public function transaksi()
     {
-        return $this->hasMany(Transaksi::class, 'ID_Barang');
+        return $this->hasOne(Transaksi::class, 'ID_Barang', 'ID_Barang');
     }
 
     public function rab()
     {
-        return $this->hasMany(rab::class,'ID_Barang');
+        return $this->belongsToMany(Rab::class, 'tabel_barang_rab', 'ID_Barang', 'ID_RAB');
     }
 
     public function pengadaan()

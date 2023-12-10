@@ -22,6 +22,10 @@ class Pengadaan extends Model
         'id_status_justifikasi',
         'id_status_nota_dinas_permintaan',
         'id_status_nota_dinas_pelaksanaan',
+        'alasan_rab',
+        'alasan_justifikasi',
+        'alasan_nota_dinas_permintaan',
+        'alasan_nota_dinas_pelaksanaan',
     ];
 
     public function metodePengadaan()

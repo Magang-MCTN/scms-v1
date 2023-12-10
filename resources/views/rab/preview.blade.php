@@ -1,3 +1,14 @@
+@php
+    // Import namespace di luar blok PHP
+    use Illuminate\Support\Facades\File;
+
+    // Lanjutkan dengan penggunaan normal
+    if ($rab->tanda_tangan_user_1) {
+        $imagePath = public_path('storage/' . $rab->tanda_tangan_user_1);
+        $imageData = base64_encode(File::get($imagePath));
+        $imageMimeType = mime_content_type($imagePath);
+    }
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -94,16 +105,18 @@
         @endif{{ $tanggalFormatted }}</p>
         <p>Disetujui oleh:</p>
         <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
+        <div>
+            @if ($rab->tanda_tangan_user_1)
+                <img src="data:image/{{ $imageMimeType }};base64,{{ $imageData }}" alt="Tanda Tangan" width="100">
+            @else
+                <p>Tidak ada tanda tangan</p>
+            @endif
+        </div>
         <br>
         <p>Pengguna Barang/Jasa: <b>{{ $rab->nama_user_1 }}</b></p>
         <p>Jabatan: <b>{{ $rab->jabatan_user_1 }}</b></p>
         <p>Lampiran: Rincian RAB</p>
     </div>
-    <!-- Button untuk mengunduh file PDF -->
-    {{-- <a href="{{ route('rab.preview.download', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'ID_RAB' => $rab->ID_RAB]) }}" class="btn btn-success">Download PDF</a> --}}
 </body>
 
 </html>

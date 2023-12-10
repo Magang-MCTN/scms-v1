@@ -5,7 +5,6 @@ use App\Models\BarangRab;
 use App\Models\Divisi;
 use App\Models\Signatures;
 use App\Models\User;
-// use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Dompdf\Options;
 use Illuminate\Support\Facades\File;
@@ -220,7 +219,7 @@ class RabController extends Controller
     $options->set('defaultPaperSize', 'A4');
     $options->set('max_execution_time', 300);
     // $options->set('orientation', 'landscape');
-
+    // $typesuser1 = $rab->tanda_tangan_user_1->mime_type;
     // Mengambil path gambar dari direktori lokal
     $pathToImage = public_path('dashboard/template/images/logo1.jpg');
 
@@ -229,7 +228,7 @@ class RabController extends Controller
     // Mengonversi gambar ke dalam base64
     $base64Image = base64_encode(File::get($pathToImage));
     $types = pathinfo($pathToImage, PATHINFO_EXTENSION);
-
+    
     $pdf = PDF::loadView('rab.preview', compact('pengadaan', 'rab', 'kota','barangs', 'tanggalFormatted','base64Image','types'));
 
     return view('rab.templatepdf.tampil', compact('pengadaan', 'rab', 'kota','barangs', 'tanggalFormatted','base64Image','types', 'pdf'));
@@ -252,6 +251,7 @@ public function downloadPreview($ID_Pengadaan, $ID_RAB)
         $kota = Kota::find($rab->ID_Kota);
         $barangs = $rab->barang()->with('transaksi')->get();
         $tanggalFormatted = Carbon::parse($rab->tanggal)->format('d F Y');
+        // $tanda_tangan = Signatures::findOrFail()
     
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
@@ -259,18 +259,18 @@ public function downloadPreview($ID_Pengadaan, $ID_RAB)
         $options->set('isHtml5ParserEnabled', true);
         $options->set('pdfBackend', 'CPDF');
         $options->set('defaultPaperSize', 'A4');
-        $options->set('max_execution_time', 300);
+        $options->set('max_execution_time', 1000);
         // $options->set('orientation', 'landscape');
-    
+        // $typesuser1 = $rab->tanda_tangan_user_1->mime_type;
         // Mengambil path gambar dari direktori lokal
         $pathToImage = public_path('dashboard/template/images/logo1.jpg');
-    
+
         // Memeriksa apakah file gambar ada
         if (file_exists($pathToImage)) {
         // Mengonversi gambar ke dalam base64
         $base64Image = base64_encode(File::get($pathToImage));
         $types = pathinfo($pathToImage, PATHINFO_EXTENSION);
-    
+
         $pdf = PDF::loadView('rab.preview', compact('pengadaan', 'rab', 'kota','barangs', 'tanggalFormatted','base64Image','types'));
     
         return $pdf->download('preview.pdf');

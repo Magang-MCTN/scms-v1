@@ -38,10 +38,24 @@
                                     @if ($status)
                                         <tr>
                                             <td>{{ $dokumen }}</td>
-                                            <td>Tanggal Pengajuan: {{ $tanggalPengajuan }}</td>
+                                            <td>
+                                                @if ($dokumen == 'Rencana Anggaran Biaya')
+                                                    @if ($rab)
+                                                        {{ $rab->created_at }}
+                                                    @else
+                                                        Status Tidak Ditemukan
+                                                    @endif
+                                                @endif
+                                            </td>
                                             <td class="badge badge-pill badge-dark">{{ $status }}</td>
                                             <td>
-                                                {{-- Aksi --}}
+                                                @if ($dokumen == 'Rencana Anggaran Biaya')
+                                                    @if ($pengadaans->id_status_rab == 8 )
+                                                        <a href="{{ route('pejabatuser.approve.rab', ['ID_Pengadaan' => $pengadaans->ID_Pengadaan, 'ID_RAB' => $rab->ID_RAB]) }}" class="btn btn-info">Detail</a>
+                                                    @else
+                                                        Anda Sudah Menyetujuinya
+                                                    @endif
+                                                @endif
                                             </td>
                                         </tr>
                                     @endif

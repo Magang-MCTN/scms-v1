@@ -160,6 +160,10 @@ Route::middleware(['auth', 'role:5'])->group(function () {
     // Route::get('/pejabatuser', [PejabatUserController::class, 'status'])->name('pejabatuser.status');
     // Route::get('/pejabatuser/{ID_Pengadaan}', [PejabatUserController::class, 'detail'])->name('pejabatuser.detail');
     Route::get('/detail/{ID_Pengadaan}', [PejabatUserController::class, 'detail'])->name('pejabatuser.detail');
+    Route::get('/approve/rab/{ID_Pengadaan}/{ID_RAB}', [PejabatUserController::class, 'approveRab'])->name('pejabatuser.approve.rab');
+    Route::post('/rab/approve/{ID_Pengadaan}/{ID_RAB}', [PejabatUserController::class, 'approveFileRab'])->name('pejabatuser.approve-rab');
+    Route::post('/rab/reject/{ID_Pengadaan}/{ID_RAB}', [PejabatUserController::class, 'rejectFileRab'])->name('pejabatuser.reject-rab');
+    Route::get('/rab/preview/download/{ID_Pengadaan}/{ID_RAB}', [RabController::class, 'downloadPreview'])->name('rab.preview.download');
 });
 Route::middleware(['auth', 'role:6'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "Pejabat Rendan"

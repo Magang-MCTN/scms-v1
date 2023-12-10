@@ -9,7 +9,7 @@ class Signatures extends Model
 {
     use HasFactory;
     protected $table = 'signatures';
-
+    protected $primaryKey = 'id_signatures';
     protected $fillable = [
         'id_user', 
         'path'

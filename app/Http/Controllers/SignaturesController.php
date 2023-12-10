@@ -11,7 +11,11 @@ class SignaturesController extends Controller
     public function create()
     {
         // Ambil informasi tanda tangan jika sudah ada
-        $tandaTangan = Signatures::first();
+        // $tandaTangan = Signatures::first();
+        $user = Auth::user();
+
+        // Check if the user already has a signature
+        $tandaTangan = Signatures::where('id_user', $user->id_user)->first();
 
         return view('dashboard.signatures.create', compact('tandaTangan'));
     }
@@ -51,7 +55,8 @@ class SignaturesController extends Controller
 
         $user = Auth::user();
 
-        $path = $request->file('tanda_tangan')->store('tanda_tangan');
+        $path = $request->file('tanda_tangan')->store('public/tanda_tangan');
+        $fileName = str_replace('public/', '', $path);
 
         Signatures::updateOrCreate(
             ['id_user' => $user->id_user],

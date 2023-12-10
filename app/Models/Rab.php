@@ -18,6 +18,7 @@ class Rab extends Model
         'total_keseluruhan',
         'nama_user_1',
         'jabatan_user_1',
+        'tanda_tangan_user_1',
     ];
 
     public function kota()

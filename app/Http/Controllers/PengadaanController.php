@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BarangRab;
+use App\Models\JustifikasiPenunjukanLangsung;
 use App\Models\Pengadaan;
 use App\Models\Rab;
 use App\Models\Status;
@@ -99,6 +100,7 @@ class PengadaanController extends Controller
     {
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
         $rab = Rab::where('ID_Pengadaan', $ID_Pengadaan)->first();
+        $justifikasi = JustifikasiPenunjukanLangsung::where('ID_Pengadaan', $ID_Pengadaan)->first();
         $dokumenList = ['Rencana Anggaran Biaya', 'Justifikasi Penunjukan Langsung','Nota Dinas Permintaan Pengadaan','Nota Dinas Permintaan Pelaksanaan Pengadaan'];
         $dokumen_checked = [];
 
@@ -114,7 +116,7 @@ class PengadaanController extends Controller
     $statusNotaDinasPermintaan = $pengadaan->statusNotaDinasPermintaan;
     $statusNotaDinasPelaksanaan = $pengadaan->statusNotaDinasPelaksanaan;
 
-        return view('pengadaan.detail', compact('pengadaan','rab', 'dokumen_checked', 'dokumen','statusData','status', 'statusRab','statusJustifikasi','statusNotaDinasPermintaan','statusNotaDinasPelaksanaan'));
+        return view('pengadaan.detail', compact('pengadaan','rab','justifikasi', 'dokumen_checked', 'dokumen','statusData','status', 'statusRab','statusJustifikasi','statusNotaDinasPermintaan','statusNotaDinasPelaksanaan'));
 
     }
 

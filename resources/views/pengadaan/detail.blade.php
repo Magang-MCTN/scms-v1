@@ -27,8 +27,6 @@
                                 @if ($dokumen_checked[$dokumen])
                                     <tr>
                                         <td>{{ $dokumen }}</td>
-                                        {{-- Tambahkan tanggal_pengajuan berdasarkan masing-masing dokumen --}}
-                                        {{-- <td>Tanggal Pengajuan: {{ optional($pengadaan->{'tanggal_' . strtolower(str_replace(' ', '_', $dokumen))})->tanggal_pengajuan }}</td> --}}
                                         <td>
                                             @if ($dokumen == 'Rencana Anggaran Biaya')
                                                 @if ($rab)
@@ -36,24 +34,24 @@
                                                 @else
                                                     Status Tidak Ditemukan
                                                 @endif
-                                            {{-- @elseif ($dokumen == 'Justifikasi Penunjukan Langsung')
-                                                @if ($statusJustifikasi)
-                                                    {{ $statusJustifikasi->keterangan_status }}
+                                            @elseif ($dokumen == 'Justifikasi Penunjukan Langsung')
+                                                @if ($justifikasi)
+                                                    {{ $justifikasi->created_at }}
                                                 @else
                                                     Status Tidak Ditemukan
                                                 @endif
-                                            @elseif ($dokumen == 'Nota Dinas Permintaan Pengadaan')
-                                                @if ($statusNotaDinasPermintaan)
-                                                    {{ $statusNotaDinasPermintaan->keterangan_status }}
+                                            {{-- @elseif ($dokumen == 'Nota Dinas Permintaan Pengadaan')
+                                                @if ($notaDinasPermintaan)
+                                                    {{ $notaDinasPermintaan->created_at }}
                                                 @else
                                                     Status Tidak Ditemukan
-                                                @endif
-                                            @elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')
+                                                @endif --}}
+                                            {{-- '@elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')
                                                 @if ($statusNotaDinasPelaksanaan)
                                                     {{ $statusNotaDinasPelaksanaan->keterangan_status }}
                                                 @else
                                                     Status Tidak Ditemukan
-                                                @endif --}}
+                                                @endif' --}}
                                             @endif
                                         </td>
                                         <td class="badge badge-pill badge-dark">
@@ -91,9 +89,21 @@
                                                 <a href="{{ route('rab.preview', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'ID_RAB' => $rab->ID_RAB]) }}" class="btn btn-info">Detail</a>
                                             @endif
                                         @elseif ($dokumen == 'Justifikasi Penunjukan Langsung')
+                                            @if ($pengadaan->id_status_justifikasi == 6 )
                                             <a href="{{ route('justifikasi.index', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan]) }}" class="btn btn-info">Detail</a>
+                                            @else
+                                            <a href="{{ route('justifikasi.preview', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'ID_JPL' => $justifikasi->ID_JPL]) }}" class="btn btn-info">Detail</a>
+                                            @endif
                                         @elseif ($dokumen == 'Nota Dinas Permintaan Pengadaan')
-                                            <a href="{{ route('nota_dinas_permintaan.index') }}" class="btn btn-info">Detail</a>
+                                            @if ($pengadaan->id_status_rab == 9 && $pengadaan->id_status_justifikasi == 9)
+                                                @if ($pengadaan->id_status_nota_dinas_permintaan == 6)
+                                                    <a href="{{ route('nota_dinas_permintaan.index', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan]) }}" class="btn btn-info">Detail</a>
+                                                @else
+                                                    <a href="{{ route('nota_dinas_permintaan.preview', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'ID_NotaDinasPermintaan' => $justifikasi->ID_NotaDinasPermintaan]) }}" class="btn btn-info">Detail</a>
+                                                @endif
+                                            @else
+                                                Surat RAB Dan Surat Justifikasi Belum Disetujui
+                                            @endif
                                         @elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')
                                             <a href="{{ route('nota_dinas_pelaksanaan.index') }}" class="btn btn-info">Detail</a>
                                         @endif

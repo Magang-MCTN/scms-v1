@@ -3,39 +3,35 @@
 @section('content')
 <div class="card-body">
     <embed src="{{ 'data:application/pdf;base64,' . base64_encode($pdf->output()) }}" type="application/pdf" width="100%" height="500px" />
-    {{-- <a href="{{ route('rab.edit', ['ID_RAB' => $rab->ID_RAB]) }}" class="btn btn-warning">Edit</a> --}}
     <div class="bi bi-download">
-    <a href="{{ route('rab.preview.download', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_RAB' => $rab->ID_RAB]) }}" class="btn btn-success">Unduh PDF</a>
-    {{-- <td class="badge badge-primary">
-        <a href="{{ route('rab.kirim', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_RAB' => $rab->ID_RAB]) }}" class="btn btn-primary">Kirim</a>
-    </td>     --}}
+    <a href="{{ route('justifikasi.preview.download', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_JPL' => $justifikasi->ID_JPL]) }}" class="btn btn-success">Unduh PDF</a>
     <td class="d-flex my-4">
-        @if($pengadaan->id_status_rab === 8)
+        @if($pengadaan->id_status_justifikasi === 8)
             <button id="btn-approve" class="btn btn-success mx-2">Setuju</button>
         @endif
 
-        @if($pengadaan->id_status_rab === 8)
+        @if($pengadaan->id_status_justifikasi === 8)
             <button id="btn-reject" class="btn btn-danger mx-2">Tolak</button>
         @endif
     </td>
     <div id="alasan-form" style="display: none;">
-        <form action="{{ route('pejabatuser.approve-rab', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_RAB' => $rab->ID_RAB]) }}" method="POST">
+        <form action="{{ route('pejabatuser.approve-justifikasi', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_JPL' => $justifikasi->ID_JPL]) }}" method="POST">
             @csrf
             <div class="my-3 me-3">
-                <label for="alasan_rab">Alasan Setuju:</label>
+                <label for="alasan_justifikasi">Alasan Setuju:</label>
             </div>
-            <textarea name="alasan_rab" id="alasan_rab" cols="40" rows="5" style="border-radius: 5px"required></textarea><br>
+            <textarea name="alasan_justifikasi" id="alasan_justifikasi" cols="40" rows="5" style="border-radius: 5px"required></textarea><br>
             <button type="submit" class="btn btn-success my-2">Setuju</button>
         </form>
     </div>
 
     <div id="alasan-tolak-form" style="display: none;">
-        <form action="{{ route('pejabatuser.reject-rab', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_RAB' => $rab->ID_RAB]) }}" method="POST">
+        <form action="{{ route('pejabatuser.reject-justifikasi', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_JPL' => $justifikasi->ID_JPL]) }}" method="POST">
             @csrf
             <div class="my-3 me-3">
-                <label for="alasan_rab">Alasan Tolak:</label>
+                <label for="alasan_justifikasi">Alasan Tolak:</label>
             </div>
-            <textarea name="alasan_rab" id="alasan_rab" cols="40" rows="5" style="border-radius: 5px" required></textarea><br>
+            <textarea name="alasan_justifikasi" id="alasan_justifikasi" cols="40" rows="5" style="border-radius: 5px" required></textarea><br>
             <button type="submit" class="btn btn-danger my-2">Tolak</button>
         </form>
     </div>

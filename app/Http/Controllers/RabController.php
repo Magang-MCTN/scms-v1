@@ -91,7 +91,7 @@ class RabController extends Controller
 
         $namaUser1 = $request->input('divisiUser1');
         $user1 = User::where('name', $namaUser1)->first();
-        // $idUser1 = $user1->name;
+        
         $jabatanUser1 = $user1->jabatan;
         if ($user1 && $user1->name) {
             $idUser1 = $user1->name;
@@ -217,7 +217,7 @@ class RabController extends Controller
     $options->set('isHtml5ParserEnabled', true);
     $options->set('pdfBackend', 'CPDF');
     $options->set('defaultPaperSize', 'A4');
-    $options->set('max_execution_time', 300);
+    $options->set('max_execution_time', 1000);
     // $options->set('orientation', 'landscape');
     // $typesuser1 = $rab->tanda_tangan_user_1->mime_type;
     // Mengambil path gambar dari direktori lokal
@@ -231,7 +231,7 @@ class RabController extends Controller
     
     $pdf = PDF::loadView('rab.preview', compact('pengadaan', 'rab', 'kota','barangs', 'tanggalFormatted','base64Image','types'));
 
-    return view('rab.templatepdf.tampil', compact('pengadaan', 'rab', 'kota','barangs', 'tanggalFormatted','base64Image','types', 'pdf'));
+    return view('rab.templatepdf.tampil', compact('ID_Pengadaan','pengadaan', 'rab', 'kota','barangs', 'tanggalFormatted','base64Image','types', 'pdf'));
     } else {
         \Log::error('File gambar tidak ditemukan di path yang diinginkan: ' . $pathToImage);
         return redirect()->back()->with('error', 'File gambar tidak ditemukan.');
@@ -273,7 +273,7 @@ public function downloadPreview($ID_Pengadaan, $ID_RAB)
 
         $pdf = PDF::loadView('rab.preview', compact('pengadaan', 'rab', 'kota','barangs', 'tanggalFormatted','base64Image','types'));
     
-        return $pdf->download('preview.pdf');
+        return $pdf->download('preview-rab.pdf');
         } else {
             \Log::error('File gambar tidak ditemukan di path yang diinginkan: ' . $pathToImage);
             return redirect()->back()->with('error', 'File gambar tidak ditemukan.');

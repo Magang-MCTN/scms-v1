@@ -12,32 +12,34 @@ class JustifikasiPenunjukanLangsung extends Model
 
     protected $fillable = [
         'ID_Kota',
-        'pengadaan_ID_Pengadaan',
+        'ID_Pengadaan',
+        'ID_Jenis_Pengadaan',
+        'ID_Kriteria',
         'Tanggal',
-        'Nomor_PRK',
-        'ID_Peserta',
+        'pagu_anggaran',
+        'nama_perusahaan',
+        'nama_user_1',
+        'jabatan_user_1',
+        'tanda_tangan_user_1',
         'Rincian_Status_Kondisi',
         'Rincian_Alasan_Metode',
         'Rincian_Kriteria_Peserta',
+        'Rincian_Kriteria_Peserta_Komersial',
+        'Rincian_Kriteria_Peserta_Lainnya',
     ];
 
     public function kota()
     {
-        return $this->belongsTo(Kota::class, 'ID_Kota');
-    }
-
-    public function anggaran()
-    {
-        return $this->belongsTo(Anggaran::class, 'Nomor_PRK');
-    }
-
-    public function peserta()
-    {
-        return $this->belongsTo(Peserta::class, 'ID_Peserta');
+        return $this->hasMany(Kota::class, 'ID_Kota');
     }
 
     public function pengadaan()
     {
-        return $this->belongsTo(Pengadaan::class, 'pengadaan_ID_Pengadaan');
+        return $this->belongsTo(Pengadaan::class, 'ID_Pengadaan');
+    }
+
+    public function kriteria()
+    {
+        return $this->belongsTo(Kriteria::class, 'ID_Kriteria');
     }
 }

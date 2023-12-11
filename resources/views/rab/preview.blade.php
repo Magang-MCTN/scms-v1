@@ -109,7 +109,7 @@
             @if ($rab->tanda_tangan_user_1)
                 <img src="data:image/{{ $imageMimeType }};base64,{{ $imageData }}" alt="Tanda Tangan" width="100">
             @else
-                <p>Tidak ada tanda tangan</p>
+                <p></p>
             @endif
         </div>
         <br>

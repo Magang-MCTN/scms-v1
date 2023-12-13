@@ -17,6 +17,8 @@ class Pengadaan extends Model
         'ID_Metode_Pengadaan',
         'ID_Sistem_Evaluasi_Penawaran',
         'ID_Jenis_Pengadaan',
+        'ID_Sumber_Anggaran',
+        'id_admin_rendan',
         'id_status',
         'id_status_rab',
         'id_status_justifikasi',
@@ -26,6 +28,10 @@ class Pengadaan extends Model
         'alasan_justifikasi',
         'alasan_nota_dinas_permintaan',
         'alasan_nota_dinas_pelaksanaan',
+        'rencana_tanggal_terkontrak_mulai',
+        'rencana_tanggal_terkontrak_selesai',
+        'rencana_durasi_kontrak',
+        'rencana_durasi_kontrak_tanggal',
     ];
 
     public function metodePengadaan()
@@ -54,8 +60,13 @@ class Pengadaan extends Model
     }
 
     public function rencanaNotaDinas()
+{
+    return $this->hasOne(RencanaNotaDinas::class, 'ID_Pengadaan');
+}
+
+    public function sumberAnggaran()
     {
-        return $this->hasMany(RencanaNotaDinas::class, 'pengadaan_ID_Pengadaan');
+        return $this->hasMany(SumberAnggaran::class, 'ID_Sumber_Anggaran');
     }
 
     public function pelaksanaanNotaDinas()

@@ -237,7 +237,7 @@
     <div>
         <p>@if(isset($kota))
             {{ $kota->Kota }},
-        @endif{{ $tanggalFormatted }}</p>
+        @endif{{ $tanggalJPLFormatted }}</p>
         <p>Disetujui oleh:</p>
         <p><b>{{ $justifikasi->jabatan_user_1 }}</b></p>
         <p></p>

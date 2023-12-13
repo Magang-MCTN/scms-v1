@@ -231,6 +231,7 @@ public function downloadPreview($ID_Pengadaan, $ID_JPL)
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
         $justifikasi = JustifikasiPenunjukanLangsung::findOrFail($ID_JPL);
         $kota = Kota::find($justifikasi->ID_Kota);
+        $kriteria = Kriteria::find($justifikasi->ID_Kriteria);
         $jenisPengadaan = JenisPengadaan::find($pengadaan->ID_Jenis_Pengadaan);
         $tanggalFormatted = Carbon::parse($justifikasi->Tanggal)->format('d F Y');
         // $tanda_tangan = Signatures::findOrFail()
@@ -253,7 +254,7 @@ public function downloadPreview($ID_Pengadaan, $ID_JPL)
         $base64Image = base64_encode(File::get($pathToImage));
         $types = pathinfo($pathToImage, PATHINFO_EXTENSION);
 
-        $pdf = PDF::loadView('justifikasi.preview', compact('pengadaan', 'justifikasi', 'kota', 'tanggalFormatted','base64Image','types','jenisPengadaan'));
+        $pdf = PDF::loadView('justifikasi.preview', compact('pengadaan', 'kriteria', 'justifikasi', 'kota', 'tanggalFormatted','base64Image','types','jenisPengadaan'));
     
         return $pdf->download('preview-justifikasi.pdf');
         } else {

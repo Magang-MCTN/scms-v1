@@ -51,21 +51,31 @@
                                                     @else
                                                         Status Tidak Ditemukan
                                                     @endif
+                                                    @elseif ($dokumen == 'Nota Dinas Permintaan Pengadaan')
+                                                    @if ($notaDinasPermintaan)
+                                                        {{ $notaDinasPermintaan->created_at }}
+                                                    @else
+                                                        Status Tidak Ditemukan
+                                                    @endif
                                                 @endif
                                             </td>
                                             <td class="badge badge-pill badge-dark">{{ $status }}</td>
                                             <td>
                                                 @if ($dokumen == 'Rencana Anggaran Biaya')
-                                                    {{-- @if ($pengadaans->id_status_rab == 8 ) --}}
                                                     @if (in_array($statusRab->id_status, [8, 9, 10]))
                                                         <a href="{{ route('pejabatuser.approve.rab', ['ID_Pengadaan' => $pengadaans->ID_Pengadaan, 'ID_RAB' => $rab->ID_RAB]) }}" class="btn btn-info">Detail</a>
                                                     @else
                                                         Anda Sudah Menyetujuinya
                                                     @endif
                                                 @elseif ($dokumen == 'Justifikasi Penunjukan Langsung')
-                                                    {{-- @if ($pengadaans->id_status_rab == 8 ) --}}
                                                     @if (in_array($statusJustifikasi->id_status, [8, 9, 10]))
                                                         <a href="{{ route('pejabatuser.approve.justifikasi', ['ID_Pengadaan' => $pengadaans->ID_Pengadaan, 'ID_JPL' => $justifikasi->ID_JPL]) }}" class="btn btn-info">Detail</a>
+                                                    @else
+                                                        Anda Sudah Menyetujuinya
+                                                    @endif
+                                                @elseif ($dokumen == 'Nota Dinas Permintaan Pengadaan')
+                                                    @if (in_array($statusNotaDinasPermintaan->id_status, [8, 9, 10]))
+                                                        <a href="{{ route('pejabatuser.approve.nota-dinas-permintaan', ['ID_Pengadaan' => $pengadaans->ID_Pengadaan, 'id_nota_dinas_permintaan' => $notaDinasPermintaan->id_nota_dinas_permintaan]) }}" class="btn btn-info">Detail</a>
                                                     @else
                                                         Anda Sudah Menyetujuinya
                                                     @endif

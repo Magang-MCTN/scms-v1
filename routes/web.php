@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JustifikasiController;
 use App\Http\Controllers\NotaDinasPermintaanPelaksanaanPengadaanController;
 use App\Http\Controllers\NotaDinasPermintaanPengadaanController;
+use App\Http\Controllers\PejabatRendanController;
 use App\Http\Controllers\PejabatUserController;
 use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\PengadaanScmController;
@@ -142,11 +143,14 @@ Route::middleware(['auth', 'role:1,2,3,4,'])->group(function () {
     Route::get('/pengadaan/kirim/justifikasi/{ID_Pengadaan}/{ID_JPL}', [JustifikasiController::class, 'kirimJustifikasi'])->name('justifikasi.kirim');
 
     //Nota Dinas Permintaan Pengadaan
-    Route::get('/nota_dinas_permintaan', [NotaDinasPermintaanPengadaanController::class, 'index'])->name('nota_dinas_permintaan.index');
-    Route::get('/nota_dinas_permintaan/create', [NotaDinasPermintaanPengadaanController::class, 'create'])->name('nota_dinas_permintaan.create');
-    Route::post('/nota_dinas_permintaan', [NotaDinasPermintaanPengadaanController::class, 'store'])->name('nota_dinas_permintaan.store');
+    Route::get('/nota_dinas_permintaan/{ID_Pengadaan}', [NotaDinasPermintaanPengadaanController::class, 'index'])->name('nota_dinas_permintaan.index');
+    // Route::get('/nota_dinas_permintaan/create', [NotaDinasPermintaanPengadaanController::class, 'create'])->name('nota_dinas_permintaan.create');
+    Route::post('/nota_dinas_permintaan/{ID_Pengadaan}', [NotaDinasPermintaanPengadaanController::class, 'store'])->name('nota_dinas_permintaan.store');
     Route::get('/status_nota_dinas_permintaan', [NotaDinasPermintaanPengadaanController::class, 'status'])->name('nota_dinas_permintaan.status');
-    Route::get('/status_nota_dinas_permintaan/{id}', [NotaDinasPermintaanPengadaanController::class, 'detail'])->name('nota_dinas_permintaan.detail');
+    Route::get('/status_nota_dinas_permintaan/{ID_Pengadaan}', [NotaDinasPermintaanPengadaanController::class, 'detail'])->name('nota_dinas_permintaan.detail');
+    Route::get('/nota_dinas_permintaan/preview/{ID_Pengadaan}/{id_nota_dinas_permintaan}', [NotaDinasPermintaanPengadaanController::class, 'preview'])->name('nota_dinas_permintaan.preview');
+    Route::get('/nota_dinas_permintaan/preview/download/{ID_Pengadaan}/{id_nota_dinas_permintaan}', [NotaDinasPermintaanPengadaanController::class, 'downloadPreview'])->name('nota_dinas_permintaan.preview.download');
+    Route::get('/pengadaan/kirim/nota_dinas_permintaan/{ID_Pengadaan}/{id_nota_dinas_permintaan}', [NotaDinasPermintaanPengadaanController::class, 'kirimNotaDinasPermintaan'])->name('nota_dinas_permintaan.kirim');
 
     //Nota Dinas Permintaan Pelaksanaan Pengadaan
     Route::get('/nota_dinas_pelaksanaan', [NotaDinasPermintaanPelaksanaanPengadaanController::class, 'index'])->name('nota_dinas_pelaksanaan.index');
@@ -172,10 +176,19 @@ Route::middleware(['auth', 'role:5'])->group(function () {
     Route::post('/justifikasi/approve/{ID_Pengadaan}/{ID_JPL}', [PejabatUserController::class, 'approveFileJustifikasi'])->name('pejabatuser.approve-justifikasi');
     Route::post('/justifikasi/reject/{ID_Pengadaan}/{ID_JPL}', [PejabatUserController::class, 'rejectFileJustifikasi'])->name('pejabatuser.reject-justifikasi');
     Route::get('/justifikasi/preview/download/{ID_Pengadaan}/{ID_JPL}', [JustifikasiController::class, 'downloadPreview'])->name('justifikasi.preview.download');
+
+    Route::get('/approve/nota_dinas_permintaan/{ID_Pengadaan}/{id_nota_dinas_permintaan}', [PejabatUserController::class, 'approveNotaDinasPermintaan'])->name('pejabatuser.approve.nota-dinas-permintaan');
+    Route::post('/nota_dinas_permintaan/approve/{ID_Pengadaan}/{id_nota_dinas_permintaan}', [PejabatUserController::class, 'approveFileNotaDinasPermintaan'])->name('pejabatuser.approve-nota-dinas-permintaan');
+    Route::post('/nota_dinas_permintaan/reject/{ID_Pengadaan}/{id_nota_dinas_permintaan}', [PejabatUserController::class, 'rejectFileNotaDinasPermintaan'])->name('pejabatuser.reject-nota-dinas-permintaan');
+    Route::get('/nota_dinas_permintaan/preview/download/{ID_Pengadaan}/{id_nota_dinas_permintaan}', [JustifikasiController::class, 'downloadPreview'])->name('nota_dinas_permintaan.preview.download');
+
 });
 Route::middleware(['auth', 'role:6'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "Pejabat Rendan"
-
+    Route::get('/persetujuan/pengadaan/rendan', [PejabatRendanController::class, 'index'])->name('persetujuan.pengadaan-rendan.index');
+    Route::get('/detail/{ID_Pengadaan}', [PejabatRendanController::class, 'detail'])->name('pejabatrendan.detail');
+    // Route::get('/rab/preview/download/{ID_Pengadaan}/{ID_RAB}', [RabController::class, 'downloadPreview'])->name('rab.preview.download');
+    Route::post('/pengadaan/kirim/{ID_Pengadaan}', [PejabatRendanController::class, 'kirimPegawai'])->name('pejabatrendan.kirim');
 });
 Route::middleware(['auth', 'role:7'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "Pejabat Lakdan"

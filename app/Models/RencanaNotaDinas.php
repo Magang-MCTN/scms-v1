@@ -8,24 +8,30 @@ use Illuminate\Database\Eloquent\Model;
 class RencanaNotaDinas extends Model
 {
     protected $table = 'tabel_nota_dinas_user';
-    protected $primaryKey = 'Nomor_ND_PPBJ';
+    protected $primaryKey = 'id_nota_dinas_permintaan';
 
     protected $fillable = [
+        'Nomor_ND_PPBJ',
         'ID_Kota',
-        'Judul',
         'Tanggal',
-        'Sifat',
-        'ID_Tujuan',
-        'Perihal',
-        'ID_Sumber_Anggaran',
         'Nomor_PRK',
-        'ID_Pegawai',
-        'pengadaan_ID_Pengadaan',
-        'ID_RAB ',
+        'cost_center',
+        'pagu_anggaran',
+        'nama_pengguna',
+        'divisi_pengguna',
+        'nama_user_1',
+        'jabatan_user_1',
+        'tanda_tangan_user_1',
+        'ID_Pengadaan',
+        'url_kak',
+        'url_spesifikasi_teknis',
     ];
-
+    public function kota()
+    {
+        return $this->hasMany(Kota::class, 'ID_Kota');
+    }
     public function pengadaan()
     {
-        return $this->belongsTo(Pengadaan::class, 'pengadaan_ID_Pengadaan');
+        return $this->belongsTo(Pengadaan::class, 'ID_Pengadaan');
     }
 }

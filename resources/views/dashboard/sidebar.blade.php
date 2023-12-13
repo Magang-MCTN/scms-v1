@@ -454,7 +454,7 @@
           </a>
           <div class="collapse" id="ui-basic">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/persetujuan/pengadaan/rendan">Persetujuan Pengadaan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>

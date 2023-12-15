@@ -88,6 +88,16 @@ class RabController extends Controller
         $ID_Kota = $kota->ID_Kota;
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
         $pengadaan->update(['id_status_rab' => 7]);
+        $pengadaan->update(['id_status' => 10]);
+
+         $request->validate([
+            'divisUser1' => 'required|exists:users,id_user',
+            // 'divisUser2' => 'required|exists:users,id_user',
+            // 'divisUser3' => 'required|exists:users,id_user',
+        ]);
+        $pengadaan->update(['id_pejabat_user_tingkat_3' => $request->input('divisiUser1')]);
+        // $pengadaan->update(['id_pejabat_user_tingkat_2' => $request->input('divisiUser2')]);
+        // $pengadaan->update(['id_pejabat_user_tingkat_1' => $request->input('divisiUser3')]);
 
         $namaUser1 = $request->input('divisiUser1');
         $user1 = User::where('name', $namaUser1)->first();
@@ -102,6 +112,8 @@ class RabController extends Controller
             $barang = new Barang($barangData);
             $barang->ID_Pengadaan = $pengadaan->ID_Pengadaan;
             $barang->Kode_Barang = $this->generateKodeBarang();
+            $barang->Deskripsi = strip_tags($barangData['Deskripsi']);
+            $barang->Keterangan = strip_tags($barangData['Keterangan'] ?? null);
 
             // Hitung total untuk setiap barang
             $barang->Total = $barangData['estimasi_jumlah'] * $barangData['Harga'];

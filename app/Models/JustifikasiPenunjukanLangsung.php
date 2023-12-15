@@ -13,7 +13,6 @@ class JustifikasiPenunjukanLangsung extends Model
     protected $fillable = [
         'ID_Kota',
         'ID_Pengadaan',
-        'ID_Jenis_Pengadaan',
         'ID_Kriteria',
         'Tanggal',
         'pagu_anggaran',
@@ -23,7 +22,7 @@ class JustifikasiPenunjukanLangsung extends Model
         'tanda_tangan_user_1',
         'Rincian_Status_Kondisi',
         'Rincian_Alasan_Metode',
-        'Rincian_Kriteria_Peserta',
+        'Rincian_Kriteria_Peserta_Teknis',
         'Rincian_Kriteria_Peserta_Komersial',
         'Rincian_Kriteria_Peserta_Lainnya',
     ];

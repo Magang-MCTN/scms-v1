@@ -16,8 +16,14 @@
     </td>
     @endif
     <td>
-        <a href="{{ route('pengadaan.detail', ['ID_Pengadaan' => $ID_Pengadaan]) }}" class="btn btn-primary my-4">Kembali</a>
+        <button class="btn btn-primary my-4" onclick="goBack()">Kembali</button>
     </td>
+    
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </div>
 </div>
 @endsection

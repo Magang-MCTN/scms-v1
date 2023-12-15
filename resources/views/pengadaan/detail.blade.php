@@ -31,20 +31,14 @@
                                             @if ($dokumen == 'Rencana Anggaran Biaya')
                                                 @if ($rab)
                                                     {{ $rab->created_at }}
-                                                @else
-                                                    Status Tidak Ditemukan
                                                 @endif
                                             @elseif ($dokumen == 'Justifikasi Penunjukan Langsung')
                                                 @if ($justifikasi)
                                                     {{ $justifikasi->created_at }}
-                                                @else
-                                                    Status Tidak Ditemukan
                                                 @endif
                                             @elseif ($dokumen == 'Nota Dinas Permintaan Pengadaan')
                                                 @if ($notaDinasPermintaan)
                                                     {{ $notaDinasPermintaan->created_at }}
-                                                @else
-                                                    Status Tidak Ditemukan
                                                 @endif
                                             {{-- '@elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')
                                                 @if ($statusNotaDinasPelaksanaan)
@@ -95,17 +89,18 @@
                                             <a href="{{ route('justifikasi.preview', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'ID_JPL' => $justifikasi->ID_JPL]) }}" class="btn btn-info">Detail</a>
                                             @endif
                                         @elseif ($dokumen == 'Nota Dinas Permintaan Pengadaan')
-                                            @if ($pengadaan->id_status_rab == 9)
+                                            @if (in_array($pengadaan->id_status_rab, [2, 3]))
                                                 @if ($pengadaan->id_status_nota_dinas_permintaan == 6)
                                                     <a href="{{ route('nota_dinas_permintaan.index', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan]) }}" class="btn btn-info">Detail</a>
                                                 @else
                                                     <a href="{{ route('nota_dinas_permintaan.preview', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'id_nota_dinas_permintaan' => $notaDinasPermintaan->id_nota_dinas_permintaan]) }}" class="btn btn-info">Detail</a>
                                                 @endif
                                             @else
-                                                Surat RAB Belum Disetujui
+                                                Surat RAB perlu Dibuat dan Disetujui
                                             @endif
                                         @elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')
-                                            <a href="{{ route('nota_dinas_pelaksanaan.index') }}" class="btn btn-info">Detail</a>
+                                        Perlu Persetujuan Semua Dokumen dari Pejabat Rendan
+                                            {{-- <a href="{{ route('nota_dinas_pelaksanaan.index') }}" class="btn btn-info">Detail</a> --}}
                                         @endif
                                         </td>
                                     </tr>

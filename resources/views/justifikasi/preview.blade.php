@@ -233,7 +233,7 @@
     </div>
     <p></p>
     <br>
-
+<br>
     <div>
         <p>@if(isset($kota))
             {{ $kota->Kota }},

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HPE;
 use App\Models\JenisPengadaan;
 use App\Models\JustifikasiPenunjukanLangsung;
 use App\Models\Kota;
@@ -29,7 +30,7 @@ class PejabatUserController extends Controller
         $statusData = Status::all();
         $pengadaan = Pengadaan::with(['metodePengadaan', 'sistemEvaluasiPenawaran', 'jenisPengadaan'])->get();
 
-        $dokumenList = ['Rencana Anggaran Biaya', 'Justifikasi Penunjukan Langsung','Nota Dinas Permintaan Pengadaan'];
+        $dokumenList = ['Rencana Anggaran Biaya', 'Justifikasi Penunjukan Langsung','Nota Dinas Permintaan Pengadaan', 'HPE', 'RKS', 'Ringkasan RKS', 'Dokumen Kualifikasi'];
         $dokumen_checked = [];
     
         foreach ($pengadaan as $p) {
@@ -46,7 +47,8 @@ class PejabatUserController extends Controller
         $rab = Rab::where('ID_Pengadaan', $ID_Pengadaan)->first();
         $justifikasi = JustifikasiPenunjukanLangsung::where('ID_Pengadaan', $ID_Pengadaan)->first();
         $notaDinasPermintaan = RencanaNotaDinas::where('ID_Pengadaan', $ID_Pengadaan)->first();
-        $dokumenList = ['Rencana Anggaran Biaya', 'Justifikasi Penunjukan Langsung','Nota Dinas Permintaan Pengadaan'];
+        $hpe = HPE::where('ID_Pengadaan', $ID_Pengadaan)->first();
+        $dokumenList = ['Rencana Anggaran Biaya', 'Justifikasi Penunjukan Langsung','Nota Dinas Permintaan Pengadaan', 'HPE', 'RKS', 'Ringkasan RKS', 'Dokumen Kualifikasi'];
         $dokumen_checked = [];
 
         foreach ($dokumenList as $d) {
@@ -58,8 +60,9 @@ class PejabatUserController extends Controller
         $statusRab = $pengadaans->statusRab;
         $statusJustifikasi = $pengadaans->statusJustifikasi;
         $statusNotaDinasPermintaan = $pengadaans->statusNotaDinasPermintaan;
+        $statusHPE = $pengadaans->statusHPE;
 
-        return view('pejabatuser.detail', compact('pengadaans','rab', 'justifikasi','notaDinasPermintaan','dokumen_checked', 'dokumen','statusData','status', 'statusRab','statusJustifikasi','statusNotaDinasPermintaan'));
+        return view('pejabatuser.detail', compact('pengadaans','rab', 'hpe','justifikasi','notaDinasPermintaan','dokumen_checked', 'dokumen','statusData','status', 'statusRab','statusHPE','statusJustifikasi','statusNotaDinasPermintaan'));
 
     }
 
@@ -107,7 +110,7 @@ class PejabatUserController extends Controller
     public function approveFileRab(Request $request, $ID_Pengadaan, $ID_RAB)
     {
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
-        $pengadaan->id_status_rab = 9;
+        $pengadaan->id_status_rab = 3;
         $pengadaan->alasan_rab = $request->input('alasan_rab');
         $pengadaan->save();
         // $users = User::where('id_role', 5)->get();
@@ -129,7 +132,7 @@ class PejabatUserController extends Controller
     public function rejectFileRab(Request $request, $ID_Pengadaan, $ID_RAB)
     {
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
-        $pengadaan->id_status_rab = 8;
+        $pengadaan->id_status_rab = 2;
         $pengadaan->alasan_rab = $request->input('alasan_rab');
         $pengadaan->save();
         // $users = User::where('id_role', 5)->get();
@@ -189,7 +192,7 @@ class PejabatUserController extends Controller
     public function approveFileJustifikasi(Request $request, $ID_Pengadaan, $ID_JPL)
     {
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
-        $pengadaan->id_status_justifikasi = 9;
+        $pengadaan->id_status_justifikasi = 3;
         $pengadaan->alasan_justifikasi = $request->input('alasan_justifikasi');
         $pengadaan->save();
         // $users = User::where('id_role', 5)->get();
@@ -211,7 +214,7 @@ class PejabatUserController extends Controller
     public function rejectFileJustifikasi(Request $request, $ID_Pengadaan, $ID_JPL)
     {
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
-        $pengadaan->id_status_justifikasi = 8;
+        $pengadaan->id_status_justifikasi = 2;
         $pengadaan->alasan_justifikasi = $request->input('alasan_justifikasi');
         $pengadaan->save();
         // $users = User::where('id_role', 5)->get();
@@ -274,7 +277,8 @@ class PejabatUserController extends Controller
     public function approveFileNotaDinasPermintaan(Request $request, $ID_Pengadaan, $id_nota_dinas_permintaan)
     {
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
-        $pengadaan->id_status_nota_dinas_permintaan= 9;
+        $pengadaan->id_status_nota_dinas_permintaan= 3;
+        $pengadaan->update(['id_status' => 9]);
         $pengadaan->alasan_nota_dinas_permintaan = $request->input('alasan_nota_dinas_permintaan');
         $pengadaan->save();
         // $users = User::where('id_role', 5)->get();
@@ -296,7 +300,7 @@ class PejabatUserController extends Controller
     public function rejectFileNotaDinasPermintaan(Request $request, $ID_Pengadaan, $id_nota_dinas_permintaan)
     {
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
-        $pengadaan->id_status_nota_dinas_permintaan = 8;
+        $pengadaan->id_status_nota_dinas_permintaan = 2;
         $pengadaan->alasan_nota_dinas_permintaan = $request->input('alasan_nota_dinas_permintaan');
         $pengadaan->save();
         // $users = User::where('id_role', 5)->get();

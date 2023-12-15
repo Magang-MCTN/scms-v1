@@ -18,12 +18,23 @@ class Pengadaan extends Model
         'ID_Sistem_Evaluasi_Penawaran',
         'ID_Jenis_Pengadaan',
         'ID_Sumber_Anggaran',
+        'id_pejabat_user_tingkat_3',
+        'id_pejabat_user_tingkat_2',
+        'id_pejabat_user_tingkat_1',
         'id_admin_rendan',
         'id_status',
         'id_status_rab',
         'id_status_justifikasi',
         'id_status_nota_dinas_permintaan',
         'id_status_nota_dinas_pelaksanaan',
+        'id_status_hpe',
+        'id_status_rks',
+        'id_status_ringkasan_rks',
+        'id_status_dokumen_kualifikasi',
+        'checklist_hpe',
+        'checklist_rks',
+        'checklist_ringkasan_rks',
+        'checklist_dokumen_kualifikasi',
         'alasan_rab',
         'alasan_justifikasi',
         'alasan_nota_dinas_permintaan',
@@ -100,6 +111,22 @@ public function statusNotaDinasPermintaan()
 public function statusNotaDinasPelaksanaan()
 {
     return $this->belongsTo(Status::class, 'id_status_nota_dinas_pelaksanaan');
+}
+public function statusHPE()
+{
+    return $this->belongsTo(Status::class, 'id_status_hpe');
+}
+public function statusRKS()
+{
+    return $this->belongsTo(Status::class, 'id_status_rks');
+}
+public function statusRingkasanRKS()
+{
+    return $this->belongsTo(Status::class, 'id_status_ringkasan_rks');
+}
+public function statusDokumenKualifikasi()
+{
+    return $this->belongsTo(Status::class, 'id_status_dokumen_kualifikasi');
 }
 
 

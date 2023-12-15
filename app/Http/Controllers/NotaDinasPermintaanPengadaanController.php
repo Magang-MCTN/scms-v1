@@ -55,7 +55,7 @@ class NotaDinasPermintaanPengadaanController extends Controller
             'divisi_pengguna',
             'url_kak' => 'nullable|url',
             'url_spesifikasi_teknis' => 'nullable|url',
-            'rencana_durasi_kontrak_tanggal' => 'required|in:Hari Kerja,Hari Kalender,Bulan,Tahun',
+            'rencana_durasi_kontrak_tanggal' => 'in:Hari Kerja,Hari Kalender,Bulan,Tahun',
         ]);
         $namaKota = $request->input('kota');
         $kota = Kota::where('Kota', $namaKota)->first();
@@ -78,6 +78,7 @@ class NotaDinasPermintaanPengadaanController extends Controller
 
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
         $pengadaan->update(['id_status_nota_dinas_permintaan' => 7]);
+        $pengadaan->update(['id_status' => 10]);
 
         $namaDivisi = $request->input('divisi');
         $divisi = Divisi::where('id_divisi', $namaDivisi)->first();
@@ -88,7 +89,7 @@ class NotaDinasPermintaanPengadaanController extends Controller
         $jabatanUser1 = $user1->jabatan;
 
         // if ($pengguna && $pengguna->name) {
-            $userID = $pengguna->name;
+            $userID = $user1->name;
 
             $notaDinasPermintaan = RencanaNotaDinas::create([
                 'Nomor_ND_PPBJ' => $request->input('nomor_nd_ppbj'),
@@ -110,7 +111,7 @@ class NotaDinasPermintaanPengadaanController extends Controller
 
             $sumberAnggaranisi = Pengadaan::findOrFail($ID_Pengadaan);
             $sumberAnggaranisi->update([
-                'Ringkasan_Pekerjaan' => $request->input('ringkasan_pekerjaan'),
+                'Ringkasan_Pekerjaan' => strip_tags($request->input('ringkasan_pekerjaan')),
                 'ID_Sumber_Anggaran' => $ID_Sumber_Anggaran,
                 'rencana_tanggal_terkontrak_mulai' => $request->input('rencana_tanggal_terkontrak_mulai'),
                 'rencana_tanggal_terkontrak_selesai' => $request->input('rencana_tanggal_terkontrak_selesai'),

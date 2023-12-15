@@ -115,7 +115,7 @@
         <br>
         <p>Pengguna Barang/Jasa: <b>{{ $rab->nama_user_1 }}</b></p>
         <p>Jabatan: <b>{{ $rab->jabatan_user_1 }}</b></p>
-        <p>Lampiran: Rincian RAB</p>
+        {{-- <p>Lampiran: Rincian RAB</p> --}}
     </div>
 </body>
 

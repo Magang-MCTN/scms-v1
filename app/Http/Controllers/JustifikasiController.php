@@ -63,6 +63,7 @@ class JustifikasiController extends Controller
 
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
         $pengadaan->update(['id_status_justifikasi' => 7]);
+        $pengadaan->update(['id_status' => 10]);
 
         $namaUser1 = $request->input('divisiUser1');
         $user1 = User::where('name', $namaUser1)->first();
@@ -119,18 +120,20 @@ class JustifikasiController extends Controller
                 'nama_perusahaan' => $ID_Vendor,
                 'nama_user_1'=> $idUser1,
                 'jabatan_user_1' => $jabatanUser1,
-                'Rincian_Status_Kondisi' => $request->input('Rincian_Status_Kondisi'),
-                'Rincian_Alasan_Metode' => $request->input('Rincian_Alasan_Metode'),
-                'Rincian_Kriteria_Peserta_Teknis' => $request->input('Rincian_Kriteria_Peserta_Teknis'),
-                'Rincian_Kriteria_Peserta_Komersial' => $request->input('Rincian_Kriteria_Peserta_Komersial'),
-                'Rincian_Kriteria_Peserta_Lainnya' => $request->input('Rincian_Kriteria_Peserta_Lainnya'),
+                'Rincian_Status_Kondisi' => strip_tags($request->input('Rincian_Status_Kondisi')),
+                'Rincian_Alasan_Metode' => strip_tags($request->input('Rincian_Alasan_Metode')),
+                'Rincian_Kriteria_Peserta_Teknis' => strip_tags($request->input('Rincian_Kriteria_Peserta_Teknis')),
+                'Rincian_Kriteria_Peserta_Komersial' => strip_tags($request->input('Rincian_Kriteria_Peserta_Komersial')),
+                'Rincian_Kriteria_Peserta_Lainnya' => strip_tags($request->input('Rincian_Kriteria_Peserta_Lainnya')),
+
+
             ]);
             $justifikasi->save();
 
-            $jenisPengadaanisi = Pengadaan::create([
+            $jenisPengadaanisi = $pengadaan->update([
                 'ID_Jenis_Pengadaan' => $ID_Jenis_Pengadaan,
             ]);
-            $jenisPengadaanisi->save();
+            // $jenisPengadaanisi->save();
 
         }else {
             // Log nilai-nilai yang diperlukan untuk debugging

@@ -54,50 +54,9 @@
     @endif --}}
     </div>
     @endif
-    
-    @if ($pengadaan->id_status==9)
-    <div style="float: right;">
-    <form method="POST" action="{{ route('pejabatrendan.kirim', ['ID_Pengadaan'=>$pengadaan->ID_Pengadaan]) }}">
-    @csrf
+
     <td>
-        <button type="submit" class="btn btn-primary" id="tindakLanjutBtn">Tindak Lanjut</button>
-        <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="formModalLabel">PIC (Assign Pegawai)</h5>
-                        <button type="button" class="close" id="closeModalBtnForm" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="form" action="{{ route('pejabatrendan.kirim', ['ID_Pengadaan'=>$pengadaan->ID_Pengadaan]) }}" method="POST">
-                            @csrf
-                            <div class="form-group">
-                                {{-- <label for="admin_user">Nama Pekerjaan</label> --}}
-                                {{-- <input type="text" class="form-control" id="admin_user" name="admin_user" placeholder="Nama Pegawai" required> --}}
-                                    {{-- <label for="adminRendanUser">Dikirim Kepada :</label> --}}
-                                    <select name="adminRendanUser" id="adminRendanUser" class="form-control" placeholder="Nama Pegawai" required>
-                                        <option value=""> </option>
-                                        @foreach($adminRendanOptions as $option)
-                                            <option value="{{ $option->id_user }}" {{ $adminRendanUser && $option->id_user == $adminRendanUser ? 'selected' : '' }}>
-                                                {{ $option->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                            </div>
-                        </form>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="okBtn">OK</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </td>
-    @endif
-    <td>
-        <a href="{{ route('persetujuan.pengadaan-rendan.index') }}" class="btn btn-primary my-4">Kembali</a>
+        <a href="{{ route('adminrendan.detail', ['ID_Pengadaan'=>$pengadaan->ID_Pengadaan]) }}" class="btn btn-primary my-4">Kembali</a>
     </td>
     </div>
 </div>

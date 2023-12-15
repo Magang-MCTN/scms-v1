@@ -42,7 +42,7 @@
                         <div class="form-group">
                             <label for="ringkasan_pekerjaan">Ringkasan Pekerjaan</label>
                             <div class="form-group">
-                                <textarea class="form-control" name="ringkasan_pekerjaan"></textarea>
+                                <textarea class="ckeditor form-control" name="ringkasan_pekerjaan"></textarea>
                             </div>
                         </div>
 
@@ -109,16 +109,16 @@
                             <label for="rencana_tanggal_terkontrak_selesai">Rencana Tanggal Terkontrak Selesai</label>
                         </div>
                         <div class="form-group" style="display: flex; ">
-                                <input type="date" name="rencana_tanggal_terkontrak_mulai" id="rencana_tanggal_terkontrak_mulai" class="form-control" required style="width: 45%;">
+                                <input type="date" name="rencana_tanggal_terkontrak_mulai" id="rencana_tanggal_terkontrak_mulai" class="form-control" style="width: 45%;">
                                 <span style="margin: 0 15px;"><b>-</b></span>
-                                <input type="date" name="rencana_tanggal_terkontrak_selesai" id="rencana_tanggal_terkontrak_selesai" class="form-control" required style="width: 45%;">
+                                <input type="date" name="rencana_tanggal_terkontrak_selesai" id="rencana_tanggal_terkontrak_selesai" class="form-control" style="width: 45%;">
                         </div>
 
                         <div class="form-group">
                             <label for="rencana_durasi_kontrak">Rencana Durasi Kontrak</label>
                             <div class="input-group">
-                                <input type="number" name="rencana_durasi_kontrak" id="rencana_durasi_kontrak" class="form-control" required style="width: 70%;">
-                                <select name="rencana_durasi_kontrak_tanggal" id="rencana_durasi_kontrak_tanggal" class="form-control" required>
+                                <input type="number" name="rencana_durasi_kontrak" id="rencana_durasi_kontrak" class="form-control" style="width: 70%;">
+                                <select name="rencana_durasi_kontrak_tanggal" id="rencana_durasi_kontrak_tanggal" class="form-control">
                                     <option value=""> </option>
                                     <option value="Hari Kerja">Hari Kerja</option>
                                     <option value="Hari Kalender">Hari Kalender</option>
@@ -131,7 +131,7 @@
                         @if ($jenisPengadaan->ID_Jenis_Pengadaan != 1)
                         <div class="form-group" id="url_kak">
                             <label for="url_kak">URL KAK</label>
-                            <input type="text" name="url_kak" id="url_kak" class="form-control" value="{{ old('url_kak') }}" placeholder="Contoh: https://mctn.co.id">
+                            <input type="text" name="url_kak" id="url_kak" class="form-control" value="{{ old('url_kak') }}" placeholder="Contoh: https://mctn.co.id" pattern="https?://.+">
                             @error('url_kak')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -139,7 +139,7 @@
                         @else
                         <div class="form-group" id="url_spesifikasi_teknis">
                             <label for="url_spesifikasi_teknis">URL Spesifikasi Teknis</label>
-                            <input type="text" name="url_spesifikasi_teknis" id="url_spesifikasi_teknis" class="form-control" value="{{ old('url_spesifikasi_teknis') }}" placeholder="Contoh: https://mctn.co.id">
+                            <input type="text" name="url_spesifikasi_teknis" id="url_spesifikasi_teknis" class="form-control" value="{{ old('url_spesifikasi_teknis') }}" placeholder="Contoh: https://mctn.co.id" pattern="https?://.+">
                             @error('url_spesifikasi_teknis')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -170,7 +170,7 @@
 
                     </body>
 
-                    {{-- <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script> --}}
+                    <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
                     <script type="text/javascript">
                         $(document).ready(function () {
                             $('.ckeditor').ckeditor();

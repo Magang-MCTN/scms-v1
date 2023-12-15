@@ -23,7 +23,7 @@
 
                     <div class="form-group">
                         <label for="Deskripsi">Deskripsi:</label>
-                        <textarea name="barang[0][Deskripsi]" id="Deskripsi" class="form-control" required></textarea>
+                        <textarea name="barang[0][Deskripsi]" id="Deskripsi" class="ckeditor form-control" required></textarea>
                     </div>
 
                     <div class="form-group">
@@ -52,8 +52,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="keterangan">Keterangan:</label>
-                        <textarea class="form-control" name="barang[0][Keterangan]"></textarea>
+                        <label for="Keterangan">Keterangan:</label>
+                        <textarea class="ckeditor form-control" name="barang[0][Keterangan]"></textarea>
                     </div>
                 </div>
 
@@ -172,7 +172,12 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js"></script>
+<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 <script type="text/javascript">
+ $(document).ready(function () {
+                            $('.ckeditor').ckeditor();
+                        });
 
 $(document).ready(function () {
         // Event listener untuk tombol Tambah Barang
@@ -288,6 +293,19 @@ newForm.find('[name^="barang"]').each(function () {
 //     $("#total_keseluruhan").on("input", toggleDivisi2Divisi3Visibility);
 
 </script>
+<script>
+    CKEDITOR.on("instanceReady", function(event) {
+        event.editor.on("beforeCommandExec", function(event) {
+            // Show the paste dialog for the paste buttons and right-click paste
+            if (event.data.name == "paste") {
+                event.editor._.forcePasteDialog = true;
+            }
+            // Don't show the paste dialog for Ctrl+Shift+V
+            if (event.data.name == "pastetext" && event.data.commandData.from == "keystrokeHandler") {
+                event.cancel();
+            }
+        })
+    });</script>
 
 @endsection
 

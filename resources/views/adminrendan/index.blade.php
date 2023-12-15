@@ -18,7 +18,8 @@
                         <tbody>
                             @foreach ($pengadaan as $pekerjaan)
                                 <tr>
-                                    @if (in_array($pekerjaan->id_status, [9, 11, 12, 13 , 14, 15, 16, 17]))
+                                    @if ($pekerjaan->id_admin_rendan == auth()->user()->id_user)
+                                    {{-- @if (in_array($statusRab->id_status, [2, 3, 8])) --}}
                                     <td>{{ $pekerjaan->Judul_Pengadaan }}</td>
                                     <td class="badge badge-warning">
                                         @php
@@ -31,13 +32,11 @@
                                         @endif
                                     </td>
                                     <td>
-                                    @if ($pekerjaan->id_status == 9)
-                                        <a href="{{ route('pejabatrendan.detail', ['ID_Pengadaan' => $pekerjaan->ID_Pengadaan]) }}" class="btn btn-info">Lihat Detail</a>
-                                    @elseif (in_array($pekerjaan->id_status, [11, 12, 13 , 14, 15, 16, 17]))
-                                        <a href="{{ route('pejabatrendan.pekerjaan.detail', ['ID_Pengadaan' => $pekerjaan->ID_Pengadaan]) }}" class="btn btn-info">Lihat Detail</a>
-                                    @endif
+                                        <a href="{{ route('adminrendan.detail', ['ID_Pengadaan' => $pekerjaan->ID_Pengadaan]) }}" class="btn btn-info">Lihat Detail</a>
                                     </td>
-                                @endif
+                                    @else
+                                    <a style="display: none;"></a>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>

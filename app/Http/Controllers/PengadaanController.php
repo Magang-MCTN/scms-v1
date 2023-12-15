@@ -60,7 +60,7 @@ class PengadaanController extends Controller
     $pengadaan->checklist_nota_dinas_permintaan_pelaksanaan_pengadaan = $request->has('checklist_nota_dinas_permintaan_pelaksanaan_pengadaan') ? 1 : 0;
     $pengadaan->checklist_rencana_anggaran_biaya = $request->has('checklist_rencana_anggaran_biaya') ? 1 : 0;
     $pengadaan->checklist_justifikasi_penunjukan_langsung = $request->has('checklist_justifikasi_penunjukan_langsung') ? 1 : 0;
-    $pengadaan->id_status = 6;
+    $pengadaan->id_status = 1;
     $pengadaan->id_status_rab = 6;
     $pengadaan->id_status_justifikasi = 6;
     $pengadaan->id_status_nota_dinas_permintaan = 6;

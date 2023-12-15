@@ -68,13 +68,23 @@
             @foreach($pengadaan as $item)
             <tr>
                 <td>{{ $item->Judul_Pengadaan }}</td>
-                <td>
+                <td class="badge badge-warning">
+                    @php
+                    $statusItem = $item->status ?? null;
+                    @endphp
+                    @if ($statusItem)
+                        {{ $statusItem->keterangan_status }}
+                    @else
+                        Status Tidak Ditemukan
+                    @endif
+                </td>
+                {{-- <td>
                     @if($item->status == 'Selesai')
                         <span style="color: green;">&#10003;</span>
                     @else
                         <span style="color: yellow;">&#128308;</span>
                     @endif
-                </td>
+                </td> --}}
                 <td>{{ $item->operasi }}
 
                     <button type="button" class="btn btn-warning edit-button" data-id="{{$item->ID_Pengadaan}}">

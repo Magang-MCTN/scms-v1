@@ -272,7 +272,7 @@ CKEDITOR.on("instanceReady", function(event) {
 document.addEventListener("DOMContentLoaded", function() {
  
     // Ambil elemen select jenis_pengadaan
-    const jenisPengadaanSelect = document.getElementById("Jenis_Pengadaan");
+    const jenisPengadaanSelect = document.getElementById("jenis_pengadaan");
 
     // Ambil elemen formulir URL KAK dan URL Spesifikasi Teknis
     const kriteriaJasa = document.getElementById("kriteria-jasa");

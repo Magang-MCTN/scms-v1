@@ -210,14 +210,14 @@
           <div class="collapse" id="pengadaanSubMenu">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/rab">RAB</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+              {{-- <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li> --}}
+              {{-- <li class="nav-item"> <a class="nav-link" href="/rab">RAB</a></li> --}}
+              {{-- <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li> --}}
+              {{-- <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li> --}}
             </ul>
           </div>
         </li>
-        <li class="nav-item nav-category">Cash Advance</li>
+        {{-- <li class="nav-item nav-category">Cash Advance</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
             <i class="menu-icon mdi mdi-floor-plan"></i>
@@ -231,7 +231,7 @@
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
             </ul>
           </div>
-        </li>
+        </li> --}}
 
         <li class="nav-item nav-category">Signatures</li>
         <li class="nav-item">
@@ -259,13 +259,13 @@
           <div class="collapse" id="ui-basic">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+              {{-- <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li> --}}
+              {{-- <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li> --}}
+              {{-- <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li> --}}
             </ul>
           </div>
         </li>
-        <li class="nav-item nav-category">Cash Advance</li>
+        {{-- <li class="nav-item nav-category">Cash Advance</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
             <i class="menu-icon mdi mdi-floor-plan"></i>
@@ -280,7 +280,7 @@
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
             </ul>
           </div>
-        </li>
+        </li> --}}
 
         <li class="nav-item nav-category">Signatures</li>
         <li class="nav-item">
@@ -307,14 +307,14 @@
           </a>
           <div class="collapse" id="ui-basic">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan/rendan">Pengadaan Barang Rendan</a></li>
+              {{-- <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li> --}}
+              {{-- <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li> --}}
+              {{-- <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li> --}}
             </ul>
           </div>
         </li>
-        <li class="nav-item nav-category">Cash Advance</li>
+        {{-- <li class="nav-item nav-category">Cash Advance</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
             <i class="menu-icon mdi mdi-floor-plan"></i>
@@ -323,13 +323,13 @@
           </a>
           <div class="collapse" id="cashAdvanceSubMenu">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan/rendan">Pengadaan Barang Dari Rendan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
             </ul>
           </div>
-        </li>
+        </li> --}}
 
         <li class="nav-item nav-category">Signatures</li>
         <li class="nav-item">
@@ -357,13 +357,13 @@
           <div class="collapse" id="ui-basic">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+              {{-- <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li> --}}
+              {{-- <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li> --}}
+              {{-- <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li> --}}
             </ul>
           </div>
         </li>
-        <li class="nav-item nav-category">Cash Advance</li>
+        {{-- <li class="nav-item nav-category">Cash Advance</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
             <i class="menu-icon mdi mdi-floor-plan"></i>
@@ -378,7 +378,7 @@
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
             </ul>
           </div>
-        </li>
+        </li> --}}
 
         <li class="nav-item nav-category">Signatures</li>
         <li class="nav-item">
@@ -406,13 +406,13 @@
           <div class="collapse" id="ui-basic">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="/persetujuan/pengadaan">Persetujuan Pengadaan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+              {{-- <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li> --}}
+              {{-- <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li> --}}
             </ul>
           </div>
         </li>
 
-        <li class="nav-item nav-category">Cash Advance</li>
+        {{-- <li class="nav-item nav-category">Cash Advance</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
             <i class="menu-icon mdi mdi-floor-plan"></i>
@@ -427,7 +427,7 @@
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
             </ul>
           </div>
-        </li>
+        </li> --}}
 
         <li class="nav-item nav-category">Signatures</li>
         <li class="nav-item">
@@ -455,13 +455,13 @@
           <div class="collapse" id="ui-basic">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="/persetujuan/pengadaan/rendan">Persetujuan Pengadaan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+              {{-- <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li> --}}
+              {{-- <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li> --}}
+              {{-- <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li> --}}
             </ul>
           </div>
         </li>
-        <li class="nav-item nav-category">Cash Advance</li>
+        {{-- <li class="nav-item nav-category">Cash Advance</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
             <i class="menu-icon mdi mdi-floor-plan"></i>
@@ -476,7 +476,7 @@
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
             </ul>
           </div>
-        </li>
+        </li> --}}
 
         <li class="nav-item nav-category">Signatures</li>
         <li class="nav-item">
@@ -504,10 +504,10 @@
           <div class="collapse" id="ui-basic">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="/approve-vendor">Approve Vendor</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+              {{-- <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li> --}}
+              {{-- <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li> --}}
+              {{-- <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li> --}}
+              {{-- <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li> --}}
               @if(isset($vendor))
     <!-- Tautan yang berkaitan dengan vendor -->
     <a href="{{ route('approve.vendor', $vendor->vendor_id) }}">Approve Vendor</a>
@@ -516,7 +516,7 @@
             </ul>
           </div>
         </li>
-        <li class="nav-item nav-category">Cash Advance</li>
+        {{-- <li class="nav-item nav-category">Cash Advance</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
             <i class="menu-icon mdi mdi-floor-plan"></i>
@@ -531,7 +531,7 @@
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
             </ul>
           </div>
-        </li>
+        </li> --}}
         @endif
 
         @if (Auth::user()->level === 'Admin Tim')

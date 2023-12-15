@@ -59,10 +59,18 @@
         <p>&nbsp;&nbsp;&nbsp;&nbsp;Sumber Anggaran&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <b>{{ $sumberAnggaran->nama_anggaran }}</b></p>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;Cost Center&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <b>{{ $notaDinasPermintaan->cost_center }}</b></p>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;Pagu Anggaran&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <b>{{ $notaDinasPermintaan->pagu_anggaran }}</b></p>
+        @if ($rencanaMulaiFormatted && $rencanaSelesaiFormatted)
         <p>&nbsp;&nbsp;&nbsp;&nbsp;Rencana Tanggal Terkontrak&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <b>{{ $rencanaMulaiFormatted }} - {{ $rencanaSelesaiFormatted }}</b></p>
+        @endif
+        @if ($pengadaan->rencana_durasi_kontrak && $pengadaan->rencana_durasi_kontrak_tanggal)
         <p>&nbsp;&nbsp;&nbsp;&nbsp;Rencan Durasi Kontrak&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <b>{{ $pengadaan->rencana_durasi_kontrak }} {{ $pengadaan->rencana_durasi_kontrak_tanggal }}</b></p>
+        @endif
+        @if ($notaDinasPermintaan->url_kak)
         <p>&nbsp;&nbsp;&nbsp;&nbsp;URL KAK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <b>{{ $notaDinasPermintaan->url_kak }}</b></p>
+        @endif
+        @if ($notaDinasPermintaan->url_spesifikasi_teknis)
         <p>&nbsp;&nbsp;&nbsp;&nbsp;URL Spesifikasi Teknis&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <b>{{ $notaDinasPermintaan->url_spesifikasi_teknis }}</b></p>
+        @endif
         <p></p>
         <p>Dengan ini, kami mohon dukungan dari tim rencana pengadaan untuk menyiapkan dokumen yang dibutuhkan untuk dapat melaksanakan proses pengadaan barang/jasa sesuai dengan informasi yang tertera di atas.</p>
         <p>Demikian disampaikan, atas perhatiannya diucapkan terimakasih.</p>

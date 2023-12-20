@@ -45,14 +45,24 @@ class Pengadaan extends Model
         'rencana_durasi_kontrak_tanggal',
     ];
 
+    //dummy sistem evaluasi penawaran
+    public function sistemEvaluasiPenawaran()
+    {
+        return $this->hasMany(MetodeEvaluasiPenawaran::class, 'ID_Metode_Evaluasi_Penawaran');
+    }
     public function metodePengadaan()
     {
         return $this->hasMany(MetodePengadaan::class, 'ID_Metode_Pengadaan');
     }
 
-    public function sistemEvaluasiPenawaran()
+    public function metodePenawaran()
     {
-        return $this->hasMany(SistemEvaluasiPenawaran::class, 'ID_Sistem_Evaluasi_Penawaran');
+        return $this->hasMany(MetodePenawaran::class, 'ID_Metode_Penawaran');
+    }
+
+    public function metodeEvaluasiPenawaran()
+    {
+        return $this->hasMany(MetodeEvaluasiPenawaran::class, 'ID_Metode_Evaluasi_Penawaran');
     }
 
     public function jenisPengadaan()
@@ -63,6 +73,11 @@ class Pengadaan extends Model
     public function rab()
     {
         return $this->hasOne(Rab::class, 'ID_Pengadaan');
+    }
+
+    public function ringkasanRKS()
+    {
+        return $this->hasOne(RingkasanRKS::class, 'ID_Pengadaan');
     }
 
     public function justifikasiPenunjukanLangsung()

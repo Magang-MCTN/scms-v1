@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DokumenKualifikasi;
 use App\Models\HPE;
 use App\Models\JenisPengadaan;
 use App\Models\JustifikasiPenunjukanLangsung;
@@ -10,6 +11,7 @@ use App\Models\Kriteria;
 use App\Models\Pengadaan;
 use App\Models\Rab;
 use App\Models\RencanaNotaDinas;
+use App\Models\RingkasanRKS;
 use App\Models\Status;
 use App\Models\SumberAnggaran;
 use App\Models\User;
@@ -44,9 +46,9 @@ class AdminRendanController extends Controller
     {
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
         $hpe = HPE::where('ID_Pengadaan', $ID_Pengadaan)->first();
-        // $rks = HPE::where('ID_Pengadaan', $ID_Pengadaan)->first();
-        // $ringkasanRKS = HPE::where('ID_Pengadaan', $ID_Pengadaan)->first();
-        // $dokumenKualifikasi = HPE::where('ID_Pengadaan', $ID_Pengadaan)->first();
+        $rks = RingkasanRKS::where('ID_Pengadaan', $ID_Pengadaan)->first();
+        $ringkasanRKS = RingkasanRKS::where('ID_Pengadaan', $ID_Pengadaan)->first();
+        $dokumenKualifikasi = DokumenKualifikasi::where('ID_Pengadaan', $ID_Pengadaan)->first();
         $notaDinasPermintaan = RencanaNotaDinas::where('ID_Pengadaan', $ID_Pengadaan)->first();
         $dokumenList = ['Nota Dinas Permintaan Pengadaan', 'HPE', 'RKS', 'Ringkasan RKS', 'Dokumen Kualifikasi'];
         $dokumen_checked = [];
@@ -63,7 +65,7 @@ class AdminRendanController extends Controller
     $statusRingkasanRKS = $pengadaan->statusRingkasanRKS;
     $statusDokumenKualifikasi = $pengadaan->statusDokumenKualifikasi;
 
-        return view('adminrendan.detail', compact('pengadaan', 'notaDinasPermintaan','hpe','dokumen_checked','dokumenList','statusData','status', 'statusNotaDinasPermintaan','statusHPE','statusRKS','statusRingkasanRKS','statusDokumenKualifikasi'));
+        return view('adminrendan.detail', compact('pengadaan', 'notaDinasPermintaan','rks','ringkasanRKS','dokumenKualifikasi','hpe','dokumen_checked','dokumenList','statusData','status', 'statusNotaDinasPermintaan','statusHPE','statusRKS','statusRingkasanRKS','statusDokumenKualifikasi'));
 
     }
 

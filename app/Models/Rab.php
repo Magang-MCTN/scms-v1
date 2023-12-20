@@ -19,6 +19,7 @@ class Rab extends Model
         'nama_user_1',
         'jabatan_user_1',
         'tanda_tangan_user_1',
+        'tanggal_pengajuan',
     ];
 
     public function kota()

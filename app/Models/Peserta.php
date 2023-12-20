@@ -29,7 +29,7 @@ class Peserta extends Model
 
     public function signaturesVendor()
     {
-        return $this->hasMany(SignaturesVendor::class, 'ID_Peserta', 'ID_Peserta');
+        return $this->hasOne(SignaturesVendor::class, 'ID_Peserta', 'ID_Peserta');
     }
 
     // public function perwakilanDaftar()

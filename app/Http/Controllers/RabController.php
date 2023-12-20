@@ -73,6 +73,7 @@ class RabController extends Controller
     public function store(Request $request, $ID_Pengadaan)
 {
     try {
+        // dd($request->all());
         $validatedData = $request->validate([
             'barang.*.Nama_Barang' => 'required|max:255',
             'barang.*.Deskripsi' => 'required|string',
@@ -90,12 +91,12 @@ class RabController extends Controller
         $pengadaan->update(['id_status_rab' => 7]);
         $pengadaan->update(['id_status' => 10]);
 
-         $request->validate([
-            'divisUser1' => 'required|exists:users,id_user',
-            // 'divisUser2' => 'required|exists:users,id_user',
-            // 'divisUser3' => 'required|exists:users,id_user',
-        ]);
-        $pengadaan->update(['id_pejabat_user_tingkat_3' => $request->input('divisiUser1')]);
+        //  $request->validate([
+        //     'divisUser1' => 'required|exists:users,id_user',
+        //     // 'divisUser2' => 'required|exists:users,id_user',
+        //     // 'divisUser3' => 'required|exists:users,id_user',
+        // ]);
+        // $pengadaan->update(['id_pejabat_user_tingkat_3' => $request->input('divisiUser1')]);
         // $pengadaan->update(['id_pejabat_user_tingkat_2' => $request->input('divisiUser2')]);
         // $pengadaan->update(['id_pejabat_user_tingkat_1' => $request->input('divisiUser3')]);
 
@@ -112,8 +113,8 @@ class RabController extends Controller
             $barang = new Barang($barangData);
             $barang->ID_Pengadaan = $pengadaan->ID_Pengadaan;
             $barang->Kode_Barang = $this->generateKodeBarang();
-            $barang->Deskripsi = strip_tags($barangData['Deskripsi']);
-            $barang->Keterangan = strip_tags($barangData['Keterangan'] ?? null);
+            // $barang->Deskripsi = strip_tags($barangData['Deskripsi']);
+            // $barang->Keterangan = strip_tags($barangData['Keterangan'] ?? null);
 
             // Hitung total untuk setiap barang
             $barang->Total = $barangData['estimasi_jumlah'] * $barangData['Harga'];
@@ -148,8 +149,8 @@ class RabController extends Controller
         // Tangani kasus ketika user tidak ditemukan atau properti 'name' tidak ada
         \Log::error('User dengan nama ' . $namaUser1 . ' tidak ditemukan atau properti "name" tidak ada.');
     }
+    \Log::info('Validated Data: ' . json_encode($validatedData));
 
-    
         \Log::info('Data Rab berhasil disimpan: ' . $rab->toJson());
 
         \Log::info('Data Barang dan Transaksi berhasil disimpan');
@@ -302,7 +303,10 @@ public function kirimRab($ID_Pengadaan, $ID_RAB)
     $user = auth()->user();
     $divisi = $user->divisi;
     $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
+    $rab = Rab::findOrFail($ID_RAB);
+    $tanggalPengajuan = Carbon::now('Asia/Jakarta');
     $pengadaan->update(['id_status_rab' => 8]);
+    $rab->update(['tanggal_pengajuan' => $tanggalPengajuan]);
     // Redirect ke halaman detail
     return redirect()->route('pengadaan.detail', ['ID_Pengadaan' => $ID_Pengadaan, 'ID_RAB' => $ID_RAB])
                    ->with('success', 'Pengadaan berhasil dikirim.');

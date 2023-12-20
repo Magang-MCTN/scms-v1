@@ -42,7 +42,7 @@ class JustifikasiController extends Controller
     {
         try {
         $validatedData = $request->validate([
-            'pagu_anggaran' => 'required|numeric',
+            'pagu_anggaran' => 'required',
             'Rincian_Status_Kondisi',
             'Rincian_Alasan_Metode',
             'Rincian_Kriteria_Peserta_Teknis',
@@ -277,6 +277,9 @@ public function kirimJustifikasi($ID_Pengadaan, $ID_JPL)
     $divisi = $user->divisi;
     $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
     $pengadaan->update(['id_status_justifikasi' => 8]);
+    $justifikasi = JustifikasiPenunjukanLangsung::findOrFail($ID_JPL);
+    $tanggalPengajuan = Carbon::now('Asia/Jakarta');
+    $justifikasi->update(['tanggal_pengajuan' => $tanggalPengajuan]);
     // Redirect ke halaman detail
     return redirect()->route('pengadaan.detail', ['ID_Pengadaan' => $ID_Pengadaan, 'ID_JPL' => $ID_JPL])
                    ->with('success', 'Surat Justifikasi Penunjukan Langsung berhasil dikirim.');

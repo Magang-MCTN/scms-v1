@@ -50,11 +50,11 @@
         <p></p>
         <br>
         <h4><center>RENCANA ANGGARAN BIAYA (RAB)</center></h4>
-        <center>PENGADAAN LANGSUNG BARANG/JASA</center>
+        <center>PENGADAAN BARANG/JASA</center>
 
         <h3><center>{{ $pengadaan->Judul_Pengadaan }}</center></h3>
 
-        <p>Berikut terlampir usulan Rencana Anggaran Biaya (RAB) untuk Pengadaan Langsung tersebut di atas, yakni senilai:</p>
+        <p>Berikut terlampir usulan Rencana Anggaran Biaya (RAB) untuk Pengadaan tersebut di atas, yakni senilai:</p>
 
         <table border="1" cellpadding="2">
             <thead>

@@ -23,12 +23,18 @@ class RencanaNotaDinas extends Model
         'jabatan_user_1',
         'tanda_tangan_user_1',
         'ID_Pengadaan',
+        'ID_Jenis_Pengadaan ',
         'url_kak',
         'url_spesifikasi_teknis',
+        'tanggal_pengajuan',
     ];
     public function kota()
     {
         return $this->hasMany(Kota::class, 'ID_Kota');
+    }
+    public function jenisPengadaan()
+    {
+        return $this->belongsTo(JenisPengadaan::class, 'ID_Jenis_Pengadaan');
     }
     public function pengadaan()
     {

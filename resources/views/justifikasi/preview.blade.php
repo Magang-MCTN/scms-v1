@@ -36,10 +36,10 @@
     <br>
     <div>
         <br>
-        <P>PENUNJUKAN LANGSUNG UNTUK : <b>{{ $pengadaan->Judul_Pengadaan }}</b></P>
-        <P>JENIS PENGADAAN : <b>{{ $jenisPengadaan->Jenis_Pengadaan }}</b></P>
-        <P>PAGU ANGGARAN : <b>{{ $justifikasi->pagu_anggaran }}</b></P>
-        <P>PESERTA PENUNJUKAN LANGSUNG : <b>{{ $justifikasi->nama_perusahaan }}</b></P>
+        <P>Penunjukan Langsung Untuk : <b>{{ $pengadaan->Judul_Pengadaan }}</b></P>
+        <P>Jenis Pengadaan : <b>{{ $jenisPengadaan->Jenis_Pengadaan }}</b></P>
+        <P>Pagu Anggaran : <b>Rp {{ $justifikasi->pagu_anggaran }}</b></P>
+        <P>Peserta Penunjukan Langsung : <b>{{ $justifikasi->nama_perusahaan }}</b></P>
         <br>
         <table border="1" cellpadding="3">
             <tbody>
@@ -172,9 +172,9 @@
             </tbody>
             @else
             <tbody>
-                {{-- <tr>
+                <tr>
                     <th>Kriteria</th>
-                </tr> --}}
+                </tr>
                 @php
                     $checklistNames3 = [
                     "Jasa yang akan diadakan bersifat spesifik hanya dapat dilaksanakan dengan menggunakna teknologi &nbsp;&nbsp;&nbsp;&nbsp;khusus oleh pemegang Hak Atas Kekayaan Intelektual (HAKI) dan/atau hanya ada 1 (satu) penyedia &nbsp;&nbsp;&nbsp;&nbsp;jasa konsultansi yang mampu melaksanakan.",

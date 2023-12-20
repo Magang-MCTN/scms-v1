@@ -12,6 +12,23 @@
                     <form method="POST" action="{{ route('justifikasi.store', ['ID_Pengadaan' => $justifikasiID->ID_Pengadaan]) }}">
                         @csrf
 
+                        <div class="form-group">
+                            <label for="kota">Kota:</label>
+                            <select name="kota" id="kota" class="form-control" required>
+                                <option value=""> </option>
+                                @foreach($kotaOptions as $option)
+                                    <option value="{{ $option->Kota }}" {{ $kota && $option->Kota == $kota->id ? 'selected' : '' }}>
+                                        {{ $option->Kota }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Tanggal">Tanggal</label>
+                            <input type="date" name="Tanggal" id="Tanggal" class="form-control" required>
+                        </div>
+
                         <div class="d-flex justify-content-between">
                             <h3>Nama Pekerjaan: {{ $justifikasiID->Judul_Pengadaan }}</h3>
                         </div>
@@ -216,23 +233,6 @@
                                 <input type="checkbox" class="form-check-input" name="checklist_31" id="checklist_31">
                                 <label class="form-check-label" for="checklist_31">Apabila terdapat kriteria yang belum diatur sebagaimana pada butir 1) sd 15) ayat 4.2.8.1, pasal ini maka harus melalui persetujuan Direksi.</label>
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="kota">Kota:</label>
-                            <select name="kota" id="kota" class="form-control" required>
-                                <option value=""> </option>
-                                @foreach($kotaOptions as $option)
-                                    <option value="{{ $option->Kota }}" {{ $kota && $option->Kota == $kota->id ? 'selected' : '' }}>
-                                        {{ $option->Kota }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Tanggal">Tanggal</label>
-                            <input type="date" name="Tanggal" id="Tanggal" class="form-control" required>
                         </div>
 
                         <div class="form-group">

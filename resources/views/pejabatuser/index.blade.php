@@ -20,7 +20,8 @@
                                 <tr>
                                     @if ($pekerjaan->id_pejabat_user_tingkat_3 == auth()->user()->id_user ||
                                     $pekerjaan->id_pejabat_user_tingkat_2 == auth()->user()->id_user ||
-                                    $pekerjaan->id_pejabat_user_tingkat_1 == auth()->user()->id_user)                                    {{-- @if (in_array($pekerjaan->id_status, [8, 9, 10, 11, 12, 13 , 14, 15, 16, 17])) --}}
+                                    $pekerjaan->id_pejabat_user_tingkat_1 == auth()->user()->id_user || (in_array($pekerjaan->id_status, [8, 9, 10, 11, 12, 13 , 14, 15, 16, 17])))
+                                    {{-- @if (in_array($pekerjaan->id_status, [8, 9, 10, 11, 12, 13 , 14, 15, 16, 17])) --}}                                    {{-- @if (in_array($pekerjaan->id_status, [8, 9, 10, 11, 12, 13 , 14, 15, 16, 17])) --}}
                                     <td>{{ $pekerjaan->Judul_Pengadaan }}</td>
                                     <td class="badge badge-warning">
                                         @php

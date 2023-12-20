@@ -81,10 +81,15 @@
                         </div>
 
                         @if ($rencanaMulaiFormatted && $rencanaSelesaiFormatted)
-                        <div class="form-group">
-                            <label for="rencana_durasi_kontrak">Rencana Durasi Kontrak :</label>
-                            <br>
-                            <label><b>{{ $pengadaan->rencana_durasi_kontrak }}</b>&nbsp;&nbsp;<label><b>{{ $pengadaan->rencana_durasi_kontrak_tanggal }}</b></label></label>
+                        <div>
+                            <label for="rencana_tanggal_terkontrak_mulai">Rencana Tanggal Terkontrak Mulai</label>
+                            <span style="margin: 0 130px;"></span>
+                            <label for="rencana_tanggal_terkontrak_selesai">Rencana Tanggal Terkontrak Selesai</label>
+                        </div>
+                        <div class="form-group" style="display: flex; align-items: center;" >
+                                <label style="width: 45%;"><b>{{ $pengadaan->rencana_tanggal_terkontrak_mulai }}</b></label>
+                                <span style="margin: 0 18px;"><b></b></span>
+                                <label style="width: 45%;"><b>{{ $pengadaan->rencana_tanggal_terkontrak_selesai }}</b></label>
                         </div>
                         @endif
 

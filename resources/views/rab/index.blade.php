@@ -1,14 +1,39 @@
 @extends('dashboard.app')
 
 @section('content')
-
+<style>
+    hr {
+        border: 5px solid black;
+    }
+</style>
 <div class="container mt-5">
     <div class="card">
         <div class="card-header">
-            <h4 class="mb-0">Rencana Anggaran Biaya</h4>
+            <h2><b>Nama Pekerjaan : {{ $rabData->Judul_Pengadaan }}</b></h2>
+            <h4 class="mb-0"><center>Rencana Anggaran Biaya</center></h4>
         </div>
         <form method="POST" action="{{ route('rab.store', ['ID_Pengadaan' => $rabData->ID_Pengadaan]) }}" id="rab-form">
             @csrf
+
+            <div class="form-group">
+                <label for="kota">Kota:</label>
+                <select name="kota" id="kota" class="form-control" required>
+                    <option value=""> </option>
+                    @foreach($kotaOptions as $option)
+                        <option value="{{ $option->Kota }}" {{ $kota && $option->Kota == $kota->id ? 'selected' : '' }}>
+                            {{ $option->Kota }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+                <div class="form-group">
+                    <label for="Tanggal">Tanggal</label>
+                    <input type="date" name="Tanggal" id="Tanggal" class="form-control" required>
+                </div>
+
+                <hr  />
+
             <div class="card-body">
                 <div class="barang-form">
                     <label for="barang">Barang:</label>
@@ -23,7 +48,7 @@
 
                     <div class="form-group">
                         <label for="Deskripsi">Deskripsi:</label>
-                        <textarea name="barang[0][Deskripsi]" id="Deskripsi" class="ckeditor form-control" required></textarea>
+                        <textarea name="barang[0][Deskripsi]" id="Deskripsi" class=" form-control" required></textarea>
                     </div>
 
                     <div class="form-group">
@@ -53,30 +78,13 @@
 
                     <div class="form-group">
                         <label for="Keterangan">Keterangan:</label>
-                        <textarea class="ckeditor form-control" name="barang[0][Keterangan]"></textarea>
+                        <textarea class=" form-control" name="barang[0][Keterangan]"></textarea>
                     </div>
                 </div>
 
                 <div id="barang-container">
                     <br>
                 </div>
-
-                <div class="form-group">
-                    <label for="kota">Kota:</label>
-                    <select name="kota" id="kota" class="form-control" required>
-                        <option value=""> </option>
-                        @foreach($kotaOptions as $option)
-                            <option value="{{ $option->Kota }}" {{ $kota && $option->Kota == $kota->id ? 'selected' : '' }}>
-                                {{ $option->Kota }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                    <div class="form-group">
-                        <label for="Tanggal">Tanggal</label>
-                        <input type="date" name="Tanggal" id="Tanggal" class="form-control" required>
-                    </div>
 
                 <div class="form-group">
                     <label for="total_keseluruhan">Total Keseluruhan (Rp):</label>
@@ -173,11 +181,11 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js"></script>
-<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+{{-- <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script> --}}
 <script type="text/javascript">
- $(document).ready(function () {
-                            $('.ckeditor').ckeditor();
-                        });
+//  $(document).ready(function () {
+//                             $('.ckeditor').ckeditor();
+//                         });
 
 $(document).ready(function () {
         // Event listener untuk tombol Tambah Barang
@@ -293,7 +301,7 @@ newForm.find('[name^="barang"]').each(function () {
 //     $("#total_keseluruhan").on("input", toggleDivisi2Divisi3Visibility);
 
 </script>
-<script>
+{{-- <script>
     CKEDITOR.on("instanceReady", function(event) {
         event.editor.on("beforeCommandExec", function(event) {
             // Show the paste dialog for the paste buttons and right-click paste
@@ -305,7 +313,7 @@ newForm.find('[name^="barang"]').each(function () {
                 event.cancel();
             }
         })
-    });</script>
+    });</script> --}}
 
 @endsection
 

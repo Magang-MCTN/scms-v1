@@ -25,6 +25,7 @@ class JustifikasiPenunjukanLangsung extends Model
         'Rincian_Kriteria_Peserta_Teknis',
         'Rincian_Kriteria_Peserta_Komersial',
         'Rincian_Kriteria_Peserta_Lainnya',
+        'tanggal_pengajuan',
     ];
 
     public function kota()

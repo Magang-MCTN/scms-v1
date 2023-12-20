@@ -21,6 +21,7 @@ class HPE extends Model
         'nama_pejabat_rendan',
         'jabatan_pejabat_rendan',
         'tanda_tangan_pejabat_rendan',
+        'tanggal_pengajuan',
     ];
 
     public function kota()
@@ -37,4 +38,5 @@ class HPE extends Model
     {
         return $this->belongsTo(SumberReferensi::class, 'ID_Sumber_Referensi');
     }
+    
 }

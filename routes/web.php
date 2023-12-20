@@ -5,6 +5,7 @@ use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DokumenKualifikasiController;
 use App\Http\Controllers\HPEController;
 use App\Http\Controllers\JustifikasiController;
 use App\Http\Controllers\NotaDinasPermintaanPelaksanaanPengadaanController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\PengadaanScmController;
 use App\Http\Controllers\RabController;
 use App\Http\Controllers\RabPengajuanController;
+use App\Http\Controllers\RingkasanRKSController;
 use App\Http\Controllers\SignaturesController;
 use App\Http\Controllers\TamuController;
 use App\Http\Controllers\TuanRumahController;
@@ -63,7 +65,10 @@ Route::middleware(['auth:web_vendor', 'role:1'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "Pejabat Lakdan"
     // Route::get('/vendor', [VendorController::class, 'index'])->name('vendor');
     Route::get('/vendor/approved', [VendorController::class, 'approved'])->name('vendor-page.approved');
-    Route::put('/vendor/approved/{ID_Vendor}', [VendorController::class, 'approvedSetuju'])->name('vendor-page.approved-setuju');
+    Route::get('/vendor/list', [VendorController::class, 'list'])->name('vendor-page.list');
+    Route::put('/vendor/approved/setuju/{ID_Vendor}', [VendorController::class, 'approvedSetuju'])->name('vendor-page.approved-setuju');
+    Route::put('/vendor/approved/tolak/{ID_Vendor}', [VendorController::class, 'approvedTolak'])->name('vendor-page.approved-tolak');
+    Route::delete('/vendor/approved/hapus/{ID_Vendor}', [VendorController::class, 'approvedHapus'])->name('vendor-page.approved-hapus');
     // Route::get('/profile/vendor', [VendorController::class, 'profile'])->name('vendor-page.profile');
     // Route::post('/profile/peserta', [VendorController::class, 'store'])->name('profile-vendor.store');
     // Route::post('/profile/add-signature/{ID_Peserta}', [VendorController::class, 'addSignature'])->name('profile-vendor.add-signature');
@@ -101,12 +106,17 @@ Route::middleware(['auth:web_vendor', 'role:1'])->group(function () {
 //     Route::get('/status_pengadaan_scm/{id}', [PengadaanScmController::class, 'detail'])->name('pengadaan_scm.detail');
 // });
 Route::middleware(['auth', 'role:2,3,4,5,6,7'])->group(function () {
+    Route::get('/rab/preview/{ID_Pengadaan}/{ID_RAB}', [RabController::class, 'preview'])->name('rab.preview');
     Route::get('/rab/preview/download/{ID_Pengadaan}/{ID_RAB}', [RabController::class, 'downloadPreview'])->name('rab.preview.download');
     Route::get('/justifikasi/preview/download/{ID_Pengadaan}/{ID_JPL}', [JustifikasiController::class, 'downloadPreview'])->name('justifikasi.preview.download');
     Route::get('/nota_dinas_permintaan/preview/download/{ID_Pengadaan}/{id_nota_dinas_permintaan}', [NotaDinasPermintaanPengadaanController::class, 'downloadPreview'])->name('nota_dinas_permintaan.preview.download');
     Route::get('/detail/pejabatrendan/{ID_Pengadaan}', [PejabatRendanController::class, 'detail'])->name('pejabatrendan.detail');
     Route::get('/hpe/preview/download/{ID_Pengadaan}/{ID_HPE}', [HPEController::class, 'downloadPreview'])->name('hpe.preview.download');
     Route::get('/hpe/preview/{ID_Pengadaan}/{ID_HPE}', [HPEController::class, 'preview'])->name('hpe.preview');
+    Route::get('/rks/preview/{ID_Pengadaan}/{ID_Ringkasan_Rks}', [RingkasanRKSController::class, 'preview'])->name('rks.preview');
+    Route::get('/ringkasan-rks/preview/{ID_Pengadaan}/{ID_Ringkasan_Rks}', [RingkasanRKSController::class, 'previewRingkasan'])->name('ringkasan.preview');
+    Route::get('/ringkasan-rks/preview/download/{ID_Pengadaan}/{ID_Ringkasan_Rks}', [RingkasanRKSController::class, 'downloadPreview'])->name('ringkasan.preview.download');
+    Route::get('/dokumen-kualifikasi/preview/{ID_Pengadaan}/{ID_Dokumen_Kualifikasi}', [DokumenKualifikasiController::class, 'preview'])->name('dokumen.preview');
 
 });
 
@@ -137,7 +147,7 @@ Route::middleware(['auth', 'role:1,2,4,'])->group(function () {
     Route::post('/rab/rangkum/{ID_Pengadaan}', [RabController::class, 'rangkum'])->name('rab.rangkum');
     Route::get('/status_rab', [RabController::class, 'status'])->name('rab.status');
     Route::get('/status_rab/{ID_Pengadaan}', [RabController::class, 'detail'])->name('rab.detail');
-    Route::get('/rab/preview/{ID_Pengadaan}/{ID_RAB}', [RabController::class, 'preview'])->name('rab.preview');
+    // Route::get('/rab/preview/{ID_Pengadaan}/{ID_RAB}', [RabController::class, 'preview'])->name('rab.preview');
     // Route::get('/rab/preview/download/{ID_Pengadaan}/{ID_RAB}', [RabController::class, 'downloadPreview'])->name('rab.preview.download');
     Route::get('/pengadaan/kirim/rab/{ID_Pengadaan}/{ID_RAB}', [RabController::class, 'kirimRab'])->name('rab.kirim');
     // Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
@@ -185,6 +195,29 @@ Route::middleware(['auth', 'role:3'])->group(function () {
     // Route::get('/status_justifikasi/{ID_Pengadaan}', [JustifikasiController::class, 'detail'])->name('justifikasi.detail');
     Route::get('/pengadaan/kirim/hpe/{ID_Pengadaan}/{ID_HPE}', [HPEController::class, 'kirimHpe'])->name('hpe.kirim');
 
+    //RKS
+    // Route::get('/hpe/{ID_Pengadaan}', [HPEController::class, 'index'])->name('hpe.index');
+    // Route::get('/justifikasi/create', [JustifikasiController::class, 'create'])->name('justifikasi.create');
+    // Route::post('/hpe/{ID_Pengadaan}', [HPEController::class, 'store'])->name('hpe.store');
+    // Route::get('/status_justifikasi', [JustifikasiController::class, 'status'])->name('justifikasi.status');
+    // Route::get('/status_justifikasi/{ID_Pengadaan}', [JustifikasiController::class, 'detail'])->name('justifikasi.detail');
+    // Route::get('/pengadaan/kirim/hpe/{ID_Pengadaan}/{ID_HPE}', [HPEController::class, 'kirimHpe'])->name('hpe.kirim');
+
+    //Ringkasan RKS
+    Route::get('/ringkasan-rks/{ID_Pengadaan}', [RingkasanRKSController::class, 'index'])->name('rks.index');
+    // Route::get('/justifikasi/create', [JustifikasiController::class, 'create'])->name('justifikasi.create');
+    Route::post('/ringkasan-rks/{ID_Pengadaan}', [RingkasanRKSController::class, 'store'])->name('rks.store');
+    // Route::get('/status_justifikasi', [JustifikasiController::class, 'status'])->name('justifikasi.status');
+    // Route::get('/status_justifikasi/{ID_Pengadaan}', [JustifikasiController::class, 'detail'])->name('justifikasi.detail');
+    Route::get('/pengadaan/kirim/rks/{ID_Pengadaan}/{ID_Ringkasan_Rks}', [RingkasanRKSController::class, 'kirimRKS'])->name('ringkasan.kirim');
+
+    //Dokumen Kualifikasi
+    Route::get('/dokumen-kualifikasi/{ID_Pengadaan}', [DokumenKualifikasiController::class, 'index'])->name('dokumen.index');
+    // // Route::get('/justifikasi/create', [JustifikasiController::class, 'create'])->name('justifikasi.create');
+    Route::post('/dokumen/{ID_Pengadaan}', [DokumenKualifikasiController::class, 'store'])->name('dokumen.store');
+    // // Route::get('/status_justifikasi', [JustifikasiController::class, 'status'])->name('justifikasi.status');
+    // // Route::get('/status_justifikasi/{ID_Pengadaan}', [JustifikasiController::class, 'detail'])->name('justifikasi.detail');
+    // Route::get('/pengadaan/kirim/hpe/{ID_Pengadaan}/{ID_HPE}', [HPEController::class, 'kirimHpe'])->name('hpe.kirim');
 
 });
 
@@ -211,6 +244,11 @@ Route::middleware(['auth', 'role:5'])->group(function () {
     Route::post('/nota_dinas_permintaan/reject/{ID_Pengadaan}/{id_nota_dinas_permintaan}', [PejabatUserController::class, 'rejectFileNotaDinasPermintaan'])->name('pejabatuser.reject-nota-dinas-permintaan');
     // Route::get('/nota_dinas_permintaan/preview/download/{ID_Pengadaan}/{id_nota_dinas_permintaan}', [JustifikasiController::class, 'downloadPreview'])->name('nota_dinas_permintaan.preview.download');
 
+    //RKS
+    Route::get('/approve/rks/user/{ID_Pengadaan}/{ID_Ringkasan_Rks}', [PejabatUserController::class, 'approveRKS'])->name('pejabatuser.approve.rks');
+    Route::post('/rks/approve/user/{ID_Pengadaan}/{ID_Ringkasan_Rks}', [PejabatUserController::class, 'approveFileRKS'])->name('pejabatuser.approve-rks');
+    Route::post('/rks/reject/user/{ID_Pengadaan}/{ID_Ringkasan_Rks}', [PejabatUserController::class, 'rejectFileRKS'])->name('pejabatuser.reject-rks');
+
 });
 Route::middleware(['auth', 'role:6'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "Pejabat Rendan"
@@ -227,6 +265,11 @@ Route::middleware(['auth', 'role:6'])->group(function () {
     Route::get('/approve/hpe/{ID_Pengadaan}/{ID_HPE}', [PejabatRendanController::class, 'approveHPE'])->name('pejabatrendan.approve.hpe');
     Route::post('/hpe/approve/{ID_Pengadaan}/{ID_HPE}', [PejabatRendanController::class, 'approveFileHPE'])->name('pejabatrendan.approve-hpe');
     Route::post('/hpe/reject/{ID_Pengadaan}/{ID_HPE}', [PejabatRendanController::class, 'rejectFileHPE'])->name('pejabatrendan.reject-hpe');
+
+    //RKS
+    Route::get('/approve/rks/{ID_Pengadaan}/{ID_Ringkasan_Rks}', [PejabatRendanController::class, 'approveRKS'])->name('pejabatrendan.approve.rks');
+    Route::post('/rks/approve/{ID_Pengadaan}/{ID_Ringkasan_Rks}', [PejabatRendanController::class, 'approveFileRKS'])->name('pejabatrendan.approve-rks');
+    Route::post('/rks/reject/{ID_Pengadaan}/{ID_Ringkasan_Rks}', [PejabatRendanController::class, 'rejectFileRKS'])->name('pejabatrendan.reject-rks');
 
 });
 Route::middleware(['auth', 'role:7'])->group(function () {
@@ -248,6 +291,8 @@ Route::middleware(['auth:web_vendor', 'role:8'])->group(function () {
     Route::get('/profile/vendor', [VendorController::class, 'profile'])->name('vendor-page.profile');
     Route::post('/profile/peserta', [VendorController::class, 'store'])->name('profile-vendor.store');
     Route::post('/profile/add-signature/{ID_Peserta}', [VendorController::class, 'addSignature'])->name('profile-vendor.add-signature');
+    Route::delete('/profile/delete-signature/{ID_Peserta}', [VendorController::class, 'deleteSignature'])->name('profile-vendor.delete-signature');
+    // Route::post('/profile/update-signature/{ID_Peserta}', [VendorController::class, 'updateSignature'])->name('profile-vendor.store-update-signature');
     Route::post('/profile/add-signature/{ID_Vendor}', [VendorController::class, 'addSignatureVendor'])->name('profile-vendor.add-signature-vendor');
     Route::get('/profile/{ID_Vendor}/edit', [VendorController::class, 'edit'])->name('profile-vendor.edit');
     Route::put('/profile/{ID_Vendor}', [VendorController::class, 'update'])->name('profile-vendor.update');

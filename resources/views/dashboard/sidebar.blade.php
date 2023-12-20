@@ -176,74 +176,26 @@
       <ul class="nav">
         <li class="nav-item">
           @if (Auth::user()->id_role === 1)
-          <a class="nav-link" href="/">
+          <a class="nav-link" href="/vendor/approved">
           @else
-          <a class="nav-link" href="/">
+          <a class="nav-link" href="/vendor/approved">
           @endif
             <i class="mdi mdi-grid-large menu-icon"></i>
             <span class="menu-title">Dashboard</span>
           </a>
         </li>
         @if (Auth::user()->id_role === 1)
-        <li class="nav-item nav-category">Users</li>
+        <li class="nav-item nav-category">Approval Vendors</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#izinUserSubMenu" aria-expanded="false" aria-controls="izinUserSubMenu">
             <i class="menu-icon mdi mdi-floor-plan"></i>
-            <span class="menu-title">Izin User</span>
+            <span class="menu-title">Izin Vendors</span>
             <i class="menu-arrow"></i>
           </a>
           <div class="collapse" id="izinUserSubMenu">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="/admin/users/create">Tambah User</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">Status</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item nav-category">Pengadaan Barang</li>
-        <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#pengadaanSubMenu" aria-expanded="false" aria-controls="pengadaanSubMenu">
-            <i class="menu-icon mdi mdi-floor-plan"></i>
-            <span class="menu-title">Pengadaan</span>
-            <i class="menu-arrow"></i>
-          </a>
-          <div class="collapse" id="pengadaanSubMenu">
-            <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
-              {{-- <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li> --}}
-              {{-- <li class="nav-item"> <a class="nav-link" href="/rab">RAB</a></li> --}}
-              {{-- <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li> --}}
-              {{-- <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li> --}}
-            </ul>
-          </div>
-        </li>
-        {{-- <li class="nav-item nav-category">Cash Advance</li>
-        <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
-            <i class="menu-icon mdi mdi-floor-plan"></i>
-            <span class="menu-title">Cash Advance</span>
-            <i class="menu-arrow"></i>
-          </a>
-          <div class="collapse" id="cashAdvanceSubMenu">
-            <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
-            </ul>
-          </div>
-        </li> --}}
-
-        <li class="nav-item nav-category">Signatures</li>
-        <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
-            <i class="menu-icon mdi mdi-floor-plan"></i>
-            <span class="menu-title">Signatures</span>
-            <i class="menu-arrow"></i>
-          </a>
-          <div class="collapse" id="cashAdvanceSubMenu">
-            <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="/tanda_tangan/create">Upload Tanda Tangan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/tanda_tangan/edit">Edit Tanda Tangan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/vendor/approved">Tambah User</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/vendor/list">Daftar Vendors</a></li>
             </ul>
           </div>
         </li>

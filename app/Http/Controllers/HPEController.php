@@ -26,17 +26,19 @@ class HPEController extends Controller
         $jenisPengadaan = JenisPengadaan::find($pengadaan->ID_Jenis_Pengadaan);
         $kota = !empty($Kota) ? Kota::find($Kota[1]) : null;
         $kotaOptions = Kota::all();
+        $rencanaMulaiFormatted = Carbon::parse($pengadaan->rencana_tanggal_terkontrak_mulai)->format('d F Y');
+        $rencanaSelesaiFormatted = Carbon::parse($pengadaan->rencana_tanggal_terkontrak_selesai)->format('d F Y');
         // $divisi1Options = User::where('id_divisi', 3)->get();
         // $divisiUser1 = !empty($name) ? User::find($name[1]) : null;
 
-        return view('hpe.index', compact('pengadaan','kota', 'notaDinasPermintaan','kotaOptions', 'jenisPengadaan','pejabatRendanOptions','pejabatRendan'));
+        return view('hpe.index', compact('pengadaan','kota', 'notaDinasPermintaan','kotaOptions', 'rencanaMulaiFormatted','rencanaSelesaiFormatted','jenisPengadaan','pejabatRendanOptions','pejabatRendan'));
     }
 
     public function store(Request $request, $ID_Pengadaan)
     {
         try {
         $validatedData = $request->validate([
-            // 'HPE' => 'required|numeric',
+            // 'HPE' => 'required',
             'attachment_file' => 'required|mimes:pdf,xlsx,xls|max:25000',
         ]);
         $namaKota = $request->input('kota');
@@ -211,6 +213,9 @@ public function kirimHpe($ID_Pengadaan, $ID_HPE)
     $divisi = $user->divisi;
     $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
     $pengadaan->update(['id_status_hpe' => 13]);
+    $hpe = HPE::findOrFail($ID_HPE);
+    $tanggalPengajuan = Carbon::now('Asia/Jakarta');
+    $hpe->update(['tanggal_pengajuan' => $tanggalPengajuan]);
     // Redirect ke halaman detail
     return redirect()->route('adminrendan.detail', ['ID_Pengadaan' => $ID_Pengadaan, 'ID_HPE' => $ID_HPE])
     ->with('success', 'Surat HPE berhasil dikirim.');

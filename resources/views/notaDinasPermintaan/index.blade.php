@@ -35,7 +35,7 @@
                         <br>
 
                         <div class="form-group">
-                            <label for="nomor_nd_ppbj">Nomor_ND_PPBJ</label>
+                            <label for="nomor_nd_ppbj">Nomor ND PPBJ</label>
                             <input type="text" name="nomor_nd_ppbj" id="nomor_nd_ppbj" class="form-control" required>
                         </div>
 
@@ -71,9 +71,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="jenis_pengadaan">Jenis Pengadaan :</label>
-                            <br>
-                            <label><b>{{ $jenisPengadaan->Jenis_Pengadaan }}</b></label>
+                            <label for="jenis_pengadaan">Jenis Pengadaan</label>
+                            <select name="jenis_pengadaan" id="jenis_pengadaan" class="form-control" required>
+                                <option value=""> </option>
+                                @foreach($jenisPengadaanOptions as $option)
+                                    <option value="{{ $option->Jenis_Pengadaan }}" {{ $jenisPengadaan && $option->Jenis_Pengadaan == $jenisPengadaan->ID_Jenis_Pengadaan ? 'selected' : '' }}>
+                                        {{ $option->Jenis_Pengadaan }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -128,7 +134,7 @@
                             </div>
                         </div>
                     <div>
-                        @if ($jenisPengadaan->ID_Jenis_Pengadaan != 1)
+                        {{-- @if ($jenisPengadaan->ID_Jenis_Pengadaan != 1) --}}
                         <div class="form-group" id="url_kak">
                             <label for="url_kak">URL KAK</label>
                             <input type="text" name="url_kak" id="url_kak" class="form-control" value="{{ old('url_kak') }}" placeholder="Contoh: https://mctn.co.id" pattern="https?://.+">
@@ -136,7 +142,7 @@
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
-                        @else
+                        {{-- @else --}}
                         <div class="form-group" id="url_spesifikasi_teknis">
                             <label for="url_spesifikasi_teknis">URL Spesifikasi Teknis</label>
                             <input type="text" name="url_spesifikasi_teknis" id="url_spesifikasi_teknis" class="form-control" value="{{ old('url_spesifikasi_teknis') }}" placeholder="Contoh: https://mctn.co.id" pattern="https?://.+">
@@ -144,7 +150,7 @@
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
-                        @endif
+                        {{-- @endif --}}
                     </div>
 
                     <div class="form-group">
@@ -207,6 +213,32 @@ CKEDITOR.on("instanceReady", function(event) {
         }
     });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+     
+        // Ambil elemen select jenis_pengadaan
+        const jenisPengadaanSelect = document.getElementById("jenis_pengadaan");
+    
+        // Ambil elemen formulir URL KAK dan URL Spesifikasi Teknis
+        const urlKAK = document.getElementById("url_kak");
+        const urlSpesifikasiTeknis = document.getElementById("url_spesifikasi_teknis");
+    
+        // Tambahkan event listener untuk perubahan pada jenis_pengadaan
+        jenisPengadaanSelect.addEventListener("change", function() {
+    
+            urlKAK.style.display = "none";
+            urlSpesifikasiTeknis.style.display = "none";
+    
+            // Tampilkan elemen yang sesuai dengan jenis_pengadaan
+            if (jenisPengadaanSelect.value === "Barang") {
+                urlSpesifikasiTeknis.style.display = "block";
+            } else if (jenisPengadaanSelect.value === "Jasa Konstruksi" || jenisPengadaanSelect.value === "Jasa Konsultasi" || jenisPengadaanSelect.value === "Jasa Lainnya" || jenisPengadaanSelect.value === "Pengadaan Khusus") {
+                urlKAK.style.display = "block";
+            }
+        });
+    });
+    </script>
 <script>
     document.getElementById('divisi').addEventListener('change', function() {
         var selectedDivisiId = this.value;

@@ -30,31 +30,31 @@
                                         <td>
                                             @if ($dokumen == 'Nota Dinas Permintaan Pengadaan')
                                                 @if ($notaDinasPermintaan)
-                                                    {{ $notaDinasPermintaan->created_at }}
+                                                    {{ $notaDinasPermintaan->tanggal_pengajuan }}
                                                 {{-- @else
                                                     Status Tidak Ditemukan --}}
                                                 @endif
                                             @elseif ($dokumen == 'HPE')
                                                 @if ($hpe)
-                                                    {{ $hpe->created_at }}
+                                                    {{ $hpe->tanggal_pengajuan }}
                                                 {{-- @else
                                                     Status Tidak Ditemukan --}}
                                                 @endif
                                             @elseif ($dokumen == 'RKS')
-                                                @if ($notaDinasPermintaan)
-                                                    {{ $notaDinasPermintaan->keterangan_status }}
+                                                @if ($rks)
+                                                    {{ $rks->tanggal_pengajuan }}
                                                 {{-- @else
                                                     Status Tidak Ditemukan --}}
                                                 @endif
                                             @elseif ($dokumen == 'Ringkasan RKS')
-                                                @if ($notaDinasPermintaan)
-                                                    {{ $notaDinasPermintaan->keterangan_status }}
+                                                @if ($ringkasanRKS)
+                                                    {{ $ringkasanRKS->tanggal_pengajuan }}
                                                 {{-- @else
                                                     Status Tidak Ditemukan --}}
                                                 @endif
                                             @elseif ($dokumen == 'Dokumen Kualifikasi')
-                                                @if ($notaDinasPermintaan)
-                                                    {{ $notaDinasPermintaan->keterangan_status }}
+                                                @if ($dokumenKualifikasi)
+                                                    {{ $dokumenKualifikasi->tanggal_pengajuan }}
                                                 {{-- @else
                                                     Status Tidak Ditemukan --}}
                                                 @endif
@@ -104,6 +104,24 @@
                                             <a href="{{ route('hpe.index', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan]) }}" class="btn btn-info">Detail</a>
                                             @else
                                             <a href="{{ route('hpe.preview', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'ID_HPE' => $hpe->ID_HPE]) }}" class="btn btn-info">Detail</a>
+                                            @endif
+                                        @elseif ($dokumen == 'RKS')
+                                            @if ($pengadaan->id_status_rks == 6 )
+                                            <a href="{{ route('rks.index', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan]) }}" class="btn btn-info">Detail</a>
+                                            @else
+                                            <a href="{{ route('rks.preview', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'ID_Ringkasan_Rks' =>$rks->ID_Ringkasan_Rks]) }}" class="btn btn-info"  target="_blank">Detail</a>
+                                            @endif
+                                        @elseif ($dokumen == 'Ringkasan RKS')
+                                            @if ($pengadaan->id_status_ringkasan_rks == 6 )
+                                            <a href="{{ route('rks.index', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan]) }}" class="btn btn-info">Detail</a>
+                                            @else
+                                            <a href="{{ route('ringkasan.preview', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'ID_Ringkasan_Rks' => $rks->ID_Ringkasan_Rks]) }}" class="btn btn-info">Detail</a>
+                                            @endif
+                                        @elseif ($dokumen == 'Dokumen Kualifikasi')
+                                            @if ($pengadaan->id_status_dokumen_kualifikasi == 6 )
+                                            <a href="{{ route('dokumen.index', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan]) }}" class="btn btn-info">Detail</a>
+                                            @else
+                                            <a href="{{ route('dokumen.preview', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'ID_Dokumen_Kualifikasi' => $dokumenKualifikasi->ID_Dokumen_Kualifikasi]) }}" class="btn btn-info" target="_blank">Detail</a>
                                             @endif
                                         @endif
                                         </td>

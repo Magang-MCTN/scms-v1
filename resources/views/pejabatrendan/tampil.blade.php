@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="card-body">
-    <h3><center>NOTA DINAS PERENCANAAN PERMINTAAN</center></h3>
+    <h3><center>NOTA DINAS PERMINTAAN PERENCANAAN PENGADAAN</center></h3>
     <hr />
     <embed src="{{ 'data:application/pdf;base64,' . base64_encode($pdf1->output()) }}" type="application/pdf" width="100%" height="500px" />
     {{-- <a href="{{ route('rab.edit', ['ID_RAB' => $rab->ID_RAB]) }}" class="btn btn-warning">Edit</a> --}}
@@ -19,7 +19,7 @@
     @endif --}}
     </div>
 
-    <h3><center>RENCANA BIAYA PENGADAAN</center></h3>
+    <h3><center>RENCANA ANGGARAN BIAYA</center></h3>
     <hr />
     <embed src="{{ 'data:application/pdf;base64,' . base64_encode($pdf2->output()) }}" type="application/pdf" width="100%" height="500px" />
     {{-- <a href="{{ route('rab.edit', ['ID_RAB' => $rab->ID_RAB]) }}" class="btn btn-warning">Edit</a> --}}

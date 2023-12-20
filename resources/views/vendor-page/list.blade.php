@@ -31,17 +31,17 @@
                 </thead>
                 <tbody>
                     @foreach($vendors as $vendor)
-                    @if ($vendor->approved == 0)
+                    @if ($vendor->approved == 1)
                         <tr>
                             <td>{{ $vendor->nama_perusahaan }}</td>
                             <td>{{ $vendor->email_perusahaan }}</td>
                             <td>{{ $vendor->alamat_perusahaan }}</td>
                             <td>{{ $vendor->no_telepon_perusahaan }}</td>
-                            <td>
-                                <form action="{{ route('vendor-page.approved-setuju', ['ID_Vendor' => $vendor->ID_Vendor]) }}" method="POST">
+                            <td> 
+                                <form action="{{ route('vendor-page.approved-tolak', ['ID_Vendor' => $vendor->ID_Vendor]) }}" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda yakin ingin menyetujui vendor ini?')">Setujui</button>
+                                    <button type="submit" class="btn btn-warning" onclick="return confirm('Apakah Anda yakin ingin menolak vendor ini?')">Tolak</button>
                                 </form>
                             </td>
                             <td>

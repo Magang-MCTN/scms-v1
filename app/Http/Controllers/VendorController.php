@@ -66,6 +66,17 @@ class VendorController extends Controller
 
         return redirect()->route('vendor-page.profile')->with('success', 'Tanda tangan berhasil ditambahkan');
     }
+
+    public function deleteSignature(Request $request, $ID_Peserta) {
+        $peserta = Peserta::findOrFail($ID_Peserta);
+
+        if ($peserta->signaturesVendor) {
+            Storage::disk('public')->delete('signatures-vendor/' . $peserta->signaturesVendor->signatures);
+            $peserta->signaturesVendor->delete();
+        }
+
+        return redirect()->route('vendor-page.profile')->with('success', 'Tanda tangan berhasil dihapus');
+    }
     public function addSignatureVendor(Request $request, $ID_Vendor) {
         $validatedData = $request->validate([
             'signatures' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -134,11 +145,22 @@ public function delete($ID_Peserta)
 
 public function approved(Request $request, ...$ID_Vendor){
 
+    $vendor = Vendor::findOrFail($ID_Vendor);
     $vendors = auth()->guard('web_vendor')->user();
     $approved = Vendor::all();
     $vendors = $approved;
 
-    return view('vendor-page.approved', compact('vendors'));
+    return view('vendor-page.approved', compact('vendors','vendor'));
+}
+
+public function list(Request $request, ...$ID_Vendor){
+
+    $vendor = Vendor::findOrFail($ID_Vendor);
+    $vendors = auth()->guard('web_vendor')->user();
+    $approved = Vendor::all();
+    $vendors = $approved;
+
+    return view('vendor-page.list', compact('vendors','vendor'));
 }
 
 public function approvedSetuju($ID_Vendor){
@@ -153,6 +175,34 @@ public function approvedSetuju($ID_Vendor){
     }
 
     return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk melakukan tindakan ini atau ID Vendor tidak valid.');
+}
+
+public function approvedTolak($ID_Vendor){
+    $vendors = Vendor::find($ID_Vendor);
+
+    if ($vendors && auth()->guard('web_vendor')->user()->id_role === 1) {
+        $vendors->update([
+            'approved' => false,
+        ]);
+
+        return redirect()->back()->with('success', 'Vendor berhasil ditolak.');
+    }
+
+    return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk melakukan tindakan ini atau ID Vendor tidak valid.');
+}
+
+public function approvedHapus($ID_Vendor)
+{
+
+    $vendors = Vendor::find($ID_Vendor);
+
+    if (!$vendors) {
+        return redirect()->route('vendor-page.approved', compact('vendors'))->with('error', 'Data peserta tidak ditemukan');
+    }
+
+    $vendors->delete();
+
+    return redirect()->route('vendor-page.approved',  compact('vendors'))->with('success', 'Data peserta berhasil dihapus');
 }
 
 // public function tampilkanPopupPerwakilan()

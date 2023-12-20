@@ -149,6 +149,7 @@
         <br>
         <p><b>{{ $hpe->nama_pejabat_rendan }}</b></p>
         <p><b>{{ $hpe->jabatan_pejabat_rendan }}</b></p>
+        <p><b>Lampiran : <a href="{{ asset('storage/' . $hpe->attachment_file) }}">Rincian Perhitungan HPE</a></b></p>
     </div>
 </body>
 

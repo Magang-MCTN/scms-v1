@@ -22,7 +22,8 @@ class NotaDinasPermintaanPengadaanController extends Controller
     {
         $notaDinasPermintaanID = Pengadaan::findorfail($ID_Pengadaan);
         // $ID_RAB = Rab::where('ID_Pengadaan', $ID_Pengadaan)->value('ID_RAB');
-        $jenisPengadaan = JenisPengadaan::find($notaDinasPermintaanID->ID_Jenis_Pengadaan);
+        $jenisPengadaan = !empty($Jenis_Pengadaan) ? JenisPengadaan::find($Jenis_Pengadaan[1]) : null;
+        $jenisPengadaanOptions = JenisPengadaan::all();
         $rencanaNotaDinasData =  RencanaNotaDinas::all();
         $kota = !empty($Kota) ? Kota::find($Kota[1]) : null;
         $kotaOptions = Kota::all();
@@ -40,7 +41,7 @@ class NotaDinasPermintaanPengadaanController extends Controller
             $divisiUsers = User::whereIn('id_divisi', [4, 5, 6, 7])->get();
         }
 
-        return view('notaDinasPermintaan.index', compact('notaDinasPermintaanID','rencanaNotaDinasData','kota', 'kotaOptions', 'jenisPengadaan', 'divisi', 'divisiOptions', 'divisiUser','divisiUsers','sumberAnggaran','sumberAnggaranOptions', 'divisiUser1','divisi1Options',));
+        return view('notaDinasPermintaan.index', compact('notaDinasPermintaanID','rencanaNotaDinasData','jenisPengadaan','jenisPengadaanOptions','kota', 'kotaOptions', 'jenisPengadaan', 'divisi', 'divisiOptions', 'divisiUser','divisiUsers','sumberAnggaran','sumberAnggaranOptions', 'divisiUser1','divisi1Options',));
     }
 
     public function store(Request $request, $ID_Pengadaan)
@@ -61,6 +62,10 @@ class NotaDinasPermintaanPengadaanController extends Controller
         $kota = Kota::where('Kota', $namaKota)->first();
         $ID_Kota = $kota->ID_Kota;
 
+        $namaJenisPengadaan = $request->input('jenis_pengadaan');
+        $jenisPengadaan = JenisPengadaan::where('jenis_pengadaan', $namaJenisPengadaan)->first();
+        $ID_Jenis_Pengadaan = $jenisPengadaan->ID_Jenis_Pengadaan;
+
         $namaSumberAnggaran = $request->input('nama_anggaran');
         $sumberAnggaran = SumberAnggaran::where('nama_anggaran', $namaSumberAnggaran)->first();
         // $ID_Sumber_Anggaran = $sumberAnggaran->ID_Sumber_Anggaran;
@@ -79,6 +84,10 @@ class NotaDinasPermintaanPengadaanController extends Controller
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
         $pengadaan->update(['id_status_nota_dinas_permintaan' => 7]);
         $pengadaan->update(['id_status' => 10]);
+        
+        // $namaJenisPengadaan = $request->input('jenis_pengadaan');
+        // $jenisPengadaan = JenisPengadaan::where('Jenis_Pengadaan', $namaJenisPengadaan)->first();
+        // $ID_Jenis_Pengadaan = $jenisPengadaan->ID_Jenis_Pengadaan;
 
         $namaDivisi = $request->input('divisi');
         $divisi = Divisi::where('id_divisi', $namaDivisi)->first();
@@ -95,6 +104,7 @@ class NotaDinasPermintaanPengadaanController extends Controller
                 'Nomor_ND_PPBJ' => $request->input('nomor_nd_ppbj'),
                 'ID_Kota' => $ID_Kota,
                 'ID_Pengadaan' => $ID_Pengadaan,
+                // 'ID_Jenis_Pengadaan' => $ID_Jenis_Pengadaan,
                 'Tanggal' => $request->input('Tanggal'),
                 'Nomor_PRK' => $request->input('informasi_anggaran'),
                 'pagu_anggaran' => $request->input('pagu_anggaran'),
@@ -113,6 +123,7 @@ class NotaDinasPermintaanPengadaanController extends Controller
             $sumberAnggaranisi->update([
                 'Ringkasan_Pekerjaan' => strip_tags($request->input('ringkasan_pekerjaan')),
                 'ID_Sumber_Anggaran' => $ID_Sumber_Anggaran,
+                'ID_Jenis_Pengadaan' => $ID_Jenis_Pengadaan,
                 'rencana_tanggal_terkontrak_mulai' => $request->input('rencana_tanggal_terkontrak_mulai'),
                 'rencana_tanggal_terkontrak_selesai' => $request->input('rencana_tanggal_terkontrak_selesai'),
                 'rencana_durasi_kontrak' => $request->input('rencana_durasi_kontrak'),
@@ -233,6 +244,9 @@ public function kirimNotaDinasPermintaan($ID_Pengadaan, $id_nota_dinas_permintaa
     $divisi = $user->divisi;
     $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
     $pengadaan->update(['id_status_nota_dinas_permintaan' => 8]);
+    $notaDinasPermintaan = RencanaNotaDinas::findOrFail($id_nota_dinas_permintaan);
+    $tanggalPengajuan = Carbon::now('Asia/Jakarta');
+    $notaDinasPermintaan->update(['tanggal_pengajuan' => $tanggalPengajuan]);
     // Redirect ke halaman detail
     return redirect()->route('pengadaan.detail', ['ID_Pengadaan' => $ID_Pengadaan, 'id_nota_dinas_permintaan' => $id_nota_dinas_permintaan])
                    ->with('success', 'Surat Nota Dinas Permintaan berhasil dikirim.');

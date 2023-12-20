@@ -207,6 +207,8 @@ Route::middleware(['auth', 'role:3'])->group(function () {
     Route::get('/ringkasan-rks/{ID_Pengadaan}', [RingkasanRKSController::class, 'index'])->name('rks.index');
     // Route::get('/justifikasi/create', [JustifikasiController::class, 'create'])->name('justifikasi.create');
     Route::post('/ringkasan-rks/{ID_Pengadaan}', [RingkasanRKSController::class, 'store'])->name('rks.store');
+    Route::get('/ringkasan-rks/edit/{ID_Pengadaan}/{ID_Ringkasan_Rks}', [RingkasanRKSController::class, 'edit'])->name('rks.edit');
+    Route::put('/ringkasan-rks/update/{ID_Pengadaan}/{ID_Ringkasan_Rks}', [RingkasanRKSController::class, 'update'])->name('rks.update');
     // Route::get('/status_justifikasi', [JustifikasiController::class, 'status'])->name('justifikasi.status');
     // Route::get('/status_justifikasi/{ID_Pengadaan}', [JustifikasiController::class, 'detail'])->name('justifikasi.detail');
     Route::get('/pengadaan/kirim/rks/{ID_Pengadaan}/{ID_Ringkasan_Rks}', [RingkasanRKSController::class, 'kirimRKS'])->name('ringkasan.kirim');

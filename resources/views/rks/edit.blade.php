@@ -9,15 +9,16 @@
                 <div class="card-header"><center>{{ __('EDIT INFORMASI UMUM RKS') }}</center></div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('rks.update', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'ID_Ringkasan_Rks' => $rks->ID_Ringkasan_Rks]) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('rks.update', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'ID_Ringkasan_Rks' => $ringkasanRKS->ID_Ringkasan_Rks]) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
+
                         <div class="form-group">
                             <label for="kota">Kota:</label>
                             <select name="kota" id="kota" class="form-control" required>
                                 <option value=""> </option>
                                 @foreach($kotaOptions as $option)
-                                    <option value="{{ $option->Kota }}" {{ $kota && $option->Kota == $kota->id ? 'selected' : '' }}>
+                                    <option value="{{ $option->Kota }}" {{ old('kota', $ringkasanRKS->ID_Kota) == $option->ID_Kota ? 'selected' : '' }}>
                                         {{ $option->Kota }}
                                     </option>
                                 @endforeach
@@ -26,12 +27,12 @@
 
                         <div class="form-group">
                             <label for="Tanggal">Tanggal</label>
-                            <input type="date" name="Tanggal" id="Tanggal" class="form-control" required>
+                            <input type="date" name="Tanggal" id="Tanggal" class="form-control" required value="{{ old('Tanggal', $ringkasanRKS->Tanggal) }}">
                         </div>
 
                         <div class="form-group">
                             <label for="Nomor_Rks">Nomor RKS</label>
-                            <input type="text" name="Nomor_Rks" id="Nomor_Rks" class="form-control" required>
+                            <input type="text" name="Nomor_Rks" id="Nomor_Rks" class="form-control" required value="{{ old('Nomor_Rks', $ringkasanRKS->Nomor_Rks) }}">
                             @error('Nomor_Rks')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -39,7 +40,7 @@
 
                         <div class="form-group">
                             <label for="Tanggal_Rks">Tanggal RKS</label>
-                            <input type="date" name="Tanggal_Rks" id="Tanggal_Rks" class="form-control" required>
+                            <input type="date" name="Tanggal_Rks" id="Tanggal_Rks" class="form-control" required value="{{ old('Tanggal_Rks', $ringkasanRKS->Tanggal_Rks) }}">
                         </div>
 
                         <div>
@@ -48,9 +49,9 @@
                             <label for="Tanggal_Pengambilan_Rks_Selesai">Tanggal Pengambilan RKS Selesai</label>
                         </div>
                         <div class="form-group" style="display: flex; ">
-                                <input type="date" name="Tanggal_Pengambilan_Rks_Mulai" id="Tanggal_Pengambilan_Rks_Mulai" class="form-control" style="width: 45%;">
+                                <input type="date" name="Tanggal_Pengambilan_Rks_Mulai" id="Tanggal_Pengambilan_Rks_Mulai" class="form-control" style="width: 45%;" value="{{ old('Tanggal_Pengambilan_Rks_Mulai', $ringkasanRKS->Tanggal_Pengambilan_Rks_Mulai) }}">
                                 <span style="margin: 0 15px;"><b>-</b></span>
-                                <input type="date" name="Tanggal_Pengambilan_Rks_Selesai" id="Tanggal_Pengambilan_Rks_Selesai" class="form-control" style="width: 45%;">
+                                <input type="date" name="Tanggal_Pengambilan_Rks_Selesai" id="Tanggal_Pengambilan_Rks_Selesai" class="form-control" style="width: 45%;" value="{{ old('Tanggal_Pengambilan_Rks_Selesai', $ringkasanRKS->Tanggal_Pengambilan_Rks_Selesai) }}">
                         </div>
 
                         <div>
@@ -59,9 +60,9 @@
                             <label for="Waktu_Pengambilan_Rks_Selesai">Waktu Pengambilan RKS Selesai</label>
                         </div>
                         <div class="form-group" style="display: flex; ">
-                                <input type="date" name="Waktu_Pengambilan_Rks_Mulai" id="Waktu_Pengambilan_Rks_Mulai" class="form-control" style="width: 45%;">
+                                <input type="date" name="Waktu_Pengambilan_Rks_Mulai" id="Waktu_Pengambilan_Rks_Mulai" class="form-control" style="width: 45%;" value="{{ old('Waktu_Pengambilan_Rks_Mulai', $ringkasanRKS->Waktu_Pengambilan_Rks_Mulai) }}">
                                 <span style="margin: 0 15px;"><b>-</b></span>
-                                <input type="date" name="Waktu_Pengambilan_Rks_Selesai" id="Waktu_Pengambilan_Rks_Selesai" class="form-control" style="width: 45%;">
+                                <input type="date" name="Waktu_Pengambilan_Rks_Selesai" id="Waktu_Pengambilan_Rks_Selesai" class="form-control" style="width: 45%;" value="{{ old('Waktu_Pengambilan_Rks_Selesai', $ringkasanRKS->Waktu_Pengambilan_Rks_Selesai) }}">
                         </div>
 
                         <div class="form-group">
@@ -69,19 +70,21 @@
                             <select name="lokasi" id="lokasi" class="form-control" required>
                                 <option value=""> </option>
                                 @foreach($kotaOptions as $option)
-                                <option value="{{ $option->Kota }}" {{ $kota && $option->Kota == $kota->Kota ? 'selected' : '' }}>
-                                    {{ $option->Kota }}
-                                </option>
-                            @endforeach
+                                    <option value="{{ $option->Kota }}" {{ old('lokasi', $ringkasanRKS->ID_Kota) == $option->ID_Kota ? 'selected' : '' }}>
+                                        {{ $option->Kota }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
+                        
+                        
 
                         <div class="form-group">
                             <label for="Status_Rks">Status RKS/Pekerjaan</label>
                                 <select name="Status_Rks" id="Status_Rks" class="form-control">
                                     <option value=""> </option>
-                                    <option value="Ada di DRP">Ada di DRP</option>
-                                    <option value="Tidak Ada di DRP">Tidak Ada di DRP</option>
+                                    <option value="Ada di DRP" {{ old('Status_Rks', $ringkasanRKS->Status_Rks) === 'Ada di DRP' ? 'selected' : '' }}>Ada di DRP</option>
+                                    <option value="Tidak Ada di DRP" {{ old('Status_Rks', $ringkasanRKS->Status_Rks) === 'Tidak Ada di DRP' ? 'selected' : '' }}>Tidak Ada di DRP</option>
                                 </select>
                         </div>
 
@@ -138,7 +141,7 @@
                             <select name="Metode_Pengadaan" id="Metode_Pengadaan" class="form-control" required>
                                 <option value=""> </option>
                                 @foreach($metodePengadaanOptions as $option)
-                                    <option value="{{ $option->Metode_Pengadaan }}" {{ $metodePengadaan && $option->Metode_Pengadaan == $metodePengadaan->id ? 'selected' : '' }}>
+                                        <option value="{{ $option->Metode_Pengadaan }}" {{ old('Metode_Pengadaan', $ringkasanRKS ? $ringkasanRKS->ID_Metode_Pengadaan : '') == $option->ID_Metode_Pengadaan ? 'selected' : '' }}>
                                         {{ $option->Metode_Pengadaan }}
                                     </option>
                                 @endforeach
@@ -150,8 +153,8 @@
                             <select name="Metode_Penawaran" id="Metode_Penawaran" class="form-control" required>
                                 <option value=""> </option>
                                 @foreach($metodePenawaranOptions as $option)
-                                    <option value="{{ $option->Metode_Penawaran }}" {{ $metodePenawaran && $option->Metode_Penawaran == $metodePenawaran->id ? 'selected' : '' }}>
-                                        {{ $option->Metode_Penawaran }}
+                                <option value="{{ $option->Metode_Penawaran }}" {{ old('Metode_Penawaran', $ringkasanRKS ? $ringkasanRKS->ID_Metode_Penawaran : '') == $option->ID_Metode_Penawaran ? 'selected' : '' }}>
+                                    {{ $option->Metode_Penawaran }}
                                     </option>
                                 @endforeach
                             </select>
@@ -167,8 +170,12 @@
                             <label for="Kualifikasi_Pengadaan">Kualifikasi Pengadaan</label>
                                 <select name="Kualifikasi_Pengadaan" id="Kualifikasi_Pengadaan" class="form-control">
                                     <option value=""> </option>
-                                    <option value="Prakualifikasi">Prakualifikasi</option>
-                                    <option value="Pasca Kualifikasi">Pasca Kualifikasi</option>
+                                    <option value="Prakualifikasi" {{ old('Kualifikasi_Pengadaan', $ringkasanRKS->Kualifikasi_Pengadaan) == 'Prakualifikasi' ? 'selected' : '' }}>
+                                        Prakualifikasi
+                                    </option>
+                                    <option value="Pasca Kualifikasi" {{ old('Kualifikasi_Pengadaan', $ringkasanRKS->Kualifikasi_Pengadaan) == 'Pasca Kualifikasi' ? 'selected' : '' }}>
+                                        Pasca Kualifikasi
+                                    </option>
                                 </select>
                         </div>
 
@@ -176,8 +183,12 @@
                             <label for="Kualifikasi_CSMS">Kualifikasi CSMS</label>
                                 <select name="Kualifikasi_CSMS" id="Kualifikasi_CSMS" class="form-control">
                                     <option value=""> </option>
-                                    <option value="Perlu">Perlu</option>
-                                    <option value="Tidak Perlu">Tidak Perlu</option>
+                                    <option value="Perlu" {{ old('Kualifikasi_CSMS', $ringkasanRKS->Kualifikasi_CSMS) == 'Perlu' ? 'selected' : '' }}>
+                                        Perlu
+                                    </option>
+                                    <option value="Tidak Perlu" {{ old('Kualifikasi_CSMS', $ringkasanRKS->Kualifikasi_CSMS) == 'Tidak Perlu' ? 'selected' : '' }}>
+                                        Tidak Perlu
+                                    </option>
                                 </select>
                         </div>
 
@@ -186,8 +197,8 @@
                             <select name="Metode_Evaluasi_Penawaran" id="Metode_Evaluasi_Penawaran" class="form-control" required>
                                 <option value=""> </option>
                                 @foreach($metodeEvaluasiPenawaranOptions as $option)
-                                    <option value="{{ $option->Metode_Evaluasi_Penawaran }}" {{ $metodeEvaluasiPenawaran && $option->Metode_Evaluasi_Penawaran == $metodeEvaluasiPenawaran->id ? 'selected' : '' }}>
-                                        {{ $option->Metode_Evaluasi_Penawaran }}
+                                <option value="{{ $option->Metode_Evaluasi_Penawaran }}" {{ old('Metode_Evaluasi_Penawaran', $ringkasanRKS ? $ringkasanRKS->ID_Metode_Evaluasi_Penawaran : '') == $option->ID_Metode_Evaluasi_Penawaran ? 'selected' : '' }}>
+                                    {{ $option->Metode_Evaluasi_Penawaran }}
                                     </option>
                                 @endforeach
                             </select>
@@ -216,13 +227,14 @@
 
                         <div class="form-group">
                             <label for="Target_Selesai_Rks">Target Selesai RKS</label>
-                            <input type="date" name="Target_Selesai_Rks" id="Target_Selesai_Rks" class="form-control" required>
+                            <input type="date" name="Target_Selesai_Rks" id="Target_Selesai_Rks" class="form-control" required value="{{ old('Target_Selesai_Rks', $ringkasanRKS->Target_Selesai_Rks) }}">
                         </div>
 
                         <div class="form-group">
                             <label for="Info_Tambahan">Info Tambahan (Jika Ada)</label>
                             <div class="form-group">
-                                <textarea class="ckeditor form-control" name="Info_Tambahan"></textarea>
+                                {{-- <textarea class="ckeditor form-control" name="Info_Tambahan" value="{{ old('Info_Tambahan', $ringkasanRKS->Info_Tambahan) }}"></textarea> --}}
+                                <textarea id="Info_Tambahan" class="ckeditor form-control" name="Info_Tambahan">{{ old('Info_Tambahan', $ringkasanRKS->Info_Tambahan) }}</textarea>
                             </div>
                         </div>
 
@@ -231,8 +243,8 @@
                             <select name="klasifikasi_baku" id="klasifikasi_baku" class="form-control" required>
                                 <option value=""> </option>
                                 @foreach($klasifikasiOptions as $option)
-                                    <option value="{{ $option->Nomor_Klasifikasi }}" {{ $klasifikasi && $option->Nomor_Klasifikasi == $klasifikasi->id ? 'selected' : '' }}>
-                                        {{ $option->Nomor_Klasifikasi }}
+                                <option value="{{ $option->Nomor_Klasifikasi }}" {{ old('klasifikasi_baku', $ringkasanRKS ? $ringkasanRKS->ID_Klasifikasi : '') == $option->ID_Klasifikasi ? 'selected' : '' }}>
+                                    {{ $option->Nomor_Klasifikasi }}
                                     </option>
                                 @endforeach
                             </select>
@@ -240,12 +252,12 @@
 
                         <div class="form-group">
                             <label for="Kualifikasi_Peserta_Pengadaan">Kualifikasi Peserta Pengadaan</label>
-                            <input type="text" name="Kualifikasi_Peserta_Pengadaan" id="Kualifikasi_Peserta_Pengadaan" class="form-control" required>
+                            <input type="text" name="Kualifikasi_Peserta_Pengadaan" id="Kualifikasi_Peserta_Pengadaan" class="form-control" required value="{{ old('Kualifikasi_Peserta_Pengadaan', $ringkasanRKS->Kualifikasi_Peserta_Pengadaan) }}">
                         </div>
 
                         <div class="form-group" id="url_rks">
                             <label for="url_rks">URL RKS</label>
-                            <input type="text" name="url_rks" id="url_rks" class="form-control" value="{{ old('url_rks') }}" placeholder="Contoh: https://mctn.co.id" pattern="https?://.+">
+                            <input type="text" name="url_rks" id="url_rks" class="form-control" value="{{ old('url_rks', $ringkasanRKS->url_rks) }}" placeholder="Contoh: https://mctn.co.id" pattern="https?://.+" >
                             @error('url_rks')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -256,8 +268,8 @@
                             <select name="divisiUser2" id="divisiUser2" class="form-control" required>
                                 <option value=""> </option>
                                 @foreach($divisi2Options as $option)
-                                    <option value="{{ $option->name }}" {{ $divisiUser2 && $option->name == $divisiUser2 ? 'selected' : '' }}>
-                                        {{ $option->name }}
+                                <option value="{{ $option->name }}" {{ old('divisiUser2', $divisiUser2) == $option->name ? 'selected' : '' }}>
+                                    {{ $option->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -268,8 +280,8 @@
                             <select name="divisiUser1" id="divisiUser1" class="form-control" required>
                                 <option value=""> </option>
                                 @foreach($divisi1Options as $option)
-                                    <option value="{{ $option->name }}" {{ $divisiUser1 && $option->name == $divisiUser1 ? 'selected' : '' }}>
-                                        {{ $option->name }}
+                                <option value="{{ $option->name }}" {{ old('divisiUser1', $divisiUser1) == $option->name ? 'selected' : '' }}>
+                                    {{ $option->name }}
                                     </option>
                                 @endforeach
                             </select>

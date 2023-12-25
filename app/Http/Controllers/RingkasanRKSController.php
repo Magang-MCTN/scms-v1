@@ -206,9 +206,9 @@ public function update(Request $request, $ID_Pengadaan, $ID_Ringkasan_Rks)
         $ID_Pengguna2 = $pengguna2->name;
 
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
-        // $pengadaan->update(['id_status_rks' => 11]);
-        // $pengadaan->update(['id_status_ringkasan_rks' => 7]);
-        // $pengadaan->update(['id_status' => 11]);
+        $pengadaan->update(['id_status_rks' => 11]);
+        $pengadaan->update(['id_status_ringkasan_rks' => 7]);
+        $pengadaan->update(['id_status' => 11]);
 
         $ringkasanRKS = RingkasanRKS::findorfail($ID_Ringkasan_Rks);
 

@@ -35,6 +35,6 @@ class Barang extends Model
 
     public function pengadaan()
     {
-        return $this->belongsTo(Pengadaan::class, 'ID_Pengadaan', 'ID_Pengadaan');
+        return $this->hasMany(Pengadaan::class, 'ID_Pengadaan', 'ID_Pengadaan');
     }
 }

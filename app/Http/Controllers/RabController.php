@@ -163,6 +163,280 @@ class RabController extends Controller
     }
 }
 
+public function edit($ID_Pengadaan, $ID_RAB)
+{
+    $rab = Rab::findorfail($ID_RAB);
+    $barangData = Barang::where('ID_Pengadaan', $ID_Pengadaan)->get();
+    $rabData = Pengadaan::findorfail($ID_Pengadaan);
+    $newKodeBarang = $rab->barang->first()->Kode_Barang;
+    // if ($rab->barang->isNotEmpty()) {
+    //     $newKodeBarang = $rab->barang->first()->Kode_Barang;
+    // } else {
+    //     $newKodeBarang = null; // atau nilai default lainnya sesuai kebutuhan
+    // }
+    $kota = $rab->ID_Kota;
+    $kotaOptions = Kota::all();
+
+        // $divisi1Options = User::all();
+        // $divisiTingkat = $this->getDivisiTingkat($request->input('total_keseluruhan'));
+        // $divisiUser1 = !empty($divisiUser1) ? User::find($divisiUser1->id) : null;
+        // // $divisiUser = $users->divisiUser;
+        // $name = User::where('id_divisi', $divisiTingkat)->get();
+
+        // $divisi1Options = User::where('id_divisi', 1)->get();
+        // $divisiUser1 = !empty($divisiUser1) ? User::find($divisiUser1->id) : null;
+
+        // $divisi2Options = User::where('id_divisi', 2)->get();
+        // $divisiUser2 = !empty($divisiUser2) ? User::find($divisiUser2->id) : null;
+
+        // $divisi3Options = User::where('id_divisi', 3)->get();
+        // $divisiUser3 = !empty($divisiUser3) ? User::find($divisiUser3->id) : null;
+
+    // $total_keseluruhan = $request->input('total_keseluruhan');
+    $divisi1Options = User::where('id_divisi', 3)->get();
+    // $divisiUser1 = !empty($divisiUser1) ? User::find($divisiUser1->name) : null;
+    $divisiUser1 = $rab->nama_user_1;
+    // Set divisiUser2Options dan divisiUser3Options hanya jika total_keseluruhan memenuhi kondisi tertentu
+    // $divisiUser2Options = [];
+    // $divisiUser3Options = [];
+
+    // if ($total_keseluruhan > 3000000000 && $total_keseluruhan <= 20000000000) {
+    //     $divisiUser2Options = User::where('id_divisi', 2)->get();
+    // } elseif ($total_keseluruhan > 20000000000 && $total_keseluruhan <= 89000000000) {
+    //     $divisiUser2Options = User::where('id_divisi', 2)->get();
+    //     $divisiUser3Options = User::where('id_divisi', 3)->get();
+    // }
+
+    // $divisiUser2 = !empty($divisiUser2) ? User::find($divisiUser2->id) : null;
+    // $divisiUser3 = !empty($divisiUser3) ? User::find($divisiUser3->id) : null;
+
+        return view('rab.edit', compact('rabData','rab','barangData', 'newKodeBarang', 'kota', 'kotaOptions', 'divisi1Options', 'divisiUser1'));
+    }
+
+    public function update(Request $request, $ID_Pengadaan, $ID_RAB)
+{
+    try {
+        $rab = Rab::findOrFail($ID_RAB);
+
+        $validatedData = $request->validate([
+            // 'barang.*.ID_Barang' => 'required', // Menambahkan validasi untuk ID_Barang
+            'barang.*.Nama_Barang' => 'required|max:255',
+            'barang.*.Deskripsi' => 'required|string',
+            'barang.*.estimasi_jumlah' => 'required|numeric',
+            'barang.*.Unit' => 'required|in:Buah,Pcs,Lembar,Set',
+            'barang.*.Harga' => 'required|numeric',
+            'barang.*.Total' => 'numeric',
+            'barang.*.Keterangan' => 'nullable|string',
+            'barang.*.total_keseluruhan' => 'numeric',
+        ]);
+
+        $namaKota = $request->input('kota');
+        $kota = Kota::where('Kota', $namaKota)->firstOrFail();
+        $ID_Kota = $kota->ID_Kota;
+        $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
+
+        // Update status pada pengadaan
+        $pengadaan->update(['id_status_rab' => 7]);
+        $pengadaan->update(['id_status' => 10]);
+
+        // Mendapatkan data user 1
+        $namaUser1 = $request->input('divisiUser1');
+        $user1 = User::where('name', $namaUser1)->firstOrFail();
+        $jabatanUser1 = $user1->jabatan;
+        // $idUser1 = $user1->id; // Menggunakan ID user 1, karena ID yang diharapkan oleh relasi.
+        $idUser1 = $user1->name;
+
+
+        // Mendapatkan data barang dan transaksi yang sudah ada
+        $barangIDs = [];
+        $existingBarangIDs = $rab->barang->pluck('ID_Barang')->toArray();
+        foreach ($validatedData['barang'] as $barangData) {
+            // $barang = Barang::findOrFail($barangData['ID_Barang']);
+            $barang = Barang::updateOrCreate(['ID_Barang' => $barangData['ID_Barang'] ?? null], $barangData);
+            $barang->ID_Pengadaan = $pengadaan->ID_Pengadaan;
+            $barang->Kode_Barang = $this->generateKodeBarang();
+            $barang->update($barangData);
+
+            // Hitung total untuk setiap barang
+            $barang->Total = $barangData['estimasi_jumlah'] * $barangData['Harga'];
+            $barang->save();
+
+            $barangIDs[] = $barang->ID_Barang;
+
+            // Update atau buat transaksi
+            $transaksi = Transaksi::updateOrCreate(
+                ['ID_Barang' => $barang->ID_Barang],
+                [
+                    'estimasi_jumlah' => $barangData['estimasi_jumlah'],
+                    'Unit' => $barangData['Unit'],
+                    'Harga' => $barangData['Harga'],
+                    'Total' => $barang->Total,
+                ]
+            );
+            $transaksi->ID_Barang = $barang->ID_Barang;
+            $transaksi->save();
+        }
+        $deletedBarangIDs = array_diff($existingBarangIDs, $barangIDs);
+        Transaksi::whereIn('ID_Barang', $deletedBarangIDs)->delete();
+        Barang::whereIn('ID_Barang', $deletedBarangIDs)->delete();
+
+        // Update data pada tabel RAB
+        $rab->update([
+            'ID_Kota' => $ID_Kota,
+            'tanggal' => $request->input('Tanggal'),
+            'total_keseluruhan' => $request->input('total_keseluruhan'),
+            'ID_Pengadaan' => $ID_Pengadaan,
+            'ID_Barang' => $barangIDs[0], // Pilih salah satu ID_Barang karena update pada tabel RAB
+            'nama_user_1' => $idUser1,
+            'jabatan_user_1' => $jabatanUser1,
+        ]);
+
+        // Detach dan attach untuk menyinkronkan relasi many-to-many dengan barang
+        $rab->barang()->detach();
+        $rab->barang()->attach($barangIDs);
+
+        return redirect()->route('pengadaan.detail', ['ID_Pengadaan' => $ID_Pengadaan])
+            ->with('success', 'Data Barang berhasil disimpan');
+    } catch (\Exception $e) {
+        \Log::error('Error saat menyimpan data: ' . $e->getMessage());
+
+        return redirect()->route('pengadaan.detail', ['ID_Pengadaan' => $ID_Pengadaan])
+            ->with('error', 'Terjadi kesalahan saat menyimpan data Barang');
+    }
+}
+
+
+// public function update(Request $request, $ID_Pengadaan, $ID_RAB)
+// {
+//     try {
+//         $rab = Rab::findorfail($ID_RAB);
+//         // dd($request->all());
+//         $validatedData = $request->validate([
+//             'barang.*.Nama_Barang' => 'required|max:255',
+//             'barang.*.Deskripsi' => 'required|string',
+//             'barang.*.estimasi_jumlah' => 'required|numeric',
+//             'barang.*.Unit' => 'required|in:Buah,Pcs,Lembar,Set',
+//             'barang.*.Harga' => 'required|numeric',
+//             'barang.*.Total' => 'numeric',
+//             'barang.*.Keterangan' => 'nullable|string',
+//             'barang.*.total_keseluruhan' => 'numeric',
+//         ]);
+//         $namaKota = $request->input('kota');
+//         $kota = Kota::where('Kota', $namaKota)->first();
+//         $ID_Kota = $kota->ID_Kota;
+//         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
+//         $pengadaan->update(['id_status_rab' => 7]);
+//         $pengadaan->update(['id_status' => 10]);
+
+//         //  $request->validate([
+//         //     'divisUser1' => 'required|exists:users,id_user',
+//         //     // 'divisUser2' => 'required|exists:users,id_user',
+//         //     // 'divisUser3' => 'required|exists:users,id_user',
+//         // ]);
+//         // $pengadaan->update(['id_pejabat_user_tingkat_3' => $request->input('divisiUser1')]);
+//         // $pengadaan->update(['id_pejabat_user_tingkat_2' => $request->input('divisiUser2')]);
+//         // $pengadaan->update(['id_pejabat_user_tingkat_1' => $request->input('divisiUser3')]);
+
+//         $namaUser1 = $request->input('divisiUser1');
+//         $user1 = User::where('name', $namaUser1)->first();
+        
+//         $jabatanUser1 = $user1->jabatan;
+//         if ($user1 && $user1->name) {
+//             $idUser1 = $user1->name;
+
+//         $barangData = Barang::where('ID_Pengadaan', $ID_Pengadaan)->get();
+//         $barangIDs = [];
+
+//         foreach ($validatedData['barang'] as $barangData) {
+//             // $barang = Barang::find($barangData['ID_Barang']);
+//             $barang = Barang::updateOrCreated(['ID_Barang' => $barangData['ID_Barang'] ?? null], $barangData);
+//             // $barang = Barang::updateOrCreate(['ID_Barang' => $barangData['ID_Barang']], $barangData);
+//             // $barang = new Barang($barangData);
+//             // $barang->ID_Pengadaan = $pengadaan->ID_Pengadaan;
+//             // $barang->Kode_Barang = $this->generateKodeBarang();
+//             $barang->update($barangData);
+//             // $barang->update([
+//             //     'Nama_Barang' => $barangData['Nama_Barang'],
+//             //     'Deskripsi' => $barangData['Deskripsi'],
+//             //     'Unit' => $barangData['Unit'],
+//             //     'estimasi_jumlah' => $barangData['estimasi_jumlah'],
+//             //     'Harga' => $barangData['Harga'],
+//             //     'Total' => $barangData['estimasi_jumlah'] * $barangData['Harga'],
+//             //     'Keterangan' => $barangData['Keterangan'],
+//             // ]);
+//             // $barang->Deskripsi = strip_tags($barangData['Deskripsi']);
+//             // $barang->Keterangan = strip_tags($barangData['Keterangan'] ?? null);
+//             // $barangData->update();
+//             // Hitung total untuk setiap barang
+//             $barang->Total = $barangData['estimasi_jumlah'] * $barangData['Harga'];
+//             $barang->save();
+//             $barangIDs[] = $barang->ID_Barang;
+//             \Log::info('Data Barang berhasil diperbaharui: ' . $barang->toJson());
+//             // $transaksi = new Transaksi();
+//         //     $transaksi = Transaksi::updateOrCreate(['ID_Barang' => $barang->ID_Barang], [
+//         //         // Akumulasi total keseluruhan
+//         //     // $transaksi->ID_Barang = $barang->ID_Barang;
+//         //   'estimasi_jumlah' => $barangData['estimasi_jumlah'],
+//         //   'Unit' => $barangData['Unit'],
+//         //   'Harga' => $barangData['Harga'],
+//         //   'Total' => $barangData['estimasi_jumlah'] * $barangData['Harga'],
+//         //     ]);
+//         // $transaksi = Transaksi::find($barangData['ID_Barang']);
+//         //     // $transaksi = Transaksi::find(
+//         //     //     ['ID_Barang' => $barang->ID_Barang],
+//         //     // );
+//         //     $transaksi->update([
+//         //         'estimasi_jumlah' => $barangData['estimasi_jumlah'],
+//         //             'Unit' => $barangData['Unit'],
+//         //             'Harga' => $barangData['Harga'],
+//         //             'Total' => $barangData['estimasi_jumlah'] * $barangData['Harga'],
+//         //     ]);
+//         // $transaksi->save();
+//         $transaksi = Transaksi::updateOrCreate(['ID_Barang' => $barang->ID_Barang], [
+//             'estimasi_jumlah' => $barangData['estimasi_jumlah'],
+//             'Unit' => $barangData['Unit'],
+//             'Harga' => $barangData['Harga'],
+//             'Total' => $barangData['estimasi_jumlah'] * $barangData['Harga'],
+//         ]);
+
+//         $rab->barang()->detach($barang->ID_Barang);
+//         $rab->barang()->attach($barang->ID_Barang, ['ID_Transaksi' => $transaksi->ID_Transaksi]);
+//         }
+
+//         $rab->update([
+//             'ID_Kota' => $ID_Kota,// Sesuaikan dengan field 'kota' pada form
+//             'tanggal' => $request->input('Tanggal'),
+//             'total_keseluruhan' => $request->input('total_keseluruhan'),
+//             'ID_Pengadaan' => $ID_Pengadaan,
+//             'ID_Barang' =>  $barang->ID_Barang,
+//             'nama_user_1'=> $idUser1,
+//             'jabatan_user_1' => $jabatanUser1,
+//         ]);
+//         // $rab->barang()->detach(array_diff($rab->barang->pluck('ID_Barang')->toArray(), $barangIDs));
+//         // $rab->barang()->detach(array_diff($rab->barang->pluck('ID_Barang')->toArray(), $barangIDs));
+//         // $rab->barang()->attach($barangIDs);
+//         $rab->save();
+//     }else {
+//         // Log nilai-nilai yang diperlukan untuk debugging
+//         \Log::error('User1:', ['namaUser1' => $namaUser1, 'user1' => $user1]);
+    
+//         // Tangani kasus ketika user tidak ditemukan atau properti 'name' tidak ada
+//         \Log::error('User dengan nama ' . $namaUser1 . ' tidak ditemukan atau properti "name" tidak ada.');
+//     }
+//     \Log::info('Validated Data: ' . json_encode($validatedData));
+
+//         // \Log::info('Data Rab berhasil disimpan: ' . $rab->toJson());
+
+//         \Log::info('Data Barang dan Transaksi berhasil disimpan');
+        
+//         return redirect()->route('pengadaan.detail', ['ID_Pengadaan' => $ID_Pengadaan])->with('success', 'Data Barang berhasil disimpan');
+//     } catch (\Exception $e) {
+//         \Log::error('Error saat menyimpan data: ' . $e->getMessage());
+
+//         return redirect()->route('pengadaan.detail', ['ID_Pengadaan' => $ID_Pengadaan])->with('error', 'Terjadi kesalahan saat menyimpan data Barang');
+//     }
+// }
+
     public function status(Request $request)
     {
         $selectedStatus = $request->input('status', 'semua');

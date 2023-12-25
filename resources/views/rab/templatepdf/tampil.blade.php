@@ -16,7 +16,11 @@
     </td>
     @endif
     <td>
-        <button class="btn btn-primary my-4" onclick="goBack()">Kembali</button>
+        <a href="{{ route('rab.edit', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_RAB' =>$rab->ID_RAB]) }}" class="btn btn-warning">Edit</a>
+    </td>
+    <td>
+        <a href="{{ route('pengadaan.detail', ['ID_Pengadaan' => $ID_Pengadaan]) }}" class="btn btn-primary my-4">Kembali</a>
+        {{-- <button class="btn btn-primary my-4" onclick="goBack()">Kembali</button> --}}
     </td>
     
     <script>

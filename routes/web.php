@@ -144,6 +144,8 @@ Route::middleware(['auth', 'role:1,2,4,'])->group(function () {
     Route::get('/rab/{ID_Pengadaan}', [RabController::class, 'index'])->name('rab.index');
     // Route::get('/rab/create', [RabController::class, 'create'])->name('rab.create');
     Route::post('/rab/{ID_Pengadaan}', [RabController::class, 'store'])->name('rab.store');
+    Route::get('/rab/edit/{ID_Pengadaan}/{ID_RAB}', [RabController::class, 'edit'])->name('rab.edit');
+    Route::put('/rab/update/{ID_Pengadaan}/{ID_RAB}', [RabController::class, 'update'])->name('rab.update');
     Route::post('/rab/rangkum/{ID_Pengadaan}', [RabController::class, 'rangkum'])->name('rab.rangkum');
     Route::get('/status_rab', [RabController::class, 'status'])->name('rab.status');
     Route::get('/status_rab/{ID_Pengadaan}', [RabController::class, 'detail'])->name('rab.detail');

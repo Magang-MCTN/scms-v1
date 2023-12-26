@@ -11,6 +11,7 @@ class JenisPengadaan extends Model
     protected $primaryKey = 'ID_Jenis_Pengadaan';
 
     protected $fillable = [
+        'ID_Jenis_Pengadaan',
         'Jenis_Pengadaan',
     ];
 

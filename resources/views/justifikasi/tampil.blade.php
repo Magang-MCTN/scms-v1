@@ -10,6 +10,9 @@
     <td class="badge badge-primary">
         <a href="{{ route('justifikasi.kirim', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_JPL' => $justifikasi->ID_JPL]) }}" class="btn btn-primary">Kirim</a>
     </td>
+    <td>
+        <a href="{{ route('justifikasi.edit', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_JPL' =>$justifikasi->ID_JPL]) }}" class="btn btn-warning">Edit</a>
+    </td>
     @else
     <td>
         <a style="display:none;"></a>

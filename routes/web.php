@@ -159,6 +159,8 @@ Route::middleware(['auth', 'role:1,2,4,'])->group(function () {
     Route::get('/justifikasi/{ID_Pengadaan}', [JustifikasiController::class, 'index'])->name('justifikasi.index');
     // Route::get('/justifikasi/create', [JustifikasiController::class, 'create'])->name('justifikasi.create');
     Route::post('/justifikasi/{ID_Pengadaan}', [JustifikasiController::class, 'store'])->name('justifikasi.store');
+    Route::get('/justifikasi/edit/{ID_Pengadaan}/{ID_JPL}', [JustifikasiController::class, 'edit'])->name('justifikasi.edit');
+    Route::put('/justifikasi/update/{ID_Pengadaan}/{ID_JPL}', [JustifikasiController::class, 'update'])->name('justifikasi.update');
     Route::get('/status_justifikasi', [JustifikasiController::class, 'status'])->name('justifikasi.status');
     Route::get('/status_justifikasi/{ID_Pengadaan}', [JustifikasiController::class, 'detail'])->name('justifikasi.detail');
     Route::get('/justifikasi/preview/{ID_Pengadaan}/{ID_JPL}', [JustifikasiController::class, 'preview'])->name('justifikasi.preview');

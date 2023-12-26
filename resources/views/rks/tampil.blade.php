@@ -10,14 +10,14 @@
     <td class="badge badge-primary">
         <a href="{{ route('ringkasan.kirim', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_Ringkasan_Rks' => $rks->ID_Ringkasan_Rks]) }}" class="btn btn-primary">Kirim</a>
     </td>
+    <td>
+        <a href="{{ route('rks.edit', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_Ringkasan_Rks' =>$rks->ID_Ringkasan_Rks]) }}" class="btn btn-warning">Edit</a>
+    </td>
     @else
     <td>
         <a style="display:none;"></a>
     </td>
     @endif
-    <td>
-        <a href="{{ route('rks.edit', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_Ringkasan_Rks' =>$rks->ID_Ringkasan_Rks]) }}" class="btn btn-warning">Edit</a>
-    </td>
     <td>
         <a href="{{ route('adminrendan.detail', ['ID_Pengadaan' => $ID_Pengadaan]) }}" class="btn btn-primary my-4">Kembali</a>
         {{-- <button class="btn btn-primary my-4" onclick="goBack()">Kembali</button> --}}

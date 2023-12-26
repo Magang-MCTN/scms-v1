@@ -43,16 +43,16 @@
                 <div class="card-header"><center>{{ __('HARGA PERHITUNGAN ENGINEERING (HPE)') }}</center></div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('hpe.store', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan]) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('hpe.update', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'ID_HPE' => $hpe->ID_HPE]) }}" enctype="multipart/form-data">
                         @csrf
-
+                        @method('PUT')
                         <div class="form-group">
                             <label for="kota">Kota:</label>
                             <select name="kota" id="kota" class="form-control" required>
                                 <option value=""> </option>
                                 @foreach($kotaOptions as $option)
-                                    <option value="{{ $option->Kota }}" {{ $kota && $option->Kota == $kota->id ? 'selected' : '' }}>
-                                        {{ $option->Kota }}
+                                <option value="{{ $option->Kota }}" {{ old('kota', $hpe->ID_Kota) == $option->ID_Kota ? 'selected' : '' }}>
+                                    {{ $option->Kota }}
                                     </option>
                                 @endforeach
                             </select>
@@ -60,7 +60,7 @@
 
                         <div class="form-group">
                             <label for="Tanggal">Tanggal</label>
-                            <input type="date" name="Tanggal" id="Tanggal" class="form-control" required>
+                            <input type="date" name="Tanggal" id="Tanggal" class="form-control" required value="{{ old('Tanggal', $hpe->Tanggal) }}">
                         </div>
 
                         <div class="form-group">
@@ -71,7 +71,7 @@
 
                         <div class="form-group">
                             <label for="hpe">HPE</label>
-                            <input type="number" step="any" name="hpe" id="hpe" class="form-control" required>
+                            <input type="number" step="any" name="hpe" id="hpe" class="form-control" required value="{{ old('hpe', $hpe->HPE) }}">
                         </div>
 
                         <div class="form-group">
@@ -111,52 +111,53 @@
                         <div class="form-group" for="sumber-referensi-barang" name="sumber-referensi-barang" id="sumber-referensi-barang" >
                             <h3>Sumber Referensi</h3>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="checklist_1" id="checklist_1">
+                                <input type="checkbox" class="form-check-input" name="checklist_1" id="checklist_1" {{ $sumberReferensi->checklist_1 == 1 ? 'checked' : '' }}>
                                 <label class="form-check-label" for="checklist_1">Informasi Harga Pabrikan/Agen Tunggal</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="checklist_2" id="checklist_2">
+                                <input type="checkbox" class="form-check-input" name="checklist_2" id="checklist_2" {{ $sumberReferensi->checklist_2 == 1 ? 'checked' : '' }}>
                                 <label class="form-check-label" for="checklist_2">Informasi Harga Pasar</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="checklist_3" id="checklist_3">
+                                <input type="checkbox" class="form-check-input" name="checklist_3" id="checklist_3" {{ $sumberReferensi->checklist_3 == 1 ? 'checked' : '' }}>
                                 <label class="form-check-label" for="checklist_3">Informasi Harga dari data Badan Pusat Statistik</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="checklist_4" id="checklist_4">
+                                <input type="checkbox" class="form-check-input" name="checklist_4" id="checklist_4" {{ $sumberReferensi->checklist_4 == 1 ? 'checked' : '' }}>
                                 <label class="form-check-label" for="checklist_4">Hasil Perhitungan Konsultan Enjiniring</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="checklist_5" id="checklist_5">
+                                <input type="checkbox" class="form-check-input" name="checklist_5" id="checklist_5" {{ $sumberReferensi->checklist_5 == 1 ? 'checked' : '' }}>
                                 <label class="form-check-label" for="checklist_5">Harga Kontrak yang lalu pada Pekerjaan yang sejenis</label>
                             </div>
                         @else
                         <div class="form-group" for="sumber-referensi-jasa" name="sumber-referensi-jasa" id="sumber-referensi-jasa" >
                             <h3>Sumber Referensi</h3>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="checklist_6" id="checklist_6">
+                                <input type="checkbox" class="form-check-input" name="checklist_6" id="checklist_6" {{ $sumberReferensi->checklist_6 == 1 ? 'checked' : '' }}>
                                 <label class="form-check-label" for="checklist_6">HPE yang dimutakhirkan</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="checklist_7" id="checklist_7">
+                                <input type="checkbox" class="form-check-input" name="checklist_7" id="checklist_7" {{ $sumberReferensi->checklist_7 == 1 ? 'checked' : '' }}>
                                 <label class="form-check-label" for="checklist_7">Daftar renumerasi konsultan dari asosiasi</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="checklist_8" id="checklist_8">
+                                <input type="checkbox" class="form-check-input" name="checklist_8" id="checklist_8" {{ $sumberReferensi->checklist_8 == 1 ? 'checked' : '' }}>
                                 <label class="form-check-label" for="checklist_8">Besarnya Gaji yang pernah dibayarkan</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="checklist_9" id="checklist_9">
+                                <input type="checkbox" class="form-check-input" name="checklist_9" id="checklist_9" {{ $sumberReferensi->checklist_9 == 1 ? 'checked' : '' }}>
                                 <label class="form-check-label" for="checklist_9">Informasi lain terkait biaya konsultan</label>
                             </div>
                         @endif
 
                         <div class="form-group">
-                            <label for="pejabatRendan">Dikirim Kepada Pejabat Rendan :</label>
+                            <label for="pejabatRendan">Dikirim Kepada Pejabat Rendan:</label>
                             <select name="pejabatRendan" id="pejabatRendan" class="form-control" required>
                                 <option value=""> </option>
                                 @foreach($pejabatRendanOptions as $option)
-                                    <option value="{{ $option->name }}" {{ $pejabatRendan && $option->name == $pejabatRendan ? 'selected' : '' }}>
+                                <option value="{{ $option->name }}" {{ old('pejabatRendan', $pejabatRendan) == $option->name ? 'selected' : '' }}>
+                                    {{-- <option value="{{ $option->name }}" {{ $pejabatRendan && $option->name == $pejabatRendan ? 'selected' : '' }}> --}}
                                         {{ $option->name }}
                                     </option>
                                 @endforeach
@@ -168,8 +169,8 @@
                             <select name="divisiUser1" id="divisiUser1" class="form-control" required>
                                 <option value=""> </option>
                                 @foreach($divisi1Options as $option)
-                                    <option value="{{ $option->name }}" {{ $divisiUser1 && $option->name == $divisiUser1 ? 'selected' : '' }}>
-                                        {{ $option->name }}
+                                <option value="{{ $option->name }}" {{ old('divisiUser1', $divisiUser1) == $option->name ? 'selected' : '' }}>
+                                    {{ $option->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -184,7 +185,8 @@
                             <label for="attachment_file">+ Attachment File</label>
                             <div class="custom-file">
                                 <input type="file" name="attachment_file" id="attachment_file" class="custom-file-input">
-                                <label class="custom-file-label" id="fileLabel" for="attachment_file">Choose file</label>
+                                <label class="custom-file-label" id="fileLabel" for="attachment_file">{{ $hpe->attachment_file ? $hpe->attachment_file : 'Choose file' }}
+                                </label>
                             </div>
                         </div>
 

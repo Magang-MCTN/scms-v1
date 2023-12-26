@@ -171,6 +171,8 @@ Route::middleware(['auth', 'role:1,2,4,'])->group(function () {
     Route::get('/nota_dinas_permintaan/{ID_Pengadaan}', [NotaDinasPermintaanPengadaanController::class, 'index'])->name('nota_dinas_permintaan.index');
     // Route::get('/nota_dinas_permintaan/create', [NotaDinasPermintaanPengadaanController::class, 'create'])->name('nota_dinas_permintaan.create');
     Route::post('/nota_dinas_permintaan/{ID_Pengadaan}', [NotaDinasPermintaanPengadaanController::class, 'store'])->name('nota_dinas_permintaan.store');
+    Route::get('/nota_dinas_permintaan/edit/{ID_Pengadaan}/{id_nota_dinas_permintaan}', [NotaDinasPermintaanPengadaanController::class, 'edit'])->name('nota_dinas_permintaan.edit');
+    Route::put('/nota_dinas_permintaan/update/{ID_Pengadaan}/{id_nota_dinas_permintaan}', [NotaDinasPermintaanPengadaanController::class, 'update'])->name('nota_dinas_permintaan.update');
     Route::get('/status_nota_dinas_permintaan', [NotaDinasPermintaanPengadaanController::class, 'status'])->name('nota_dinas_permintaan.status');
     Route::get('/status_nota_dinas_permintaan/{ID_Pengadaan}', [NotaDinasPermintaanPengadaanController::class, 'detail'])->name('nota_dinas_permintaan.detail');
     Route::get('/nota_dinas_permintaan/preview/{ID_Pengadaan}/{id_nota_dinas_permintaan}', [NotaDinasPermintaanPengadaanController::class, 'preview'])->name('nota_dinas_permintaan.preview');
@@ -195,6 +197,8 @@ Route::middleware(['auth', 'role:3'])->group(function () {
     Route::get('/hpe/{ID_Pengadaan}', [HPEController::class, 'index'])->name('hpe.index');
     // Route::get('/justifikasi/create', [JustifikasiController::class, 'create'])->name('justifikasi.create');
     Route::post('/hpe/{ID_Pengadaan}', [HPEController::class, 'store'])->name('hpe.store');
+    Route::get('/hpe/edit/{ID_Pengadaan}/{ID_HPE}', [HPEController::class, 'edit'])->name('hpe.edit');
+    Route::put('/hpe/update/{ID_Pengadaan}/{ID_HPE}', [HPEController::class, 'update'])->name('hpe.update');
     // Route::get('/status_justifikasi', [JustifikasiController::class, 'status'])->name('justifikasi.status');
     // Route::get('/status_justifikasi/{ID_Pengadaan}', [JustifikasiController::class, 'detail'])->name('justifikasi.detail');
     Route::get('/pengadaan/kirim/hpe/{ID_Pengadaan}/{ID_HPE}', [HPEController::class, 'kirimHpe'])->name('hpe.kirim');

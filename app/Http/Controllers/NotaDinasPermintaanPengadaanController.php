@@ -148,6 +148,135 @@ class NotaDinasPermintaanPengadaanController extends Controller
         }
 }
 
+public function edit($ID_Pengadaan, $id_nota_dinas_permintaan)
+{
+    $notaDinasPermintaan = RencanaNotaDinas::findorfail($id_nota_dinas_permintaan);
+    $pengadaan = Pengadaan::findorfail($ID_Pengadaan);
+        $jenisPengadaan = $pengadaan->ID_Jenis_Pengadaan;
+        $jenisPengadaanOptions = JenisPengadaan::all();
+        $kota = $notaDinasPermintaan->ID_Kota;
+        $kotaOptions = Kota::all();
+        $divisiOptions = Divisi::whereIn('id_divisi', [4,5,6,7])->get();
+        $divisi = $notaDinasPermintaan->divisi_pengguna;
+        $divisiUser = $notaDinasPermintaan->nama_pengguna;
+        $sumberAnggaran = $pengadaan->ID_Sumber_Anggaran;
+        $sumberAnggaranOptions = SumberAnggaran::all();
+        $divisi1Options = User::where('id_divisi', 3)->get();
+        $divisiUser1 = $notaDinasPermintaan->nama_user_1;
+
+        // if ($divisi) {
+        //     $divisiUsers = User::where('id_divisi', $divisi)->get();
+        // } else {
+            $divisiUsers = User::whereIn('id_divisi', [4, 5, 6, 7])->get();
+        // }
+
+        return view('notaDinasPermintaan.edit', compact('pengadaan','notaDinasPermintaan','jenisPengadaan','jenisPengadaanOptions','kota', 'kotaOptions', 'jenisPengadaan', 'divisi', 'divisiOptions', 'divisiUser','divisiUsers','sumberAnggaran','sumberAnggaranOptions', 'divisiUser1','divisi1Options',));
+    }
+
+public function update(Request $request, $ID_Pengadaan, $id_nota_dinas_permintaan)
+{
+    try {
+        $validatedData = $request->validate([
+            // 'Nomor_ND_PPBJ',
+            // 'Nomor_PRK',
+            // 'cost_center',
+            // 'pagu_anggaran',
+            // 'nama_pengguna',
+            // 'divisi_pengguna',
+            // 'url_kak' => 'nullable|url',
+            // 'url_spesifikasi_teknis' => 'nullable|url',
+            // 'rencana_durasi_kontrak_tanggal' => 'in:Hari Kerja,Hari Kalender,Bulan,Tahun',
+        ]);
+        $namaKota = $request->input('kota');
+        $kota = Kota::where('Kota', $namaKota)->first();
+        $ID_Kota = $kota->ID_Kota;
+
+        $namaJenisPengadaan = $request->input('jenis_pengadaan');
+        $jenisPengadaan = JenisPengadaan::where('jenis_pengadaan', $namaJenisPengadaan)->first();
+        $ID_Jenis_Pengadaan = $jenisPengadaan->ID_Jenis_Pengadaan;
+
+        $namaSumberAnggaran = $request->input('nama_anggaran');
+        $sumberAnggaran = SumberAnggaran::where('nama_anggaran', $namaSumberAnggaran)->first();
+        // $ID_Sumber_Anggaran = $sumberAnggaran->ID_Sumber_Anggaran;
+        if ($sumberAnggaran) {
+            $ID_Sumber_Anggaran = $sumberAnggaran->ID_Sumber_Anggaran;
+        }else{
+            \Log::error('Objek SumberAnggaran dengan nama ' . $namaSumberAnggaran . ' tidak ditemukan.');
+        }
+
+        $namaPengguna = $request->input('divisiUser');
+        $pengguna = User::where('name', $namaPengguna)->first();
+        if ($pengguna) {
+            $ID_Pengguna = $pengguna->name;
+        // $ID_Pengguna = $pengguna->name;
+
+        $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
+        $pengadaan->update(['id_status_nota_dinas_permintaan' => 7]);
+        $pengadaan->update(['id_status' => 10]);
+        
+        // $namaJenisPengadaan = $request->input('jenis_pengadaan');
+        // $jenisPengadaan = JenisPengadaan::where('Jenis_Pengadaan', $namaJenisPengadaan)->first();
+        // $ID_Jenis_Pengadaan = $jenisPengadaan->ID_Jenis_Pengadaan;
+
+        $namaDivisi = $request->input('divisi');
+        $divisi = Divisi::where('id_divisi', $namaDivisi)->first();
+        $divisiID = $divisi->nama_divisi;
+
+        $namaUser1 = $request->input('divisiUser1');
+        $user1 = User::where('name', $namaUser1)->first();
+        $jabatanUser1 = $user1->jabatan;
+
+        // if ($pengguna && $pengguna->name) {
+            $userID = $user1->name;
+            $notaDinasPermintaan = RencanaNotaDinas::findorfail($id_nota_dinas_permintaan);
+            $notaDinasPermintaan->update([
+                'Nomor_ND_PPBJ' => $request->input('nomor_nd_ppbj'),
+                'ID_Kota' => $ID_Kota,
+                'ID_Pengadaan' => $ID_Pengadaan,
+                // 'ID_Jenis_Pengadaan' => $ID_Jenis_Pengadaan,
+                'Tanggal' => $request->input('Tanggal'),
+                'Nomor_PRK' => $request->input('informasi_anggaran'),
+                'pagu_anggaran' => $request->input('pagu_anggaran'),
+                'cost_center' => $request->input('cost_center'),
+                'nama_pengguna' => $ID_Pengguna,
+                'nama_user_1'=> $userID,
+                'jabatan_user_1' => $jabatanUser1,
+                'divisi_pengguna' => $divisiID,
+                'url_kak' => $request->input('url_kak'),
+                'url_spesifikasi_teknis' => $request->input('url_spesifikasi_teknis'),
+            ]);
+            $pengadaan->rencanaNotaDinas()->save($notaDinasPermintaan);
+            $notaDinasPermintaan->save();
+
+            $sumberAnggaranisi = Pengadaan::findOrFail($ID_Pengadaan);
+            $sumberAnggaranisi->update([
+                'Ringkasan_Pekerjaan' => strip_tags($request->input('ringkasan_pekerjaan')),
+                'ID_Sumber_Anggaran' => $ID_Sumber_Anggaran,
+                'ID_Jenis_Pengadaan' => $ID_Jenis_Pengadaan,
+                'rencana_tanggal_terkontrak_mulai' => $request->input('rencana_tanggal_terkontrak_mulai'),
+                'rencana_tanggal_terkontrak_selesai' => $request->input('rencana_tanggal_terkontrak_selesai'),
+                'rencana_durasi_kontrak' => $request->input('rencana_durasi_kontrak'),
+                'rencana_durasi_kontrak_tanggal' => $request->input('rencana_durasi_kontrak_tanggal'),
+
+            ]);
+            $sumberAnggaranisi->save();
+
+        }else{
+            // Log nilai-nilai yang diperlukan untuk debugging
+            \Log::error('pengguna:', ['namaPengguna' => $namaPengguna, 'pengguna' => $pengguna]);
+        
+            // Tangani kasus ketika user tidak ditemukan atau properti 'name' tidak ada
+            \Log::error('Pengguna dengan nama ' . $namaPengguna . ' tidak ditemukan atau properti "name" tidak ada.');
+        }
+        \Log::info('Nota Dinas Permintaan saved successfully:', ['notaDinasPermintaan' => $notaDinasPermintaan]);
+            return redirect()->route('pengadaan.detail', ['ID_Pengadaan' => $ID_Pengadaan])->with('success', 'Nota Dinas Permintaan berhasil disimpan');
+        } catch (\Exception $e) {
+            \Log::error('Error saat menyimpan data: ' . $e->getMessage());
+    
+            return redirect()->route('pengadaan.detail', ['ID_Pengadaan' => $ID_Pengadaan])->with('error', 'Terjadi kesalahan saat menyimpan Nota Dinas Permintaan');
+        }
+}
+
 public function preview($ID_Pengadaan, $id_nota_dinas_permintaan)
 {
     try {

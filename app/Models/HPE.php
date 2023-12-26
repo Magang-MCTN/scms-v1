@@ -21,6 +21,9 @@ class HPE extends Model
         'nama_pejabat_rendan',
         'jabatan_pejabat_rendan',
         'tanda_tangan_pejabat_rendan',
+        'nama_user_1',
+        'jabatan_user_1',
+        'tanda_tangan_user_1',
         'tanggal_pengajuan',
     ];
 

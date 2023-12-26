@@ -28,10 +28,10 @@ class HPEController extends Controller
         $kotaOptions = Kota::all();
         $rencanaMulaiFormatted = Carbon::parse($pengadaan->rencana_tanggal_terkontrak_mulai)->format('d F Y');
         $rencanaSelesaiFormatted = Carbon::parse($pengadaan->rencana_tanggal_terkontrak_selesai)->format('d F Y');
-        // $divisi1Options = User::where('id_divisi', 3)->get();
-        // $divisiUser1 = !empty($name) ? User::find($name[1]) : null;
+        $divisi1Options = User::where('id_divisi', 3)->get();
+        $divisiUser1 = !empty($name) ? User::find($name[1]) : null;
 
-        return view('hpe.index', compact('pengadaan','kota', 'notaDinasPermintaan','kotaOptions', 'rencanaMulaiFormatted','rencanaSelesaiFormatted','jenisPengadaan','pejabatRendanOptions','pejabatRendan'));
+        return view('hpe.index', compact('pengadaan','kota', 'notaDinasPermintaan','kotaOptions', 'rencanaMulaiFormatted','rencanaSelesaiFormatted','jenisPengadaan','pejabatRendanOptions','pejabatRendan','divisi1Options', 'divisiUser1',));
     }
 
     public function store(Request $request, $ID_Pengadaan)
@@ -52,6 +52,11 @@ class HPEController extends Controller
         $namaPejabatRendan = $request->input('pejabatRendan');
         $pejabatRendan = User::where('name', $namaPejabatRendan)->first();
         $jabatanPejabatRendan = $pejabatRendan->jabatan;
+
+        $namaUser1 = $request->input('divisiUser1');
+        $user1 = User::where('name', $namaUser1)->first();
+        $jabatanUser1 = $user1->jabatan;
+        $userID = $user1->name;
 
         if ($pejabatRendan && $pejabatRendan->name) {
             $idUser1 = $pejabatRendan->name;
@@ -94,11 +99,128 @@ class HPEController extends Controller
                 'HPE' => $request->input('hpe'),
                 'nama_pejabat_rendan'=> $idUser1,
                 'jabatan_pejabat_rendan' => $jabatanPejabatRendan,
+                'nama_user_1'=> $userID,
+                'jabatan_user_1' => $jabatanUser1,
                 // 'divisi_pejabat_rendan' => $jabatanPejabatRendan,
                 'attachment_file' => $attachmentPath,
 
             ]);
             $hpe->save();
+
+        }else {
+            // Log nilai-nilai yang diperlukan untuk debugging
+            \Log::error('Pejabat Rendan:', ['namaPejabatRendan' => $namaPejabatRendan, 'user1' => $pejabatRendan]);
+        
+            // Tangani kasus ketika user tidak ditemukan atau properti 'name' tidak ada
+            \Log::error('User dengan nama ' . $namaPejabatRendan . ' tidak ditemukan atau properti "name" tidak ada.');
+        }
+        \Log::info('HPE saved successfully:', ['hpe' => $hpe]);
+            return redirect()->route('adminrendan.detail', ['ID_Pengadaan' => $ID_Pengadaan])->with('success', 'Data Barang berhasil disimpan');
+        } catch (\Exception $e) {
+            \Log::error('Error saat menyimpan data: ' . $e->getMessage());
+    
+            return redirect()->route('adminrendan.detail', ['ID_Pengadaan' => $ID_Pengadaan])->with('error', 'Terjadi kesalahan saat menyimpan data Barang');
+        }
+}
+
+public function edit($ID_Pengadaan, $ID_HPE)
+{
+    $hpe = HPE::findorfail($ID_HPE);
+    $pengadaan = Pengadaan::findorfail($ID_Pengadaan);
+    $notaDinasPermintaan = RencanaNotaDinas::where('ID_Pengadaan', $ID_Pengadaan)->first();
+        $pejabatRendanOptions = User::where('id_role', 6)->get();
+        $pejabatRendan = $hpe->nama_pejabat_rendan;
+        $jenisPengadaan = JenisPengadaan::find($pengadaan->ID_Jenis_Pengadaan);
+        $kota = $hpe->ID_Kota;
+        $kotaOptions = Kota::all();
+        $sumberReferensi = SumberReferensi::find($hpe->ID_Sumber_Referensi);
+        $rencanaMulaiFormatted = Carbon::parse($pengadaan->rencana_tanggal_terkontrak_mulai)->format('d F Y');
+        $rencanaSelesaiFormatted = Carbon::parse($pengadaan->rencana_tanggal_terkontrak_selesai)->format('d F Y');
+        $divisi1Options = User::where('id_divisi', 3)->get();
+        $divisiUser1 = $hpe->nama_user_1;
+
+        return view('hpe.edit', compact('pengadaan','kota', 'hpe','sumberReferensi','notaDinasPermintaan','kotaOptions', 'rencanaMulaiFormatted','rencanaSelesaiFormatted','jenisPengadaan','pejabatRendanOptions','pejabatRendan','divisi1Options', 'divisiUser1',));
+    }
+
+    public function update(Request $request, $ID_Pengadaan, $ID_HPE)
+{
+    try {
+        $validatedData = $request->validate([
+            // 'HPE' => 'required',
+            // 'attachment_file' => 'required|mimes:pdf,xlsx,xls|max:25000',
+        ]);
+        $namaKota = $request->input('kota');
+        $kota = Kota::where('Kota', $namaKota)->first();
+        $ID_Kota = $kota->ID_Kota;
+
+        $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
+        $pengadaan->update(['id_status_hpe' => 7]);
+        $pengadaan->update(['id_status' => 11]);
+
+        $namaPejabatRendan = $request->input('pejabatRendan');
+        $pejabatRendan = User::where('name', $namaPejabatRendan)->first();
+        $jabatanPejabatRendan = $pejabatRendan->jabatan;
+
+        $namaUser1 = $request->input('divisiUser1');
+        $user1 = User::where('name', $namaUser1)->first();
+        $jabatanUser1 = $user1->jabatan;
+        $userID = $user1->name;
+
+        if ($pejabatRendan && $pejabatRendan->name) {
+            $idUser1 = $pejabatRendan->name;
+
+            $hpe = HPE::findorfail($ID_HPE);
+            $checklistSumberReferensi = SumberReferensi::find($hpe->ID_Sumber_Referensi);
+
+            $checklistSumberReferensi->update([
+                'checklist_1' => $request->has('checklist_1') ? 1 : 0,
+                'checklist_2' => $request->has('checklist_2') ? 1 : 0,
+                'checklist_3' => $request->has('checklist_3') ? 1 : 0,
+                'checklist_4' => $request->has('checklist_4') ? 1 : 0,
+                'checklist_5' => $request->has('checklist_5') ? 1 : 0,
+                'checklist_6' => $request->has('checklist_6') ? 1 : 0,
+                'checklist_7' => $request->has('checklist_7') ? 1 : 0,
+                'checklist_8' => $request->has('checklist_8') ? 1 : 0,
+                'checklist_9' => $request->has('checklist_9') ? 1 : 0,
+            ]);
+            $checklistSumberReferensi->save();
+
+            $ID_Sumber_Referensi = $checklistSumberReferensi->ID_Sumber_Referensi;
+
+            \Log::info('ID_Sumber_Referensi setelah disimpan:', ['ID_Sumber_Referensi' => $ID_Sumber_Referensi]);
+
+            $attachmentFile = $request->file('attachment_file');
+            $attachmentPath = null;
+            if ($attachmentFile) {
+                $allowedFileTypes = ['pdf', 'xlsx', 'xls'];
+                $fileExtension = strtolower($attachmentFile->getClientOriginalExtension());
+    
+                if (!in_array($fileExtension, $allowedFileTypes)) {
+                    return redirect()->back()->with('error', 'File attachment harus berupa PDF atau Excel file.');
+                }
+
+                // Simpan file ke folder public/storage/attachment_hpe
+                $attachmentPath = $attachmentFile->store('attachment_hpe', 'public');
+            } elseif ($existingAttachmentPath = $hpe->attachment_file) {
+                // Jika tidak ada file baru diunggah, gunakan data yang sudah ada
+                $attachmentPath = $existingAttachmentPath;
+            }
+
+            $hpe->update([
+                'ID_Kota' => $ID_Kota,
+                'ID_Pengadaan' => $ID_Pengadaan,
+                'ID_Sumber_Referensi' => $ID_Sumber_Referensi,
+                'Tanggal' => $request->input('Tanggal'),
+                'HPE' => $request->input('hpe'),
+                'nama_pejabat_rendan'=> $idUser1,
+                'jabatan_pejabat_rendan' => $jabatanPejabatRendan,
+                'nama_user_1'=> $userID,
+                'jabatan_user_1' => $jabatanUser1,
+                // 'divisi_pejabat_rendan' => $jabatanPejabatRendan,
+                'attachment_file' => $attachmentPath,
+
+            ]);
+            // $hpe->save();
 
         }else {
             // Log nilai-nilai yang diperlukan untuk debugging

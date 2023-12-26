@@ -10,6 +10,9 @@
     <td class="badge badge-primary">
         <a href="{{ route('hpe.kirim', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_HPE' => $hpe->ID_HPE]) }}" class="btn btn-primary">Kirim</a>
     </td>
+    <td>
+        <a href="{{ route('hpe.edit', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_HPE' =>$hpe->ID_HPE]) }}" class="btn btn-warning">Edit</a>
+    </td>
     @else
     <td>
         <a style="display:none;"></a>

@@ -40,12 +40,10 @@
                                                 @if ($notaDinasPermintaan)
                                                     {{ $notaDinasPermintaan->tanggal_pengajuan }}
                                                 @endif
-                                            {{-- '@elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')
+                                            @elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')
                                                 @if ($statusNotaDinasPelaksanaan)
-                                                    {{ $statusNotaDinasPelaksanaan->keterangan_status }}
-                                                @else
-                                                    Status Tidak Ditemukan
-                                                @endif' --}}
+                                                    {{ $notaDinasPelaksanaan->tanggal_pengajuan_pelaksanaan ?? ''}}
+                                                @endif
                                             @endif
                                         </td>
                                         <td class="badge badge-pill badge-dark">
@@ -103,8 +101,15 @@
                                                 Surat RAB perlu Dibuat dan Disetujui
                                             @endif
                                         @elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')
-                                        Perlu Persetujuan Semua Dokumen dari Pejabat Rendan
-                                            {{-- <a href="{{ route('nota_dinas_pelaksanaan.index') }}" class="btn btn-info">Detail</a> --}}
+                                            @if (in_array($pengadaan->id_status_ringkasan_rks, [4]) || in_array($pengadaan->id_status_hpe, [4]))
+                                                @if ($pengadaan->id_status_nota_dinas_pelaksanaan == 6)
+                                                    <a href="{{ route('nota_dinas_pelaksanaan.index', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'id_nota_dinas_permintaan' => $notaDinasPelaksanaan->id_nota_dinas_permintaan]) }}" class="btn btn-info">Detail</a>
+                                                @else
+                                                    <a href="{{ route('nota_dinas_pelaksanaan.preview', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'id_nota_dinas_permintaan' => $notaDinasPelaksanaan->id_nota_dinas_permintaan]) }}" class="btn btn-info">Detail</a>
+                                                @endif
+                                            @else
+                                            Perlu Persetujuan Semua Dokumen dari Pejabat Rendan
+                                            @endif
                                         @endif
                                         </td>
                                     </tr>

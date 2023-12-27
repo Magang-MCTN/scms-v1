@@ -234,12 +234,11 @@
     <p></p>
     <br>
 <br>
-    <div>
+    <div style="float: right; margin-right: 10px;">
         <p>@if(isset($kota))
             {{ $kota->Kota }},
         @endif{{ $tanggalFormatted }}</p>
         <p>Disetujui oleh:</p>
-        <p><b>{{ $justifikasi->jabatan_user_1 }}</b></p>
         <p></p>
         <div>
             @if ($justifikasi->tanda_tangan_user_1)
@@ -249,7 +248,8 @@
             @endif
         </div>
         <br>
-        <p><b>{{ $justifikasi->nama_user_1 }}</b></p>
+        <p><b><u>{{ $justifikasi->nama_user_1 }}</u></b></p>
+        <p><b>{{ $justifikasi->jabatan_user_1 }}</b></p>
     </div>
 </body>
 

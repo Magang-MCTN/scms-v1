@@ -2,11 +2,22 @@
     // Import namespace di luar blok PHP
     use Illuminate\Support\Facades\File;
 
-    // Lanjutkan dengan penggunaan normal
-    if ($hpe->tanda_tangan_pejabat_rendan) {
-        $imagePath = public_path('storage/' . $hpe->tanda_tangan_pejabat_rendan);
+    if ($hpe->tanda_tangan_user_1) {
+        $imagePath = public_path('storage/' . $hpe->tanda_tangan_user_1);
         $imageData = base64_encode(File::get($imagePath));
         $imageMimeType = mime_content_type($imagePath);
+    }
+    // Lanjutkan dengan penggunaan normal
+    // if ($hpe->tanda_tangan_pejabat_rendan) {
+    //     $imagePath = public_path('storage/' . $hpe->tanda_tangan_pejabat_rendan);
+    //     $imageData = base64_encode(File::get($imagePath));
+    //     $imageMimeType = mime_content_type($imagePath);
+    // }
+
+    if ($hpe->tanda_tangan_pejabat_rendan) {
+        $imagePathRendan = public_path('storage/' . $hpe->tanda_tangan_pejabat_rendan);
+        $imageDataRendan = base64_encode(File::get($imagePathRendan));
+        $imageMimeTypeRendan = mime_content_type($imagePathRendan);
     }
 @endphp
 <!DOCTYPE html>
@@ -136,21 +147,36 @@
         <p>@if(isset($kota))
             {{ $kota->Kota }},
         @endif{{ $tanggalFormatted }}</p>
-        <p>Disetujui oleh:</p>
-        <p></p>
-        <p><b>Pengguna Barang/Jasa</b></p>
-        <div>
-            @if ($hpe->tanda_tangan_pejabat_rendan)
-                <img src="data:image/{{ $imageMimeType }};base64,{{ $imageData }}" alt="Tanda Tangan" width="100">
-            @else
-                <p></p>
-            @endif
+        <p>Disusun oleh:</p>
+            <p>Pejabat Perencana Pengadaan</p>
+            <p></p>
+            <div>
+                @if ($hpe->tanda_tangan_pejabat_rendan)
+                    <img src="data:image/{{ $imageMimeTypeRendan }};base64,{{ $imageDataRendan }}" alt="Tanda Tangan" width="100">
+                @else
+                    <p></p>
+                @endif
+            </div>
+            <p>Pengguna Barang/Jasa: <b>{{ $hpe->nama_pejabat_rendan }}</b></p>
+            <p>Jabatan: <b>{{ $hpe->jabatan_pejabat_rendan }}</b></p>
         </div>
-        <br>
-        <p><b>{{ $hpe->nama_pejabat_rendan }}</b></p>
-        <p><b>{{ $hpe->jabatan_pejabat_rendan }}</b></p>
+    <br>
+        <p></p>
+        <div style="margin-right: 20px;">
+            <p>Disetujui oleh:</p>
+            <p>Pengguna Barang/Jasa:</p>
+            <p></p>
+            <div>
+                @if ($hpe->tanda_tangan_user_1)
+                    <img src="data:image/{{ $imageMimeType }};base64,{{ $imageData }}" alt="Tanda Tangan" width="100">
+                @else
+                    <p></p>
+                @endif
+            </div>
+            <p>Pengguna Barang/Jasa: <b>{{ $hpe->nama_user_1 }}</b></p>
+            <p>Jabatan: <b>{{ $hpe->jabatan_user_1 }}</b></p>
+        </div>
         <p><b>Lampiran : <a href="{{ asset('storage/' . $hpe->attachment_file) }}">Rincian Perhitungan HPE</a></b></p>
-    </div>
 </body>
 
 </html>

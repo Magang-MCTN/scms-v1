@@ -85,7 +85,8 @@
 
                         <div class="form-group">
                             <label for="informasi_anggaran">Informasi Anggaran / No. PRK</label>
-                            <input type="number" step="any" name="informasi_anggaran" id="informasi_anggaran" class="form-control" required value="{{ old('informasi_anggaran', $notaDinasPermintaan->Nomor_PRK) }}">
+                            {{-- <input type="number" step="any" name="informasi_anggaran" id="informasi_anggaran" class="form-control" required value="{{ old('informasi_anggaran', $notaDinasPermintaan->Nomor_PRK) }}"> --}}
+                            <input type="text" name="informasi_anggaran" id="informasi_anggaran" class="form-control" required value="{{ old('informasi_anggaran', $notaDinasPermintaan->Nomor_PRK) }}">
                         </div>
 
                         <div class="form-group">
@@ -102,7 +103,8 @@
 
                         <div class="form-group">
                             <label for="pagu_anggaran">Pagu Anggaran</label>
-                            <input type="number" step="any" name="pagu_anggaran" id="pagu_anggaran" class="form-control" required value="{{ old('pagu_anggaran', $notaDinasPermintaan->pagu_anggaran) }}">
+                            {{-- <input type="number" step="any" name="pagu_anggaran" id="pagu_anggaran" class="form-control" required value="{{ old('pagu_anggaran', $notaDinasPermintaan->pagu_anggaran) }}"> --}}
+                            <input type="text" name="pagu_anggaran" id="pagu_anggaran" class="form-control" required value="{{ old('pagu_anggaran', $notaDinasPermintaan->pagu_anggaran) }}">
                         </div>
 
                         <div class="form-group">

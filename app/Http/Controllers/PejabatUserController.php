@@ -18,6 +18,7 @@ use App\Models\RingkasanRKS;
 use App\Models\Signatures;
 use App\Models\Status;
 use App\Models\SumberAnggaran;
+use App\Models\SumberReferensi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -35,7 +36,7 @@ class PejabatUserController extends Controller
         $statusData = Status::all();
         $pengadaan = Pengadaan::with(['metodePengadaan', 'sistemEvaluasiPenawaran', 'jenisPengadaan'])->get();
 
-        $dokumenList = ['Rencana Anggaran Biaya', 'Justifikasi Penunjukan Langsung','Nota Dinas Permintaan Pengadaan', 'HPE', 'RKS', 'Ringkasan RKS', 'Dokumen Kualifikasi'];
+        $dokumenList = ['Rencana Anggaran Biaya', 'Justifikasi Penunjukan Langsung','Nota Dinas Permintaan Pengadaan','Nota Dinas Permintaan Pelaksanaan Pengadaan', 'HPE', 'RKS', 'Ringkasan RKS', 'Dokumen Kualifikasi'];
         $dokumen_checked = [];
     
         foreach ($pengadaan as $p) {
@@ -52,11 +53,12 @@ class PejabatUserController extends Controller
         $rab = Rab::where('ID_Pengadaan', $ID_Pengadaan)->first();
         $justifikasi = JustifikasiPenunjukanLangsung::where('ID_Pengadaan', $ID_Pengadaan)->first();
         $notaDinasPermintaan = RencanaNotaDinas::where('ID_Pengadaan', $ID_Pengadaan)->first();
+        $notaDinasPelaksanaan = RencanaNotaDinas::where('ID_Pengadaan', $ID_Pengadaan)->first();
         $hpe = HPE::where('ID_Pengadaan', $ID_Pengadaan)->first();
         $rks = RingkasanRKS::where('ID_Pengadaan', $ID_Pengadaan)->first();
         $ringkasanRKS = RingkasanRKS::where('ID_Pengadaan', $ID_Pengadaan)->first();
         $dokumenKualifikasi = DokumenKualifikasi::where('ID_Pengadaan', $ID_Pengadaan)->first();
-        $dokumenList = ['Rencana Anggaran Biaya', 'Justifikasi Penunjukan Langsung','Nota Dinas Permintaan Pengadaan', 'HPE', 'RKS', 'Ringkasan RKS', 'Dokumen Kualifikasi'];
+        $dokumenList = ['Rencana Anggaran Biaya', 'Justifikasi Penunjukan Langsung','Nota Dinas Permintaan Pengadaan','Nota Dinas Permintaan Pelaksanaan Pengadaan', 'HPE', 'RKS', 'Ringkasan RKS', 'Dokumen Kualifikasi'];
         $dokumen_checked = [];
 
         foreach ($dokumenList as $d) {
@@ -68,12 +70,13 @@ class PejabatUserController extends Controller
         $statusRab = $pengadaans->statusRab;
         $statusJustifikasi = $pengadaans->statusJustifikasi;
         $statusNotaDinasPermintaan = $pengadaans->statusNotaDinasPermintaan;
+        $statusNotaDinasPelaksanaan = $pengadaans->statusNotaDinasPelaksanaan;
         $statusHPE = $pengadaans->statusHPE;
         $statusRKS = $pengadaans->statusRKS;
         $statusRingkasanRKS = $pengadaans->statusRingkasanRKS;
         $statusDokumenKualifikasi = $pengadaans->statusDokumenKualifikasi;
 
-        return view('pejabatuser.detail', compact('pengadaans','rab', 'hpe','rks','ringkasanRKS','dokumenKualifikasi','statusRKS','statusRingkasanRKS','statusDokumenKualifikasi','justifikasi','notaDinasPermintaan','dokumen_checked', 'dokumen','statusData','status', 'statusRab','statusHPE','statusJustifikasi','statusNotaDinasPermintaan'));
+        return view('pejabatuser.detail', compact('pengadaans','rab', 'hpe','rks','ringkasanRKS','dokumenKualifikasi','statusRKS','statusRingkasanRKS','statusDokumenKualifikasi','statusNotaDinasPelaksanaan','notaDinasPelaksanaan','justifikasi','notaDinasPermintaan','dokumen_checked', 'dokumen','statusData','status', 'statusRab','statusHPE','statusJustifikasi','statusNotaDinasPermintaan'));
 
     }
 
@@ -326,6 +329,102 @@ class PejabatUserController extends Controller
         return redirect()->back()->with('success', 'Surat Nota Dinas Perencanaan Pengadaan telah ditolak');
     }
 
+    public function approveHPE($ID_Pengadaan, $ID_HPE)
+{
+    try {
+    // Ambil data berdasarkan ID_Pengadaan dan ID_RAB
+    $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
+    $hpe = HPE::findOrFail($ID_HPE);
+    $notaDinasPermintaan = RencanaNotaDinas::where('ID_Pengadaan', $ID_Pengadaan)->first();
+    $kota = Kota::find($hpe->ID_Kota);
+    $sumberReferensi = SumberReferensi::find($hpe->ID_Sumber_Referensi);
+    $jenisPengadaan = JenisPengadaan::find($pengadaan->ID_Jenis_Pengadaan);
+    $tanggalFormatted = Carbon::parse($hpe->Tanggal)->format('d F Y');
+    $rencanaMulaiFormatted = Carbon::parse($pengadaan->rencana_tanggal_terkontrak_mulai)->format('d F Y');
+    $rencanaSelesaiFormatted = Carbon::parse($pengadaan->rencana_tanggal_terkontrak_selesai)->format('d F Y');
+
+    $options = new Options();
+    $options->set('isHtml5ParserEnabled', true);
+    $options->set('isPhpEnabled', true);
+    $options->set('isHtml5ParserEnabled', true);
+    $options->set('pdfBackend', 'CPDF');
+    $options->set('defaultPaperSize', 'A4');
+    $options->set('max_execution_time', 1000);
+    // $options->set('orientation', 'landscape');
+    // $typesuser1 = $rab->tanda_tangan_user_1->mime_type;
+    // Mengambil path gambar dari direktori lokal
+    $pathToImage = public_path('dashboard/template/images/logo1.jpg');
+
+    // Memeriksa apakah file gambar ada
+    if (file_exists($pathToImage)) {
+    // Mengonversi gambar ke dalam base64
+    $base64Image = base64_encode(File::get($pathToImage));
+    $types = pathinfo($pathToImage, PATHINFO_EXTENSION);
+    
+    $pdf = PDF::loadView('hpe.preview', compact('pengadaan','notaDinasPermintaan','jenisPengadaan','rencanaMulaiFormatted','rencanaSelesaiFormatted','sumberReferensi', 'hpe', 'kota', 'tanggalFormatted','base64Image','types'));
+
+    return view('pejabatuser.tampil-hpe', compact('ID_Pengadaan','pengadaan','notaDinasPermintaan','rencanaMulaiFormatted','rencanaSelesaiFormatted','jenisPengadaan','sumberReferensi', 'hpe', 'kota', 'tanggalFormatted','base64Image','types', 'pdf'));
+    } else {
+        \Log::error('File gambar tidak ditemukan di path yang diinginkan: ' . $pathToImage);
+        return redirect()->back()->with('error', 'File gambar tidak ditemukan.');
+    }
+} catch (\Exception $e) {
+    \Log::error('Error saat membuat file PDF: ' . $e->getMessage());
+    return redirect()->back()->with('error', 'Terjadi kesalahan saat membuat file PDF preview.');
+}
+}
+
+public function approveFileHPE(Request $request, $ID_Pengadaan, $ID_HPE)
+    {
+        $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
+        $pengadaan->id_status_hpe = 4;
+        $pengadaan->alasan_dokumen_kualifikasi = $request->input('alasan_dokumen_kualifikasi');
+        $pengadaan->save();
+        // $users = User::where('id_role', 5)->get();
+        // $emails = $users->pluck('email')->toArray();
+        // Mail::to($emails)->send(new NotifEmailAdminDuri($surat2));
+
+        $hpe = HPE::findOrFail($ID_HPE);
+        // $rab->ID_RAB = Auth::user()->id_user;
+        // $id_user = Auth::user()->id_user;
+        // $tandaTangan = Signatures::where('id_user', $id_user)->value('path');
+        // $hpe->tanda_tangan_pejabat_rendan = $tandaTangan;
+        // $hpe->save();
+
+        $namaUser1 = $hpe->nama_user_1;
+        // $namaUser2 = $hpe->nama_rendan_1;
+        $idUser1 = User::where('name', $namaUser1)->value('id_user');
+        // $idUser2 = User::where('name', $namaUser2)->value('id_user');
+        $tandaTangan1 = Signatures::where('id_user', $idUser1)->value('path');
+        // $tandaTangan2 = Signatures::where('id_user', $idUser2)->value('path');
+        $hpe->tanda_tangan_user_1 = $tandaTangan1;
+        // $hpe->tanda_tangan_rendan_1 = $tandaTangan2;
+        $hpe->save();
+
+
+        // Redirect ke halaman sebelumnya atau ke halaman lain
+        return redirect()->back()->with('success', 'Surat HPE telah disetujui');
+    }
+
+    public function rejectFileHPE(Request $request, $ID_Pengadaan, $ID_HPE)
+    {
+        $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
+        $pengadaan->id_status_hpe = 2;
+        $pengadaan->alasan_dokumen_kualifikasi = $request->input('alasan_dokumen_kualifikasi');
+        $pengadaan->save();
+        // $users = User::where('id_role', 5)->get();
+        // $emails = $users->pluck('email')->toArray();
+        // Mail::to($emails)->send(new NotifEmailAdminDuri($surat2));
+
+        $hpe = Rab::findOrFail($ID_HPE);
+        // $rab->ID_RAB = Auth::user()->id_user;
+
+
+        // Redirect ke halaman sebelumnya atau ke halaman lain
+        return redirect()->back()->with('success', 'Surat HPE telah ditolak');
+    }
+
+
     public function approveRKS($ID_Pengadaan, $ID_Ringkasan_Rks)
 {
     try {
@@ -380,6 +479,7 @@ public function approveFileRKS(Request $request, $ID_Pengadaan, $ID_Ringkasan_Rk
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
         $pengadaan->id_status_ringkasan_rks = 3;
         $pengadaan->id_status_rks = 3;
+        $pengadaan->id_status_nota_dinas_pelaksanaan = 6;
         $pengadaan->alasan_rks = $request->input('alasan_rks');
         $pengadaan->save();
         // $users = User::where('id_role', 5)->get();
@@ -421,5 +521,91 @@ public function approveFileRKS(Request $request, $ID_Pengadaan, $ID_Ringkasan_Rk
 
         // Redirect ke halaman sebelumnya atau ke halaman lain
         return redirect()->back()->with('success', 'Surat Ringkasan RKS telah ditolak');
+    }
+
+    public function approveNotaDinasPelaksanaan($ID_Pengadaan, $id_nota_dinas_permintaan)
+{
+    try {
+        // Ambil data berdasarkan ID_Pengadaan dan ID_RAB
+        $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
+        $notaDinasPelaksanaan = RencanaNotaDinas::findOrFail($id_nota_dinas_permintaan);
+        $kota = Kota::find($notaDinasPelaksanaan->ID_Kota);
+        $sumberAnggaran = SumberAnggaran::find($pengadaan->ID_Sumber_Anggaran);
+        $jenisPengadaan = JenisPengadaan::find($pengadaan->ID_Jenis_Pengadaan);
+        $tanggalFormatted = Carbon::parse($notaDinasPelaksanaan->Tanggal)->format('d F Y');
+        $rencanaMulaiFormatted = Carbon::parse($pengadaan->rencana_tanggal_terkontrak_mulai)->format('d F Y');
+        $rencanaSelesaiFormatted = Carbon::parse($pengadaan->rencana_tanggal_terkontrak_selesai)->format('d F Y');
+        // $tanda_tangan = Signatures::findOrFail()
+    
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isPhpEnabled', true);
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('pdfBackend', 'CPDF');
+        $options->set('defaultPaperSize', 'A4');
+        $options->set('max_execution_time', 1000);
+        // $options->set('orientation', 'landscape');
+        // $typesuser1 = $rab->tanda_tangan_user_1->mime_type;
+        // Mengambil path gambar dari direktori lokal
+        $pathToImage = public_path('dashboard/template/images/logo1.jpg');
+
+        // Memeriksa apakah file gambar ada
+        if (file_exists($pathToImage)) {
+        // Mengonversi gambar ke dalam base64
+        $base64Image = base64_encode(File::get($pathToImage));
+        $types = pathinfo($pathToImage, PATHINFO_EXTENSION);
+
+        $pdf = PDF::loadView('notaDinasPelaksanaan.preview', compact('pengadaan','rencanaMulaiFormatted','rencanaSelesaiFormatted', 'notaDinasPelaksanaan','sumberAnggaran', 'kota', 'tanggalFormatted','base64Image','types','jenisPengadaan'));
+    
+        return view('pejabatuser.tampil-nota-dinas-pelaksanaan', compact('ID_Pengadaan','pengadaan','rencanaMulaiFormatted', 'rencanaSelesaiFormatted','notaDinasPelaksanaan','sumberAnggaran', 'kota','jenisPengadaan', 'tanggalFormatted','base64Image','types', 'pdf'));
+            } else {
+                \Log::error('File gambar tidak ditemukan di path yang diinginkan: ' . $pathToImage);
+                return redirect()->back()->with('error', 'File gambar tidak ditemukan.');
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error saat membuat file PDF: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat membuat file PDF preview.');
+        }
+}
+
+    public function approveFileNotaDinasPelaksanaan(Request $request, $ID_Pengadaan, $id_nota_dinas_permintaan)
+    {
+        $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
+        $pengadaan->id_status_nota_dinas_pelaksanaan= 3;
+        $pengadaan->update(['id_status' => 16]);
+        $pengadaan->alasan_nota_dinas_pelaksanaan = $request->input('alasan_nota_dinas_pelaksanaan');
+        $pengadaan->save();
+        // $users = User::where('id_role', 5)->get();
+        // $emails = $users->pluck('email')->toArray();
+        // Mail::to($emails)->send(new NotifEmailAdminDuri($surat2));
+
+        $notaDinasPelaksanaan = RencanaNotaDinas::findOrFail($id_nota_dinas_permintaan);
+        // $rab->ID_RAB = Auth::user()->id_user;
+        $id_user = Auth::user()->id_user;
+        $tandaTangan = Signatures::where('id_user', $id_user)->value('path');
+        $notaDinasPelaksanaan->tanda_tangan_user_pelaksanaan= $tandaTangan;
+        $notaDinasPelaksanaan->save();
+
+
+        // Redirect ke halaman sebelumnya atau ke halaman lain
+        return redirect()->back()->with('success', 'Surat Nota Dinas Permintaan Pelaksanaan Pengadaan telah disetujui');
+    }
+
+    public function rejectFileNotaDinasPelaksanaan(Request $request, $ID_Pengadaan, $id_nota_dinas_permintaan)
+    {
+        $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
+        $pengadaan->id_status_nota_dinas_pelaksanaan = 2;
+        $pengadaan->alasan_nota_dinas_pelaksanaan = $request->input('alasan_nota_dinas_pelaksanaan');
+        $pengadaan->save();
+        // $users = User::where('id_role', 5)->get();
+        // $emails = $users->pluck('email')->toArray();
+        // Mail::to($emails)->send(new NotifEmailAdminDuri($surat2));
+
+        $notaDinasPelaksanaan = RencanaNotaDinas::findOrFail($id_nota_dinas_permintaan);
+        // $rab->ID_RAB = Auth::user()->id_user;
+
+
+        // Redirect ke halaman sebelumnya atau ke halaman lain
+        return redirect()->back()->with('success', 'Surat Nota Dinas Permintaan Pelaksanaan Pengadaan telah ditolak');
     }
 }

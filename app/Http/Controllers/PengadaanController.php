@@ -103,6 +103,7 @@ class PengadaanController extends Controller
         $rab = Rab::where('ID_Pengadaan', $ID_Pengadaan)->first();
         $justifikasi = JustifikasiPenunjukanLangsung::where('ID_Pengadaan', $ID_Pengadaan)->first();
         $notaDinasPermintaan = RencanaNotaDinas::where('ID_Pengadaan', $ID_Pengadaan)->first();
+        $notaDinasPelaksanaan = RencanaNotaDinas::where('ID_Pengadaan', $ID_Pengadaan)->first();
         $dokumenList = ['Rencana Anggaran Biaya', 'Justifikasi Penunjukan Langsung','Nota Dinas Permintaan Pengadaan','Nota Dinas Permintaan Pelaksanaan Pengadaan'];
         $dokumen_checked = [];
 
@@ -118,7 +119,7 @@ class PengadaanController extends Controller
     $statusNotaDinasPermintaan = $pengadaan->statusNotaDinasPermintaan;
     $statusNotaDinasPelaksanaan = $pengadaan->statusNotaDinasPelaksanaan;
 
-        return view('pengadaan.detail', compact('pengadaan','rab','justifikasi', 'notaDinasPermintaan','dokumen_checked', 'dokumen','statusData','status', 'statusRab','statusJustifikasi','statusNotaDinasPermintaan','statusNotaDinasPelaksanaan'));
+        return view('pengadaan.detail', compact('pengadaan','rab','justifikasi', 'notaDinasPermintaan','notaDinasPelaksanaan','dokumen_checked', 'dokumen','statusData','status', 'statusRab','statusJustifikasi','statusNotaDinasPermintaan','statusNotaDinasPelaksanaan'));
 
     }
 

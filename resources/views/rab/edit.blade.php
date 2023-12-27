@@ -91,7 +91,7 @@
 
                 <div class="form-group">
                     <label for="total_keseluruhan">Total Keseluruhan (Rp):</label>
-                    <input type="number" name="total_keseluruhan" class="form-control" id="total_keseluruhan_{{ $index }}" value="{{ $rab->total_keseluruhan }}" readonly>
+                    <input type="number" name="total_keseluruhan" class="total_keseluruhan form-control" id="total_keseluruhan_{{ $index }}" value="{{ $rab->total_keseluruhan }}" readonly>
                 </div>
 
                 {{-- <div class="form-group">
@@ -203,10 +203,16 @@ $(document).ready(function () {
         });
 
         // Event listener untuk input Estimasi Jumlah dan Harga
-        $(document).on("input", ".estimasi_jumlah, .harga, #estimasi_jumlah_{{ $index }}, #harga_{{ $index }}", function () {
+        $(document).on("input", ".estimasi_jumlah, .harga", function () {
             var form = $(this).closest(".barang-form");
             calculateTotal(form);
-            calculateTotal2(form);
+            // calculateTotal2(form2);
+        });
+
+        $(document).on("input", "#estimasi_jumlah_{{ $index }}, #harga_{{ $index }}", function () {
+            var form2 = $(this).closest(".barang-form");
+            // calculateTotal(form);
+            calculateTotal2(form2);
         });
         
 
@@ -266,11 +272,11 @@ newForm.find('[name^="barang"]').each(function () {
         updateTotalKeseluruhan();
     }
 
-    function calculateTotal2(form) {
-    var estimasiJumlah2 = parseInt(form.find("#estimasi_jumlah_{{ $index }}").val()) || 0;
-    var harga2 = parseInt(form.find("#harga_{{ $index }}").val()) || 0;
+    function calculateTotal2(form2) {
+    var estimasiJumlah2 = parseInt(form2.find("#estimasi_jumlah_{{ $index }}").val()) || 0;
+    var harga2 = parseInt(form2.find("#harga_{{ $index }}").val()) || 0;
     var total2 = estimasiJumlah2 * harga2;
-    form.find("#total_{{ $index }}").val(total2);
+    form2.find("#total_{{ $index }}").val(total2);
 
     updateTotalKeseluruhan();
 }
@@ -284,11 +290,16 @@ newForm.find('[name^="barang"]').each(function () {
         var totalForm1 = parseInt($(this).find(".total").val()) || 0;
         var totalForm2 = parseInt($(this).find("#total_{{ $index }}").val()) || 0;
         totalKeseluruhan += totalForm1 + totalForm2;
+        // totalKeseluruhan += totalForm1;
         });
 
         // Setel nilai total keseluruhan
         $(".total_keseluruhan, #total_keseluruhan_{{ $index }}").val(totalKeseluruhan);
+        // $(".total_keseluruhan, #total_keseluruhan_{{ $index }}").val(totalKeseluruhan);
+        
     }
+
+    
 </script>
 
 

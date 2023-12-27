@@ -61,13 +61,13 @@
                 <tr>
                     {{-- <th>&nbsp;Kode Barang&nbsp;</th> --}}
                     <th>&nbsp;Nama Barang&nbsp;</th>
-                    <th>&nbsp;Estimasi Jumlah&nbsp;</th>
+                    <th style="width: 10%">Estimasi Jumlah</th>
                     <th>&nbsp;Unit&nbsp;</th>
                     {{-- <th>&nbsp;ID Transaksi&nbsp;</th> --}}
                     <th>&nbsp;Deskripsi&nbsp;</th>
                     <th>&nbsp;Keterangan&nbsp;</th>
-                    <th>&nbsp;Harga (Rp.)&nbsp;</th>
-                    <th>&nbsp;Total (Rp.)&nbsp;</th>
+                    <th>&nbsp;Harga (Rp)&nbsp;</th>
+                    <th>&nbsp;Total (Rp)&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
@@ -84,22 +84,18 @@
                     <td><center>{{ $barang->Total }}</center></td>
                 </tr>
                 @endforeach
-            </tbody>
-        </table>
-        <table border="2">
-            <tbody>
-            <tr>
-                <td><center>Total Keseluruhan:</center></td>
-                <td><center>Rp.&nbsp;{{ $rab->total_keseluruhan }}&nbsp;</center></td>
+                <tr>
+                <td colspan="5"><center><b>Total Keseluruhan</b> </center></td>
+                <td colspan="2"><center>Rp.&nbsp;{{ $rab->total_keseluruhan }}&nbsp;</center></td>
             </tr>
-        </tbody>
+            </tbody>
         </table>
     </div>
     <p></p>
     <br>
     <br>
 
-    <div>
+    <div style="float: right; margin-right: 20px;">
         <p>@if(isset($kota))
             {{ $kota->Kota }},
         @endif{{ $tanggalFormatted }}</p>
@@ -113,8 +109,8 @@
             @endif
         </div>
         <br>
-        <p>Pengguna Barang/Jasa: <b>{{ $rab->nama_user_1 }}</b></p>
-        <p>Jabatan: <b>{{ $rab->jabatan_user_1 }}</b></p>
+        <p><b><u>{{ $rab->nama_user_1 }}</u></b></p>
+        <p><b>{{ $rab->jabatan_user_1 }}</b></p>
         {{-- <p>Lampiran: Rincian RAB</p> --}}
     </div>
 </body>

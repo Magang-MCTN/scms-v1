@@ -12,6 +12,7 @@ class RencanaNotaDinas extends Model
 
     protected $fillable = [
         'Nomor_ND_PPBJ',
+        'Nomor_ND_Lakdan',
         'ID_Kota',
         'Tanggal',
         'Nomor_PRK',
@@ -22,11 +23,13 @@ class RencanaNotaDinas extends Model
         'nama_user_1',
         'jabatan_user_1',
         'tanda_tangan_user_1',
+        'tanda_tangan_user_pelaksanaan',
         'ID_Pengadaan',
         'ID_Jenis_Pengadaan ',
         'url_kak',
         'url_spesifikasi_teknis',
         'tanggal_pengajuan',
+        'tanggal_pengajuan_pelaksanaan',
     ];
     public function kota()
     {

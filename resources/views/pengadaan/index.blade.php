@@ -53,101 +53,111 @@
             </div>
         </div>
     </div>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nama Pekerjaan</th>
-                <th>Status</th>
-                <th>Operasi</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{-- Tampilkan data pengadaan sesuai dengan kebutuhan Anda --}}
-            @foreach($pengadaan as $item)
-            <tr>
-                <td>{{ $item->Judul_Pengadaan }}</td>
-                <td class="badge badge-warning">
-                    @php
-                    $statusItem = $item->status ?? null;
-                    @endphp
-                    @if ($statusItem)
-                        {{ $statusItem->keterangan_status }}
-                    @else
-                        Status Tidak Ditemukan
-                    @endif
-                </td>
-                {{-- <td>
-                    @if($item->status == 'Selesai')
-                        <span style="color: green;">&#10003;</span>
-                    @else
-                        <span style="color: yellow;">&#128308;</span>
-                    @endif
-                </td> --}}
-                <td>{{ $item->operasi }}
-
-                    <button type="button" class="btn btn-warning edit-button" data-id="{{$item->ID_Pengadaan}}">
-                        <i class="fas fa-edit"></i>
-                    </button>
-
-                    <div class="modal fade" id="editModal{{$item->ID_Pengadaan}}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="editModalLabel">Edit Pengadaan</h5>
-                                    <button type="button" class="close closeModalBtnEdit" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="edit-form-{{$item->ID_Pengadaan}}" action="{{ route('pengadaan.update', $item->ID_Pengadaan) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="form-group">
-                                            <label for="Judul_Pengadaan">Nama Pekerjaan</label>
-                                            <input type="text" class="form-control" name="Judul_Pengadaan" value="{{$item->Judul_Pengadaan}}">
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" name="checklist_nota_dinas_permintaan_pengadaan" id="checklist-nota-dinas-permintaan-pengadaan-{{$item->ID_Pengadaan}}">
-                                            <label class="form-check-label" for="checklist-nota-dinas-permintaan-pengadaan-{{$item->ID_Pengadaan}}">Nota Dinas Permintaan Pengadaan</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" name="checklist_nota_dinas_permintaan_pelaksanaan_pengadaan" id="checklist-nota-dinas-permintaan-pelaksanaan-pengadaan-{{$item->ID_Pengadaan}}">
-                                            <label class="form-check-label" for="checklist-nota-dinas-permintaan-pelaksanaan-pengadaan-{{$item->ID_Pengadaan}}">Nota Dinas Permintaan Pelaksanaan Pengadaan</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" name="checklist_rencana_anggaran_biaya" id="checklist-rencana-anggaran-biaya-{{$item->ID_Pengadaan}}">
-                                            <label class="form-check-label" for="checklist-rencana-anggaran-biaya-{{$item->ID_Pengadaan}}">Rencana Anggaran Biaya</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" name="checklist_justifikasi_penunjukan_langsung" id="checklist-justifikasi-penunjukan-langsung-{{$item->ID_Pengadaan}}">
-                                            <label class="form-check-label" for="checklist-justifikasi-penunjukan-langsung-{{$item->ID_Pengadaan}}">Justifikasi Penunjukan Langsung</label>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" form="edit-form-{{$item->ID_Pengadaan}}" class="btn btn-primary">Simpan Perubahan</button>
+    <div class="table-responsive home-tab">
+        <table class="table text-center">
+            <thead>
+                <tr>
+                    <th>Nama Pekerjaan</th>
+                    <th>Status</th>
+                    <th>Operasi</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{-- Tampilkan data pengadaan sesuai dengan kebutuhan Anda --}}
+                @foreach($pengadaan as $item)
+                <tr>
+                    <td>{{ $item->Judul_Pengadaan }}</td>
+                    <td>
+                    
+                        @php
+                        $statusItem = $item->status ?? null;
+                        @endphp
+                        @if ($statusItem)
+                            @if ($statusItem->id_status == 2 || $statusItem->id_status == 15)
+                                <span class="badge badge-danger">{{ $statusItem->keterangan_status }}</span>
+                                @elseif ($statusItem->id_status == 3|| $statusItem->id_status == 4 || $statusItem->id_status == 5 || $statusItem->id_status == 12)
+                                <span class="badge badge-success">{{ $statusItem->keterangan_status }}</span>
+                                @else
+                                <span class="badge badge-warning">{{ $statusItem->keterangan_status }}</span>
+                                @endif 
+                
+                        @else
+                            Status Tidak Ditemukan
+                        @endif
+                    </td>
+                    {{-- <td>
+                        @if($item->status == 'Selesai')
+                            <span style="color: green;">&#10003;</span>
+                        @else
+                            <span style="color: yellow;">&#128308;</span>
+                        @endif
+                    </td> --}}
+                    <td>{{ $item->operasi }}
+    
+                        <button type="button" class="btn btn-warning edit-button" style="color:white" data-id="{{$item->ID_Pengadaan}}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+    
+                        <div class="modal fade" id="editModal{{$item->ID_Pengadaan}}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editModalLabel">Edit Pengadaan</h5>
+                                        <button type="button" class="close closeModalBtnEdit" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="edit-form-{{$item->ID_Pengadaan}}" action="{{ route('pengadaan.update', $item->ID_Pengadaan) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="form-group">
+                                                <label for="Judul_Pengadaan">Nama Pekerjaan</label>
+                                                <input type="text" class="form-control" name="Judul_Pengadaan" value="{{$item->Judul_Pengadaan}}">
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" name="checklist_nota_dinas_permintaan_pengadaan" id="checklist-nota-dinas-permintaan-pengadaan-{{$item->ID_Pengadaan}}">
+                                                <label class="form-check-label" for="checklist-nota-dinas-permintaan-pengadaan-{{$item->ID_Pengadaan}}">Nota Dinas Permintaan Pengadaan</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" name="checklist_nota_dinas_permintaan_pelaksanaan_pengadaan" id="checklist-nota-dinas-permintaan-pelaksanaan-pengadaan-{{$item->ID_Pengadaan}}">
+                                                <label class="form-check-label" for="checklist-nota-dinas-permintaan-pelaksanaan-pengadaan-{{$item->ID_Pengadaan}}">Nota Dinas Permintaan Pelaksanaan Pengadaan</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" name="checklist_rencana_anggaran_biaya" id="checklist-rencana-anggaran-biaya-{{$item->ID_Pengadaan}}">
+                                                <label class="form-check-label" for="checklist-rencana-anggaran-biaya-{{$item->ID_Pengadaan}}">Rencana Anggaran Biaya</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" name="checklist_justifikasi_penunjukan_langsung" id="checklist-justifikasi-penunjukan-langsung-{{$item->ID_Pengadaan}}">
+                                                <label class="form-check-label" for="checklist-justifikasi-penunjukan-langsung-{{$item->ID_Pengadaan}}">Justifikasi Penunjukan Langsung</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" form="edit-form-{{$item->ID_Pengadaan}}" class="btn btn-primary">Simpan Perubahan</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <form id="delete-form-{{ $item->ID_Pengadaan }}" action="{{ route('pengadaan.delete', $item->ID_Pengadaan) }}" method="POST" style="display: none;">
-                        @csrf
-                        @method('DELETE')
-                    </form>
-                    <a href="#" class="btn btn-danger" onclick="if (confirm('Apakah Anda yakin ingin menghapus data ini?')) { event.preventDefault(); document.getElementById('delete-form-{{ $item->ID_Pengadaan }}').submit(); }">
-                        <i class="fas fa-trash"></i>
-                    </a>
-                </td>
-                <td>
-                    <a href="{{ route('pengadaan.detail', $item->ID_Pengadaan) }}" class="btn btn-info">Lihat Detail</a>
-                </td>
-            </tr>
-        @endforeach
-
-        </tbody>
+    
+                        <form id="delete-form-{{ $item->ID_Pengadaan }}" action="{{ route('pengadaan.delete', $item->ID_Pengadaan) }}" method="POST" style="display: none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                        <a href="#" class="btn btn-danger" style="color:white" onclick="if (confirm('Apakah Anda yakin ingin menghapus data ini?')) { event.preventDefault(); document.getElementById('delete-form-{{ $item->ID_Pengadaan }}').submit(); }">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ route('pengadaan.detail', $item->ID_Pengadaan) }}" class="btn btn-primary" style="color:white;">Lihat Detail</a>
+                    </td>
+                </tr>
+            @endforeach
+    
+            </tbody>
+                    </table>
+    </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js"></script>
 <script>

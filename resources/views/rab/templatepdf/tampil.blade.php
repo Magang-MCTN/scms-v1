@@ -13,6 +13,14 @@
     <td>
         <a href="{{ route('rab.edit', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_RAB' =>$rab->ID_RAB]) }}" class="btn btn-warning">Edit</a>
     </td>
+    @endif
+    @if (in_array($pengadaan->id_status_rab, [2]))
+    {{-- <td class="badge badge-primary">
+        <a href="{{ route('rab.kirim', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_RAB' => $rab->ID_RAB]) }}" class="btn btn-primary">Kirim</a>
+    </td> --}}
+    <td>
+        <a href="{{ route('rab.edit', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_RAB' =>$rab->ID_RAB]) }}" class="btn btn-warning">Edit</a>
+    </td>
     @else
     <td>
         <a style="display:none;"></a>

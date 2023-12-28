@@ -83,8 +83,117 @@
                                                     @endif
                                                 @endif
                                             </td>
-                                            <td class="badge badge-pill badge-dark">{{ $status }}</td>
                                             <td>
+                                                @if ($dokumen == 'Rencana Anggaran Biaya')
+                                                    @if ($statusRab)
+                                                        @if ($statusRab->id_status == 2 || $statusRab->id_status == 15)
+                                                            <span class="badge badge-danger">{{ $statusRab->keterangan_status }}</span>
+                                                        @elseif ($statusRab->id_status == 3 || $statusRab->id_status == 4 || $statusRab->id_status == 5 || $statusRab->id_status == 12)
+                                                            <span class="badge badge-success">{{ $statusRab->keterangan_status }}</span>
+                                                        @else
+                                                            <span class="badge badge-warning">{{ $statusRab->keterangan_status }}</span>
+                                                        @endif
+                                                    @else
+                                                        Status Tidak Ditemukan
+                                                    @endif
+                                                @elseif ($dokumen == 'Justifikasi Penunjukan Langsung')
+                                                    @if ($statusJustifikasi)
+                                                        @if ($statusJustifikasi->id_status == 2 || $statusJustifikasi->id_status == 15)
+                                                            <span class="badge badge-danger">{{ $statusJustifikasi->keterangan_status }}</span>
+                                                        @elseif ($statusJustifikasi->id_status == 3 || $statusJustifikasi->id_status == 4 || $statusJustifikasi->id_status == 5 || $statusJustifikasi->id_status == 12)
+                                                            <span class="badge badge-success">{{ $statusJustifikasi->keterangan_status }}</span>
+                                                        @else
+                                                            <span class="badge badge-warning">{{ $statusJustifikasi->keterangan_status }}</span>
+                                                        @endif
+                                                    @else
+                                                        Status Tidak Ditemukan
+                                                    @endif
+                                                @elseif ($dokumen == 'Nota Dinas Permintaan Pengadaan')
+                                                    @if ($statusNotaDinasPermintaan)
+                                                        @if ($statusNotaDinasPermintaan->id_status == 2 || $statusNotaDinasPermintaan->id_status == 15)
+                                                            <span class="badge badge-danger">{{ $statusNotaDinasPermintaan->keterangan_status }}</span>
+                                                        @elseif ($statusNotaDinasPermintaan->id_status == 3 || $statusNotaDinasPermintaan->id_status == 4 || $statusNotaDinasPermintaan->id_status == 5 || $statusNotaDinasPermintaan->id_status == 12)
+                                                            <span class="badge badge-success">{{ $statusNotaDinasPermintaan->keterangan_status }}</span>
+                                                        @else
+                                                            <span class="badge badge-warning">{{ $statusNotaDinasPermintaan->keterangan_status }}</span>
+                                                        @endif
+                                                    @else
+                                                        Status Tidak Ditemukan
+                                                    @endif
+                                                @elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')
+                                                    @if ($statusNotaDinasPelaksanaan)
+                                                        @if ($statusNotaDinasPelaksanaan->id_status == 2 || $statusNotaDinasPelaksanaan->id_status == 15)
+                                                            <span class="badge badge-danger">{{ $statusNotaDinasPelaksanaan->keterangan_status }}</span>
+                                                        @elseif ($statusNotaDinasPelaksanaan->id_status == 3 || $statusNotaDinasPelaksanaan->id_status == 4 || $statusNotaDinasPelaksanaan->id_status == 5 || $statusNotaDinasPelaksanaan->id_status == 12)
+                                                            <span class="badge badge-success">{{ $statusNotaDinasPelaksanaan->keterangan_status }}</span>
+                                                        @else
+                                                            <span class="badge badge-warning">{{ $statusNotaDinasPelaksanaan->keterangan_status }}</span>
+                                                        @endif
+                                                    @else
+                                                        Status Tidak Ditemukan
+                                                    @endif
+                                                @elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')
+                                                    @if ($statusNotaDinasPelaksanaan)
+                                                        @if ($statusNotaDinasPelaksanaan->id_status == 2 || $statusNotaDinasPelaksanaan->id_status == 15)
+                                                            <span class="badge badge-danger">{{ $statusNotaDinasPelaksanaan->keterangan_status }}</span>
+                                                        @elseif ($statusNotaDinasPelaksanaan->id_status == 3 || $statusNotaDinasPelaksanaan->id_status == 4 || $statusNotaDinasPelaksanaan->id_status == 5 || $statusNotaDinasPelaksanaan->id_status == 12)
+                                                            <span class="badge badge-success">{{ $statusNotaDinasPelaksanaan->keterangan_status }}</span>
+                                                        @else
+                                                            <span class="badge badge-warning">{{ $statusNotaDinasPelaksanaan->keterangan_status }}</span>
+                                                        @endif
+                                                    @else
+                                                        Status Tidak Ditemukan
+                                                    @endif
+                                                @elseif ($dokumen == 'HPE')
+                                                    @if ($statusHPE)
+                                                        @if ($statusHPE->id_status == 2 || $statusHPE->id_status == 15)
+                                                            <span class="badge badge-danger">{{ $statusHPE->keterangan_status }}</span>
+                                                        @elseif ($statusHPE->id_status == 3 || $statusHPE->id_status == 4 || $statusHPE->id_status == 5 || $statusHPE->id_status == 12)
+                                                            <span class="badge badge-success">{{ $statusHPE->keterangan_status }}</span>
+                                                        @else
+                                                            <span class="badge badge-warning">{{ $statusHPE->keterangan_status }}</span>
+                                                        @endif
+                                                    @else
+                                                        Status Tidak Ditemukan
+                                                    @endif
+                                                @elseif ($dokumen == 'RKS')
+                                                    @if ($statusRKS)
+                                                        @if ($statusRKS->id_status == 2 || $statusRKS->id_status == 15)
+                                                            <span class="badge badge-danger">{{ $statusRKS->keterangan_status }}</span>
+                                                        @elseif ($statusRKS->id_status == 3 || $statusRKS->id_status == 4 || $statusRKS->id_status == 5 || $statusRKS->id_status == 12)
+                                                            <span class="badge badge-success">{{ $statusRKS->keterangan_status }}</span>
+                                                        @else
+                                                            <span class="badge badge-warning">{{ $statusRKS->keterangan_status }}</span>
+                                                        @endif
+                                                    @else
+                                                        Status Tidak Ditemukan
+                                                    @endif
+                                                @elseif ($dokumen == 'Ringkasan RKS')
+                                                    @if ($statusRingkasanRKS)
+                                                        @if ($statusRingkasanRKS->id_status == 2 || $statusRingkasanRKS->id_status == 15)
+                                                            <span class="badge badge-danger">{{ $statusRingkasanRKS->keterangan_status }}</span>
+                                                        @elseif ($statusRingkasanRKS->id_status == 3 || $statusRingkasanRKS->id_status == 4 || $statusRingkasanRKS->id_status == 5 || $statusRingkasanRKS->id_status == 12)
+                                                            <span class="badge badge-success">{{ $statusRingkasanRKS->keterangan_status }}</span>
+                                                        @else
+                                                            <span class="badge badge-warning">{{ $statusRingkasanRKS->keterangan_status }}</span>
+                                                        @endif
+                                                    @else
+                                                        Status Tidak Ditemukan
+                                                    @endif
+                                                @elseif ($dokumen == 'Dokumen Kualifikasi')
+                                                    @if ($statusDokumenKualifikasi)
+                                                        @if ($statusDokumenKualifikasi->id_status == 2 || $statusDokumenKualifikasi->id_status == 15)
+                                                            <span class="badge badge-danger">{{ $statusDokumenKualifikasi->keterangan_status }}</span>
+                                                        @elseif ($statusDokumenKualifikasi->id_status == 3 || $statusDokumenKualifikasi->id_status == 4 || $statusDokumenKualifikasi->id_status == 5 || $statusDokumenKualifikasi->id_status == 12)
+                                                            <span class="badge badge-success">{{ $statusDokumenKualifikasi->keterangan_status }}</span>
+                                                        @else
+                                                            <span class="badge badge-warning">{{ $statusDokumenKualifikasi->keterangan_status }}</span>
+                                                        @endif
+                                                    @else
+                                                        Status Tidak Ditemukan
+                                                    @endif
+                                                @endif
+                                            </td>                                            <td>
                                                 @if ($dokumen == 'Rencana Anggaran Biaya')
                                                     @if (in_array($statusRab->id_status, [2, 3, 8]))
                                                         <a href="{{ route('pejabatuser.approve.rab', ['ID_Pengadaan' => $pengadaans->ID_Pengadaan, 'ID_RAB' => $rab->ID_RAB]) }}" class="btn btn-info">Detail</a>

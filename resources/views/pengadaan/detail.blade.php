@@ -10,7 +10,7 @@
                     <div class="d-flex justify-content-between">
                         <h3>Nama Pekerjaan: {{ $pengadaan->Judul_Pengadaan }}</h3>
                     </div>
-                    <table class="table">
+                    <table class="table text-center">
                         <thead>
                             <tr>
                                 <th>Nama Dokumen</th>
@@ -46,37 +46,63 @@
                                                 @endif
                                             @endif
                                         </td>
-                                        <td class="badge badge-pill badge-dark">
+                                        <td>
                                             @if ($dokumen == 'Rencana Anggaran Biaya')
                                                 @if ($statusRab)
-                                                    {{ $statusRab->keterangan_status }}
+                                                    @if ($statusRab->id_status == 2 || $statusRab->id_status == 15)
+                                                        <span class="badge badge-danger">{{ $statusRab->keterangan_status }}</span>
+                                                    @elseif ($statusRab->id_status == 3 || $statusRab->id_status == 4 || $statusRab->id_status == 5 || $statusRab->id_status == 12)
+                                                        <span class="badge badge-success">{{ $statusRab->keterangan_status }}</span>
+                                                    @else
+                                                        <span class="badge badge-warning">{{ $statusRab->keterangan_status }}</span>
+                                                    @endif
                                                 @else
                                                     Status Tidak Ditemukan
                                                 @endif
                                             @elseif ($dokumen == 'Justifikasi Penunjukan Langsung')
                                                 @if ($statusJustifikasi)
-                                                    {{ $statusJustifikasi->keterangan_status }}
+                                                    @if ($statusJustifikasi->id_status == 2 || $statusJustifikasi->id_status == 15)
+                                                        <span class="badge badge-danger">{{ $statusJustifikasi->keterangan_status }}</span>
+                                                    @elseif ($statusJustifikasi->id_status == 3 || $statusJustifikasi->id_status == 4 || $statusJustifikasi->id_status == 5 || $statusJustifikasi->id_status == 12)
+                                                        <span class="badge badge-success">{{ $statusJustifikasi->keterangan_status }}</span>
+                                                    @else
+                                                        <span class="badge badge-warning">{{ $statusJustifikasi->keterangan_status }}</span>
+                                                    @endif
                                                 @else
                                                     Status Tidak Ditemukan
                                                 @endif
                                             @elseif ($dokumen == 'Nota Dinas Permintaan Pengadaan')
                                                 @if ($statusNotaDinasPermintaan)
-                                                    {{ $statusNotaDinasPermintaan->keterangan_status }}
+                                                    @if ($statusNotaDinasPermintaan->id_status == 2 || $statusNotaDinasPermintaan->id_status == 15)
+                                                        <span class="badge badge-danger">{{ $statusNotaDinasPermintaan->keterangan_status }}</span>
+                                                    @elseif ($statusNotaDinasPermintaan->id_status == 3 || $statusNotaDinasPermintaan->id_status == 4 || $statusNotaDinasPermintaan->id_status == 5 || $statusNotaDinasPermintaan->id_status == 12)
+                                                        <span class="badge badge-success">{{ $statusNotaDinasPermintaan->keterangan_status }}</span>
+                                                    @else
+                                                        <span class="badge badge-warning">{{ $statusNotaDinasPermintaan->keterangan_status }}</span>
+                                                    @endif
                                                 @else
                                                     Status Tidak Ditemukan
                                                 @endif
                                             @elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')
                                                 @if ($statusNotaDinasPelaksanaan)
-                                                    {{ $statusNotaDinasPelaksanaan->keterangan_status }}
+                                                    @if ($statusNotaDinasPelaksanaan->id_status == 2 || $statusNotaDinasPelaksanaan->id_status == 15)
+                                                        <span class="badge badge-danger">{{ $statusNotaDinasPelaksanaan->keterangan_status }}</span>
+                                                    @elseif ($statusNotaDinasPelaksanaan->id_status == 3 || $statusNotaDinasPelaksanaan->id_status == 4 || $statusNotaDinasPelaksanaan->id_status == 5 || $statusNotaDinasPelaksanaan->id_status == 12)
+                                                        <span class="badge badge-success">{{ $statusNotaDinasPelaksanaan->keterangan_status }}</span>
+                                                    @else
+                                                        <span class="badge badge-warning">{{ $statusNotaDinasPelaksanaan->keterangan_status }}</span>
+                                                    @endif
                                                 @else
                                                     Status Tidak Ditemukan
                                                 @endif
                                             @endif
                                         </td>
+                                        
                                         <td>
                                         @if ($dokumen == 'Rencana Anggaran Biaya')
                                             @if ($pengadaan->id_status_rab == 6 )
                                                 <a href="{{ route('rab.index', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan]) }}" class="btn btn-info">Detail</a>
+                                                
                                             @elseif ($rab)
                                                 <a href="{{ route('rab.preview', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'ID_RAB' => $rab->ID_RAB]) }}" class="btn btn-info">Detail</a>
                                                 @else
@@ -101,7 +127,7 @@
                                                 Surat RAB perlu Dibuat dan Disetujui
                                             @endif
                                         @elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')
-                                            @if (in_array($pengadaan->id_status_ringkasan_rks, [4]) || in_array($pengadaan->id_status_hpe, [4]))
+                                            @if (in_array($pengadaan->id_status_ringkasan_rks, [3]) || in_array($pengadaan->id_status_hpe, [3]))
                                                 @if ($pengadaan->id_status_nota_dinas_pelaksanaan == 6)
                                                     <a href="{{ route('nota_dinas_pelaksanaan.index', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan, 'id_nota_dinas_permintaan' => $notaDinasPelaksanaan->id_nota_dinas_permintaan]) }}" class="btn btn-info">Detail</a>
                                                 @else

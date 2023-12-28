@@ -5,6 +5,22 @@
     hr {
         border: 5px solid black;
     }
+    form {
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+.btn {
+    margin-right: 5px;
+}
+
+input,
+select {
+    margin-bottom: 10px;
+}
 </style>
 <div class="container mt-5">
     <div class="card">

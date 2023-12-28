@@ -24,8 +24,6 @@
                             </select>
                         </div>
 
-                        </div>
-
                         <div class="form-group">
                             <label for="Tanggal">Tanggal</label>
                             <input type="date" name="Tanggal" id="Tanggal" class="form-control" required>

@@ -54,10 +54,10 @@ class RingkasanRKSController extends Controller
     {
         try {
         $validatedData = $request->validate([
-            'Status_Rks' => 'in:Ada di DRP, Tidak Ada di DRP',
-            'Kualifikasi_Pengadaan' => 'in:Prakualifikasi, Pasca Kualifikasi',
-            'Kualifikasi_CSMS' => 'in:Tidak Perlu, Perlu',
-            'url_rks' => 'nullable|url',
+            // 'Status_Rks' => 'in:Ada di DRP, Tidak Ada di DRP',
+            // 'Kualifikasi_Pengadaan' => 'in:Prakualifikasi, Pasca Kualifikasi',
+            // 'Kualifikasi_CSMS' => 'in:Tidak Perlu, Perlu',
+            // 'url_rks' => 'nullable|url',
         ]);
         $namaKota = $request->input('kota');
         $kota = Kota::where('Kota', $namaKota)->first();

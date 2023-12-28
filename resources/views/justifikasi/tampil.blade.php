@@ -13,6 +13,10 @@
     <td>
         <a href="{{ route('justifikasi.edit', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_JPL' =>$justifikasi->ID_JPL]) }}" class="btn btn-warning">Edit</a>
     </td>
+    @elseif ($pengadaan->id_status_justifikasi==2)
+    <td>
+        <a href="{{ route('justifikasi.edit', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_JPL' =>$justifikasi->ID_JPL]) }}" class="btn btn-warning">Edit</a>
+    </td>
     @else
     <td>
         <a style="display:none;"></a>
@@ -21,6 +25,11 @@
     <td>
         <button class="btn btn-primary my-4" onclick="goBack()">Kembali</button>
     </td>
+    <div style="border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-align: left;">
+        @if (!empty($pengadaan->alasan_justifikasi))
+            <label for="alasan_justifikasi">Alasan Penyetujuan/Penolakan : <b>{{ $pengadaan->alasan_justifikasi }}</b></label>
+        @endif
+    </div>
     
     <script>
         function goBack() {

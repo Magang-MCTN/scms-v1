@@ -5,12 +5,30 @@
     hr {
         border: 5px solid black;
     }
+    form {
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+.btn {
+    margin-right: 5px;
+}
+
+input,
+select {
+    margin-bottom: 10px;
+}
 </style>
 <div class="container mt-5">
     <div class="card">
         <div class="card-header">
             <h2><b>Nama Pekerjaan : {{ $rabData->Judul_Pengadaan }}</b></h2>
             <h4 class="mb-0"><center>Rencana Anggaran Biaya</center></h4>
+            <br>
+            <p style="font-size: 10px"><i><b>Catatan: Jika Total Pada Barang Ke 2, 3, dst berbeda, silahkan ketik ulang estimasi jumlah nya saja nanti akan otomatis terupdate</b></i></p>
         </div>
         <form method="POST" action="{{ route('rab.update', ['ID_Pengadaan' => $rabData->ID_Pengadaan, 'ID_RAB' => $rab->ID_RAB]) }}" id="rab-form">
             @csrf
@@ -291,7 +309,9 @@ newForm.find('[name^="barang"]').each(function () {
         var totalForm2 = parseInt($(this).find("#total_{{ $index }}").val()) || 0;
         totalKeseluruhan += totalForm1 + totalForm2;
         // totalKeseluruhan += totalForm1;
+        // totalKeseluruhan += totalForm2;
         });
+
 
         // Setel nilai total keseluruhan
         $(".total_keseluruhan, #total_keseluruhan_{{ $index }}").val(totalKeseluruhan);

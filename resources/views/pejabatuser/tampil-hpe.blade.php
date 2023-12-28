@@ -6,11 +6,11 @@
     <div class="bi bi-download">
     <a href="{{ route('hpe.preview.download', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan,'ID_HPE' => $hpe->ID_HPE]) }}" class="btn btn-success">Unduh PDF</a>
     <td class="d-flex my-4">
-        @if($pengadaan->id_status_hpe === 13)
+        @if($pengadaan->id_status_hpe === 4)
             <button id="btn-approve" class="btn btn-success mx-2">Setuju</button>
         @endif
 
-        @if($pengadaan->id_status_hpe === 13)
+        @if($pengadaan->id_status_hpe === 4)
             <button id="btn-reject" class="btn btn-danger mx-2">Tolak</button>
         @endif
     </td>

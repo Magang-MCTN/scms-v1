@@ -234,6 +234,7 @@
     <p></p>
     <br>
 <br>
+<p></p>
     <div style="float: right; margin-right: 10px;">
         <p>@if(isset($kota))
             {{ $kota->Kota }},

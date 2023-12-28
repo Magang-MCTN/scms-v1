@@ -81,7 +81,6 @@
                                 @else
                                 <span class="badge badge-warning">{{ $statusItem->keterangan_status }}</span>
                                 @endif 
-                
                         @else
                             Status Tidak Ditemukan
                         @endif

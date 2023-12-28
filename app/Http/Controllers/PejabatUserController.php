@@ -377,7 +377,7 @@ class PejabatUserController extends Controller
 public function approveFileHPE(Request $request, $ID_Pengadaan, $ID_HPE)
     {
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
-        $pengadaan->id_status_hpe = 4;
+        $pengadaan->id_status_hpe = 3;
         $pengadaan->alasan_dokumen_kualifikasi = $request->input('alasan_dokumen_kualifikasi');
         $pengadaan->save();
         // $users = User::where('id_role', 5)->get();
@@ -479,6 +479,7 @@ public function approveFileRKS(Request $request, $ID_Pengadaan, $ID_Ringkasan_Rk
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
         $pengadaan->id_status_ringkasan_rks = 3;
         $pengadaan->id_status_rks = 3;
+        $pengadaan->id_status = 10;
         $pengadaan->id_status_nota_dinas_pelaksanaan = 6;
         $pengadaan->alasan_rks = $request->input('alasan_rks');
         $pengadaan->save();
@@ -571,16 +572,20 @@ public function approveFileRKS(Request $request, $ID_Pengadaan, $ID_Ringkasan_Rk
     public function approveFileNotaDinasPelaksanaan(Request $request, $ID_Pengadaan, $id_nota_dinas_permintaan)
     {
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
+        if ($pengadaan->id_status_nota_dinas_pelaksanaan == 8) {
+            $pengadaan->update(['id_status' => 16]);
+        }
         $pengadaan->id_status_nota_dinas_pelaksanaan= 3;
-        $pengadaan->update(['id_status' => 16]);
+        // $pengadaan->update(['id_status' => 16]);
         $pengadaan->alasan_nota_dinas_pelaksanaan = $request->input('alasan_nota_dinas_pelaksanaan');
         $pengadaan->save();
         // $users = User::where('id_role', 5)->get();
         // $emails = $users->pluck('email')->toArray();
         // Mail::to($emails)->send(new NotifEmailAdminDuri($surat2));
-
+        
         $notaDinasPelaksanaan = RencanaNotaDinas::findOrFail($id_nota_dinas_permintaan);
         // $rab->ID_RAB = Auth::user()->id_user;
+
         $id_user = Auth::user()->id_user;
         $tandaTangan = Signatures::where('id_user', $id_user)->value('path');
         $notaDinasPelaksanaan->tanda_tangan_user_pelaksanaan= $tandaTangan;
